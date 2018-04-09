@@ -22,11 +22,6 @@ Page({
       iconUrl: app.globalData.userInfo.avatarUrl,
       userName: app.globalData.userInfo.nickName
     })
-    wx.showModal({
-      title: "person",
-      content: "打开person",
-    })
-    
   },
 
   /**

@@ -19,7 +19,8 @@ Page({
         introduction: "广州是个旧旧的城市",
         url: "广州url"
       },
-    ]
+    ],
+    inputCityName: null,
   },
 
   /**
@@ -27,8 +28,8 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    WxSearch.init(that, 43, ['北京', '上海', '南京', '广州', '深圳']);
-    WxSearch.initMindKeys(['weappdev.com', '微信小程序开发', '微信开发', '微信小程序']);
+    WxSearch.init(that, 43, ['北京', '上海', '南京', '广州', '深圳']);    //热门搜索
+    WxSearch.initMindKeys(['北京', '微信小程序开发', '微信开发', '微信小程序']);  //搜索建议
   },
 
 
@@ -49,18 +50,39 @@ Page({
 
   //是否为已存在的景点
   isExistScene: function (city) {
-    
+    for (var i in this.data.recommendList)
+    {
+      if (this.data.recommendList[i].cityName == city)
+        return i;        
+    }
+    return -1;
   },
 
   //↓wxSearch接口
   wxSearchFn: function (e) {
+    console.log(e)
     var that = this
     WxSearch.wxSearchAddHisKey(that);
-
+    if (!this.data.inputCityName)
+      return;
+    var index = this.isExistScene(this.data.inputCityName)
+    if (index != -1)
+    {
+      app.globalData.placeUrl = that.data.recommendList[index].url;
+      wx.navigateTo({
+        url: "../place/place",
+      })
+    }
+    else
+      wx.showModal({
+        title: 'I’m sorry~',
+        content: '这个小程序还没有这个城市（景点）的信息',
+      })
   },
   wxSearchInput: function (e) {
     var that = this
     WxSearch.wxSearchInput(e, that);
+    this.data.inputCityName = e.detail.value
   },
   wxSerchFocus: function (e) {
     var that = this
@@ -73,6 +95,7 @@ Page({
   wxSearchKeyTap: function (e) {
     var that = this
     WxSearch.wxSearchKeyTap(e, that);
+    this.data.inputCityName = e.currentTarget.dataset.key;
   },
   wxSearchDeleteKey: function (e) {
     var that = this
@@ -85,6 +108,7 @@ Page({
   wxSearchTap: function (e) {
     var that = this
     WxSearch.wxSearchHiddenPancel(that);
+    console.log(e);
   },
   //↑wxSearch接口
 

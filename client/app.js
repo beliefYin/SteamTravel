@@ -1,6 +1,7 @@
 //app.js
 var qcloud = require('./vendor/wafer2-client-sdk/index')
 var config = require('./config')
+var util = require('./utils/util.js')
 
 App({
     globalData: {
@@ -8,28 +9,51 @@ App({
       code: null,
       isLoginSuc: false,
       placeUrl: null,
+      logged:false
     },
     onLaunch: function () {
         qcloud.setLoginUrl(config.service.loginUrl)
-        var that = this;
-        wx.login({
-          success: function (loginSucRes) {
-            that.globalData.code = loginSucRes.code;
-            that.globalData.isLoginSuc = true;
+        this.login()
+    },
+    // 用户登录示例
+    login: function () {
+      if (this.globalData.logged) return
 
-            wx.getUserInfo({
-              success: function (res) {
-                that.globalData.userInfo = res.userInfo
+      util.showBusy('正在登录')
+      var that = this
+
+      // 调用登录接口
+      qcloud.login({
+        success(result) {
+          if (result) {
+            util.showSuccess('登录成功')
+            that.setData({
+              userInfo: result,
+              logged: true
+            })
+          } else {
+            // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
+            qcloud.request({
+              url: config.service.requestUrl,
+              login: true,
+              success(result) {
+                util.showSuccess('登录成功')
+                that.globalData.userInfo = result.data.data,
+                that.globalData.logged = true
               },
-            })
-          },
-          fail: function () {
-            wx.showModal({
-              title: "登录失败",
-              content: "失败了哦",
-            })
-          },
 
-        })
-    }
+              fail(error) {
+                util.showModel('请求失败', error)
+                console.log('request fail', error)
+              }
+            })
+          }
+        },
+
+        fail(error) {
+          util.showModel('登录失败', error)
+          console.log('登录失败', error)
+        }
+      })
+    },
 })
