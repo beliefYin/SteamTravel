@@ -1,0 +1,4 @@
+<!--pages/person/person.wxml-->
+
+<view><image src="{{iconUrl}}" class="icon"></image></view>
+<view class="userName"><text>{{userName}}</text></view>
