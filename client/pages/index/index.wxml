@@ -9,7 +9,7 @@
 <template is="wxSearch" data="{{wxSearchData}}" />
 
 <!--推荐-->
-<view class='item' wx:for="{{recommendList}}" bindtap="openScenicSpots" data-url="{{item.url}}">
+<view class='item' wx:for="{{recommendList}}" bindtap="openCity" data-url="{{item.url}}">
   <view ><image src="{{item.picUrl}}" class='picture'></image></view>
   <view><text class="cityName">{{item.cityName}}</text></view>
   <view><text class="introduction">{{item.introduction}}</text></view>

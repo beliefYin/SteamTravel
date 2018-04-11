@@ -32,19 +32,19 @@ Page({
     WxSearch.initMindKeys(['北京', '微信小程序开发', '微信开发', '微信小程序']);  //搜索建议
   },
 
-
+  //打开城市页面
+  openCity: function (params) {
+    app.globalData.placeUrl = params.currentTarget.dataset.url
+    wx.navigateTo({
+      url: "../city/city",
+    })
+  },
 
   //打开景点页面
   openScenicSpots: function (params) {
     app.globalData.placeUrl = params.currentTarget.dataset.url
     wx.navigateTo({
-      url: "../place/place",
-      success: function(res){
-        // success
-      },
-      fail: function() {
-        // fail
-      },
+      url: "../ScenicSpot/ScenicSpot",
     })
   },
 
