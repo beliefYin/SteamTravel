@@ -1,4 +1,16 @@
 <!--pages/person/person.wxml-->
 
 <view><image src="{{iconUrl}}" class="icon"></image></view>
-<view class="userName"><text>{{userName}}</text></view>
+
+<view>
+  <view class="userName">
+      <text >{{userName}}</text>
+    </view>
+    
+    <view wx:if="{{sex == 0}}" >
+      <image src="{{manUrl}}" class="sexPic"></image>
+    </view>
+    <view wx:else >
+      <image src="{{womanUrl}}" class="sexPic"></image>
+    </view>
+</view>

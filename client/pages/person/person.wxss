@@ -9,3 +9,8 @@
 .userName {
     text-align: center;
 }
+
+.sexPic {
+    width:100rpx;
+    height:100rpx;
+}

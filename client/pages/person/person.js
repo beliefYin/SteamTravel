@@ -9,19 +9,18 @@ Page({
    */
   data: {
     userInfo: null,
-    iconUrl: null,
-    userName: null,
+    iconUrl: "../../image/user-unlogin.png",
+    userName: "unlogin",
+    sex: 0,
+    womanUrl:"../../image/woman.png",
+    manUrl:"../../image/man.png",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      userInfo: app.globalData.userInfo,
-      iconUrl: app.globalData.userInfo.avatarUrl,
-      userName: app.globalData.userInfo.nickName
-    })
+    
   },
 
   /**
@@ -35,7 +34,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    if (app.globalData.logged) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        iconUrl: app.globalData.userInfo.avatarUrl,
+        userName: app.globalData.userInfo.nickName
+      })
+    }
   },
 
   /**
