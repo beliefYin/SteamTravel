@@ -1,0 +1,9 @@
+<view><image src="{{iconUrl}}" class="icon"></image></view>
+
+<view>
+  <view class="userName">
+    <text >{{userName}}</text>
+    <image src="{{sex == 0?manUrl:darkManUrl}}" class="sexPic"></image>
+    <image src="{{sex == 1?womanUrl:darkWomanUrl}}" class="sexPic"></image>
+  </view>
+</view>

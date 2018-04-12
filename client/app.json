@@ -4,7 +4,9 @@
     "pages/index/index",
     "pages/addCgi/addCgi",
     "pages/city/city",
-    "pages/scenicSpot/scenicSpot"
+    "pages/scenicSpot/scenicSpot",
+    "pages/editProfile/editProfile",
+    "pages/memory/memory"
   ],
   "window":{
     "backgroundColor":"#F6F6F6",

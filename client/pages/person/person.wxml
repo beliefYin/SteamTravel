@@ -10,12 +10,36 @@
 </view>
 
 <view>
-    <image src="{{memoryBtnUrl}}" class="memoryBtn"></image>
-    <image src="{{changeInfoBtnUrl}}" class="changeInfoBtn"></image>
+  <image src="{{memoryBtnUrl}}" class="memoryBtn" bindtap="NavigateToMemory"></image>
+  <image src="{{changeInfoBtnUrl}}" class="changeInfoBtn" bindtap="NavigateToEditProfile"></image>
 </view>
 
 <view>
-    <image src="{{leftQuotesUrl}}" class="memoryBtn"></image>
-    <text>{{briefIntro}}</text>
-    <image src="{{rightQuotesUrl}}" class="changeInfoBtn"></image>
+  <image src="{{leftQuotesUrl}}" class="memoryBtn"></image>
+  <text>{{briefIntro}}</text>
+  <image src="{{rightQuotesUrl}}" class="changeInfoBtn"></image>
+</view>
+
+<view>
+  <text>粉丝 {{fans}}  关注  {{stats}}</text>
+</view>
+
+
+<view><button bindtap="OpenCommentView">评论</button><button bindtap="OpenArticleView">帖子</button></view>
+<view wx:if="{{viewSwitch == 1}}">
+  <view wx:for="{{sceneList}}">
+    <image src="{{item.picUrl}}" class="icon"></image><text>{{item.name}}</text>
+    <text>{{item.comment}}</text>
+    <view wx:if="{{item.like == 1}}">
+      <image src="{{likeUrl}}" class="memoryBtn"></image>
+    </view>
+    <view wx:else>
+      <image src="{{dislikeUrl}}" class="memoryBtn"></image>
+    </view>
+    <text>赞同人数:{{item.agreeNum}}</text>
+    <text>反对人数:{{item.disagreeNum}}</text>
+  </view>
+</view>
+<view wx:else>
+  帖子
 </view>

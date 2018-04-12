@@ -1,9 +1,13 @@
 // pages/person/person.js
 
 var app = getApp()
+const COMMENT_VIEW = 1
+const ARTICLE_VIEW = 2
+
+const LIKE = 1
+const DISLIKE = 0
 
 Page({
-  
   /**
    * 页面的初始数据
    */
@@ -19,6 +23,37 @@ Page({
     leftQuotesUrl:"../../image/leftQuotes.png",
     rightQuotesUrl:"../../image/rightQuotes.png",
     briefIntro:"hello，i am Simon.",
+    stats:12, //关注数
+    fans:111, //粉丝数
+    viewSwitch:1,//用于切换标签页
+    likeUrl:"../../image/like.png",
+    dislikeUrl:"../../image/dislike.png",
+    sceneList : [
+      {
+        picUrl:"../../image/man.png",
+        name:"留园",
+        comment:"这是一个苏州的园林",
+        like:LIKE,
+        agreeNum:23,
+        disagreeNum:2,
+      },
+      {
+        picUrl:"../../image/man.png",
+        name:"黄旗山",
+        comment:"顶上有一个灯笼",
+        like:DISLIKE,
+        agreeNum:45,
+        disagreeNum:2,
+      }
+    ],
+    articleList : [
+      {
+        
+      },
+      {
+
+      },
+    ]
   },
 
   /**
@@ -81,5 +116,43 @@ Page({
    */
   onShareAppMessage: function () {
   
-  }
+  },
+
+  OpenCommentView: function () {
+    this.setData({
+      viewSwitch:COMMENT_VIEW
+    })
+  },
+
+  OpenArticleView: function () {
+    this.setData({
+      viewSwitch:ARTICLE_VIEW
+    })
+  },
+
+  NavigateToEditProfile: function () {
+    if(app.globalData.logged)
+      wx.navigateTo({
+        url: '../editProfile/editProfile',
+      })
+    else
+      wx.showModal({
+        title: '要登录哦',
+        content: '您还没有登录，要登录了才能编辑资料哦',
+      })
+  },
+
+  NavigateToMemory: function () {
+    if(app.globalData.logged)
+      wx.navigateTo({
+        url: '../memory/memory',
+      })
+    else
+      wx.showModal({
+        title: '要登录哦',
+        content: '您还没有登录，要登录了进入回忆长廊哦',
+      })
+  },
+
+
 })

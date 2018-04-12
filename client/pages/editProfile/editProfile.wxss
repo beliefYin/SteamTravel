@@ -1,0 +1,15 @@
+.icon {
+    width:128rpx;
+    height:128rpx;
+    border-radius:50%;
+    text-align:center;
+}
+
+.userName {
+    text-align: center;
+}
+
+.sexPic {
+    width:50rpx;
+    height:50rpx;
+}
