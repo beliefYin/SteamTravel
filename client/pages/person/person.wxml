@@ -4,13 +4,18 @@
 
 <view>
   <view class="userName">
-      <text >{{userName}}</text>
-    </view>
-    
-    <view wx:if="{{sex == 0}}" >
-      <image src="{{manUrl}}" class="sexPic"></image>
-    </view>
-    <view wx:else >
-      <image src="{{womanUrl}}" class="sexPic"></image>
-    </view>
+    <text >{{userName}}</text>
+    <image src="{{sex == 0?manUrl:womanUrl}}" class="sexPic"></image>
+  </view>
+</view>
+
+<view>
+    <image src="{{memoryBtnUrl}}" class="memoryBtn"></image>
+    <image src="{{changeInfoBtnUrl}}" class="changeInfoBtn"></image>
+</view>
+
+<view>
+    <image src="{{leftQuotesUrl}}" class="memoryBtn"></image>
+    <text>{{briefIntro}}</text>
+    <image src="{{rightQuotesUrl}}" class="changeInfoBtn"></image>
 </view>

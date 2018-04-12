@@ -14,6 +14,11 @@ Page({
     sex: 0,
     womanUrl:"../../image/woman.png",
     manUrl:"../../image/man.png",
+    memoryBtnUrl:"../../image/memoryBtn.png",
+    changeInfoBtnUrl:"../../image/changeInfoBtn.png",
+    leftQuotesUrl:"../../image/leftQuotes.png",
+    rightQuotesUrl:"../../image/rightQuotes.png",
+    briefIntro:"hello，i am Simon.",
   },
 
   /**

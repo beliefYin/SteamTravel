@@ -11,6 +11,16 @@
 }
 
 .sexPic {
+    width:50rpx;
+    height:50rpx;
+}
+
+.memoryBtn {
     width:100rpx;
-    height:100rpx;
+    height:50rpx;
+}
+
+.changeInfoBtn {
+    width:100rpx;
+    height:50rpx;
 }
