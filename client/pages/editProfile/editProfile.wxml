@@ -3,8 +3,8 @@
 <view>
   <view class="userName">
     <text >{{userName}}</text>
-    <image src="{{sex == 0?manUrl:darkManUrl}}" class="sexPic"></image>
-    <image src="{{sex == 1?womanUrl:darkWomanUrl}}" class="sexPic"></image>
+    <image src="{{sex == 0?manUrl:darkManUrl}}" class="sexPic" bindtap="SetMan"></image>
+    <image src="{{sex == 1?womanUrl:darkWomanUrl}}" class="sexPic" bindtap="SetWoman"></image>
   </view>
   
   <textarea class="briefIntro" value="{{briefIntro}}" bindinput="InputBriefIntro"></textarea>

@@ -1,5 +1,6 @@
 var app = getApp()
-
+const MAN = 0;
+const WOMAN = 1;
 Page({
 
   /**
@@ -9,7 +10,7 @@ Page({
     userInfo: null,
     iconUrl: "../../image/user-unlogin.png",
     userName: "unlogin",
-    sex: 0,
+    sex: MAN,
     womanUrl:"../../image/woman.png",
     manUrl:"../../image/man.png",
     darkWomanUrl:"../../image/darkWoman.png",
@@ -28,13 +29,17 @@ Page({
       checked: 'true'
     }
   },
+  SetMan:function(){
+    this.setData({sex: MAN})
+  },
+  SetWoman:function(){
+    this.setData({sex: WOMAN})
+  },
   ChangeProfileVisble: function(e) {
     this.data.profileVisble.checked = !this.data.profileVisble.checked
-    console.log(this.data.profileVisble.checked)
   },
   ChangeMemoryVisble: function(e) {
     this.data.memoryVisble.checked = !this.data.memoryVisble.checked
-    console.log(this.data.memoryVisble.checked)
   },
   //确认修改
   ConfirmChange: function(e){
