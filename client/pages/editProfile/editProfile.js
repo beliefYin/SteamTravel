@@ -14,8 +14,32 @@ Page({
     manUrl:"../../image/man.png",
     darkWomanUrl:"../../image/darkWoman.png",
     darkManUrl:"../../image/darkMan.png",
+    briefIntro:"hello，i am Simon.",
+    checkboxItems: [
+      {value: 'USA', string: '个人资料他人是否可见', checked: 'true'},
+      {value: 'CHN', string: '回忆长廊他人是否可见', checked: 'true'},
+    ],
+    profileVisble: {
+      string: '个人资料他人是否可见',
+      checked: 'true'
+    },
+    memoryVisble: {
+      string: '回忆长廊他人是否可见',
+      checked: 'true'
+    }
   },
-
+  ChangeProfileVisble: function(e) {
+    this.data.profileVisble.checked = !this.data.profileVisble.checked
+    console.log(this.data.profileVisble.checked)
+  },
+  ChangeMemoryVisble: function(e) {
+    this.data.memoryVisble.checked = !this.data.memoryVisble.checked
+    console.log(this.data.memoryVisble.checked)
+  },
+  //确认修改
+  ConfirmChange: function(e){
+  //写入数据库
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -76,5 +100,11 @@ Page({
    */
   onShareAppMessage: function () {
     
+  },
+  //输入简介
+  InputBriefIntro: function (e) {
+    this.setData({
+      briefIntro: e.detail.value
+    })
   }
 })

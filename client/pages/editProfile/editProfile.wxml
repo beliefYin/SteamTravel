@@ -6,4 +6,15 @@
     <image src="{{sex == 0?manUrl:darkManUrl}}" class="sexPic"></image>
     <image src="{{sex == 1?womanUrl:darkWomanUrl}}" class="sexPic"></image>
   </view>
+  
+  <textarea class="briefIntro" value="{{briefIntro}}" bindinput="InputBriefIntro"></textarea>
+
+  <checkbox-group bindchange="ChangeProfileVisble">
+    <checkbox checked="{{profileVisble.checked}}"/>{{profileVisble.string}}
+  </checkbox-group>
+  <checkbox-group bindchange="ChangeMemoryVisble">
+    <checkbox checked="{{memoryVisble.checked}}"/>{{memoryVisble.string}}
+  </checkbox-group>
+
+  <button bindtap="ConfirmChange">修改</button>
 </view>

@@ -13,3 +13,7 @@
     width:50rpx;
     height:50rpx;
 }
+
+.briefIntro {
+    border: black 1rpx;
+}

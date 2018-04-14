@@ -1,0 +1,6 @@
+<image bindtap="uploadImage" src="{{addMemoryImage}}" ></image>
+<textarea placeholder="这里要写些东西哦" bindinput="InputDescription"></textarea>
+<checkbox-group bindchange="ChangeVisble">
+    <checkbox checked="{{visble}}"/>他人是否可见
+</checkbox-group>
+<image bindtap="ConfirmChange" src="../../image/changeInfoBtn.png" class="confirm"></image>

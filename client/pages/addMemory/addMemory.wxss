@@ -1,0 +1,4 @@
+.confirm {
+    width: 128rpx;
+    height: 60rpx;
+}

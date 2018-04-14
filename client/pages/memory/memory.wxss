@@ -1,0 +1,6 @@
+/* pages/memory/memory.wxss */
+
+.addMemoryBtn {
+    width:60rpx;
+    height:60rpx;
+}

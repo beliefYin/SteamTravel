@@ -8,7 +8,7 @@ Page({
         userInfo: {},
         logged: false,
         takeSession: false,
-        requestResult: ''
+        requestResult: '',
     },
 
     // 用户登录示例
