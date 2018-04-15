@@ -1,13 +1,15 @@
 {
   "pages":[
-    "pages/person/person",
     "pages/index/index",
+    "pages/person/person",
     "pages/addCgi/addCgi",
     "pages/city/city",
     "pages/scenicSpot/scenicSpot",
     "pages/editProfile/editProfile",
     "pages/memory/memory",
-    "pages/addMemory/addMemory"
+    "pages/addMemory/addMemory",
+    "pages/article/article",
+    "pages/writeArticle/writeArticle"
   ],
   "window":{
     "backgroundColor":"#F6F6F6",

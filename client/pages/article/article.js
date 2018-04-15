@@ -1,7 +1,5 @@
 // pages/place/place.js
 var app = getApp()
-const SCENEICSPOT_VIEW = 1
-const ARTICLE_VIEW = 2
 
 Page({
 
@@ -12,52 +10,9 @@ Page({
     loadingHidden: true,
     imgUrls: [],
     introduction: "这个景点还没有介绍哦",
-    placeName: "镇江",
-    viewIndex: SCENEICSPOT_VIEW,
-    sceneList: [
-      {
-        imgUrl: "../../image/IMG_20140711_201049.jpg",
-        name: "北固山"
-      },
-      {
-        imgUrl: "../../image/IMG_20140713_075457.jpg",
-        name: "金山"
-      }
-    ],
-    articleList: [
-      {
-        imgUrl: "../../image/广州1.png",
-        name: "北固山"
-      },
-      {
-        imgUrl: "../../image/广州2.png",
-        name: "金山"
-      }
-    ]
+    placeName: "镇江"
   },
-  NavigateToScenicSpot:function(e)
-  {
-    wx.navigateTo({
-      url: '../scenicSpot/scenicSpot',
-    })
-  },
-  NavigateToArticle:function(e)
-  {
-    wx.navigateTo({
-      url: '../article/article',
-    })
-  },
-  OpenSceneView:function(e){
-    this.setData({viewIndex: SCENEICSPOT_VIEW})
-  },
-  OpenArticle:function(e){
-    this.setData({viewIndex: ARTICLE_VIEW})
-  },
-  WriteArticle:function(e){
-    wx.navigateTo({
-      url: '../writeArticle/writeArticle',
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */

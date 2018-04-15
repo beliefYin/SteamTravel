@@ -10,3 +10,21 @@
 </swiper>
 <text>简介\n</text>
 <text>{{introduction}}</text>
+
+<view>
+  <button bindtap="OpenSceneView">景点</button>
+  <button bindtap="OpenArticle">攻略</button>
+  <button bindtap="WriteArticle">写攻略</button>
+  <view wx:if="{{viewIndex == 1}}">
+    <view wx:for="{{sceneList}}" bindtap="NavigateToScenicSpot">
+      <image src="{{item.imgUrl}}"></image>
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+  <view wx:elif="{{viewIndex == 2}}">
+    <view wx:for="{{articleList}}" bindtap="NavigateToArticle">
+      <image src="{{item.imgUrl}}"></image>
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+</view>

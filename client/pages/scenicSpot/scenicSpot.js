@@ -1,5 +1,7 @@
 // pages/place/place.js
 var app = getApp()
+const GOOD = 1
+const BAD = 2
 
 Page({
 
@@ -8,9 +10,25 @@ Page({
    */
   data: {
     loadingHidden: true,
-    imgUrls: [],
+    imgUrls: ["../../image/广州1.png", "../../image/广州2.png"],
     introduction: "这个景点还没有介绍哦",
-    placeName: "镇江"
+    placeName: "北固山",
+    commentList:[
+      {
+        name:"simon",
+        picUrl:"../../user-unlogin.png",
+        attitude:GOOD,//好评或差评
+        agreeNum:100,
+        disagreeNum:23,
+      },
+      {
+        name:"simon",
+        picUrl:"../../user-unlogin.png",
+        attitude:BAD,//好评或差评
+        agreeNum:10,
+        disagreeNum:23,
+      },
+    ]
   },
 
   /**
@@ -31,26 +49,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var url = app.globalData.placeUrl;
-    console.log(url);
-    
-    if(url == "镇江url")
-    {
-      var imageList = ["../../image/镇江1.png", "../../image/镇江2.png"]
-      this.setData({
-        placeName: "镇江",
-        imgUrls: imageList
-      })
-    }
-    else if(url == "广州url")
-    {
-      var imageList = ["../../image/广州1.png", "../../image/广州2.png"]
-      this.setData({
-        placeName: "广州",
-        imgUrls: imageList
-      })
-    }
-    
   },
 
   /**
