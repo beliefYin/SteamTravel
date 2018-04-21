@@ -1,8 +1,7 @@
 // pages/person/person.js
 
 var app = getApp()
-const COMMENT_VIEW = 1
-const ARTICLE_VIEW = 2
+var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 
 const LIKE = 1
 const DISLIKE = 0
@@ -23,22 +22,29 @@ Page({
     leftQuotesUrl:"../../image/leftQuotes.png",
     rightQuotesUrl:"../../image/rightQuotes.png",
     briefIntro:"hello，i am Simon.",
-    stats:12, //关注数
+    stars:12, //关注数
     fans:111, //粉丝数
-    viewSwitch:1,//用于切换标签页
+
+
+    tabs: ["评论", "帖子"],
+    activeIndex: 0,
+    sliderOffset: 0,
+    sliderLeft: 0,
+
+
     likeUrl:"../../image/like.png",
     dislikeUrl:"../../image/dislike.png",
     sceneList : [
       {
         picUrl:"../../image/man.png",
-        name:"留园",
-        comment:"这是一个苏州的园林",
+        name:"留园大幅度对的",
+        comment:"这是一个苏州的园拉拉队浪费大量司法所这是一个苏州的园拉拉队浪费大量司法所这是一个苏州的园拉拉队浪费大量司法所",
         like:LIKE,
         agreeNum:23,
         disagreeNum:2,
       },
       {
-        picUrl:"../../image/man.png",
+        picUrl:"../../image/woman.png",
         name:"黄旗山",
         comment:"顶上有一个灯笼",
         like:DISLIKE,
@@ -56,11 +62,25 @@ Page({
     ]
   },
 
+  tabClick: function (e) {
+    this.setData({
+      sliderOffset: e.currentTarget.offsetLeft,
+      activeIndex: e.currentTarget.id
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    var that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+          sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
+        });
+      }
+    });
   },
 
   /**
@@ -116,18 +136,6 @@ Page({
    */
   onShareAppMessage: function () {
   
-  },
-
-  OpenCommentView: function () {
-    this.setData({
-      viewSwitch:COMMENT_VIEW
-    })
-  },
-
-  OpenArticleView: function () {
-    this.setData({
-      viewSwitch:ARTICLE_VIEW
-    })
   },
 
   NavigateToEditProfile: function () {

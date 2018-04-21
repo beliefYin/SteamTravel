@@ -1,26 +1,137 @@
 /* pages/person/person.wxss */
+
+/* 头像 */
+.iconContainer{
+    display: flex;
+    justify-content:center;
+    margin-top: 20px;
+}
 .icon {
     width:128rpx;
     height:128rpx;
     border-radius:50%;
-    text-align:center;
 }
 
+/*名字和性别图片*/
 .userName {
     text-align: center;
+    
 }
-
 .sexPic {
     width:50rpx;
     height:50rpx;
 }
+.nameAndSex{
+    display: flex;
+    flex-wrap:nowrap;
+    justify-content:center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
 
+/*回忆长廊和修改资料按钮*/
+.theTwoBtn {
+    display: flex;
+    justify-content: space-between;
+}
 .memoryBtn {
-    width:100rpx;
-    height:50rpx;
+    margin: 10px 0px 10px 20px; /*上右下左*/
+}
+.changeInfoBtn {
+    margin: 10px 20px 10px 20px; /*上右下左*/
+    color:#fff;
+    background-color: orange;
 }
 
-.changeInfoBtn {
-    width:100rpx;
-    height:50rpx;
+/*简介*/
+.quote {
+    width: 50rpx;
+    height: 50rpx;
 }
+.briefIntro{
+    text-align:center;
+    margin-bottom: 20px;
+}
+
+/*粉丝和关注字样*/
+.fansAndStars{
+    display: flex;
+    justify-content: space-between;
+}
+.fans{
+    text-align: left;
+    margin-left: 30%;
+    font-size: 18px;
+}
+.stars{
+    text-align: right;
+    margin-right: 30%;
+    font-size: 18px;
+}
+.line{
+    width:70%;
+    height:2rpx;
+    background:rgb(223, 220, 220);
+    margin-left: 15%;
+    margin-top: 10px;
+}
+
+/*评论*/
+.commentContainer{
+    margin: 5px 10px 5px 10px;/*上右下左*/
+    padding: 5px 5px 5px 5px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+}
+.commentCol{
+    display: flex;
+    flex-direction:column;
+}
+.commentColOne{
+    width: 20%;
+}
+.commentAgree{
+    display: flex;
+    justify-content:flex-end;
+    margin-right: 10px;
+}
+.commentAgreePic{
+    margin-left: 5px;
+    width:30rpx;
+    height:30rpx;
+}
+.commentAgreeText{
+    font-size: 13px;
+}
+.commentIcon{
+    width:100rpx;
+    height:100rpx;
+}
+.commentName{
+    font-size: 17px;
+}
+.commentTypePic{
+    padding-left:8px;
+    margin-bottom: 10px;
+    width:80rpx;
+    height:80rpx;
+}
+.commentLine{
+    width:100%;
+    height:2rpx;
+    background:rgb(223, 220, 220);
+}
+.recomTxt{
+    font-size: 17px;
+    padding-left: 8px;
+}
+.noRecomTxt{
+    font-size: 17px;
+    padding: 0px;
+}
+.commentTxt{
+    font-size: 18px;
+    flex: 1;
+}
+/*帖子*/

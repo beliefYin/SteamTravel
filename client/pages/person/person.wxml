@@ -1,45 +1,75 @@
 <!--pages/person/person.wxml-->
 
-<view><image src="{{iconUrl}}" class="icon"></image></view>
+<view class="iconContainer"><image src="{{iconUrl}}" class="icon"></image></view>
 
-<view>
+<view class="nameAndSex">
   <view class="userName">
     <text >{{userName}}</text>
-    <image src="{{sex == 0?manUrl:womanUrl}}" class="sexPic"></image>
   </view>
+  <image src="{{sex == 0?manUrl:womanUrl}}" class="sexPic"></image>
 </view>
 
-<view>
-  <image src="{{memoryBtnUrl}}" class="memoryBtn" bindtap="NavigateToMemory"></image>
-  <image src="{{changeInfoBtnUrl}}" class="changeInfoBtn" bindtap="NavigateToEditProfile"></image>
+<!-- <view class="weui-flex">
+  <view class="weui-flex__item"><image src="{{memoryBtnUrl}}" class="memoryBtn" bindtap="NavigateToMemory"></image></view>
+  <view class="weui-flex__item"><image src="{{changeInfoBtnUrl}}" class="changeInfoBtn" bindtap="NavigateToEditProfile"></image></view>
+</view> -->
+
+<view class="theTwoBtn">
+    <button bindtap="NavigateToMemory" class="memoryBtn" type="primary" size="mini">回忆长廊</button>
+    <button class="changeInfoBtn" bindtap="NavigateToEditProfile" size="mini">修改资料</button>
 </view>
 
-<view>
-  <image src="{{leftQuotesUrl}}" class="memoryBtn"></image>
-  <text>{{briefIntro}}</text>
-  <image src="{{rightQuotesUrl}}" class="changeInfoBtn"></image>
+<view class="briefIntro">
+  <!-- <image src="{{leftQuotesUrl}}" class="quote"></image> -->
+  <text >“{{briefIntro}}”</text>
+  <!-- <image src="{{rightQuotesUrl}}" class="quote"></image> -->
 </view>
 
-<view>
-  <text>粉丝 {{fans}}  关注  {{stats}}</text>
+<view class="fansAndStars">
+  <text class="fans">粉丝: {{fans}}</text><text class="stars">关注:{{stars}}</text>
 </view>
+<view class="line"></view>
 
-
-<view><button bindtap="OpenCommentView">评论</button><button bindtap="OpenArticleView">帖子</button></view>
-<view wx:if="{{viewSwitch == 1}}">
-  <view wx:for="{{sceneList}}">
-    <image src="{{item.picUrl}}" class="icon"></image><text>{{item.name}}</text>
-    <text>{{item.comment}}</text>
-    <view wx:if="{{item.like == 1}}">
-      <image src="{{likeUrl}}" class="memoryBtn"></image>
-    </view>
-    <view wx:else>
-      <image src="{{dislikeUrl}}" class="memoryBtn"></image>
-    </view>
-    <text>赞同人数:{{item.agreeNum}}</text>
-    <text>反对人数:{{item.disagreeNum}}</text>
+<view class="weui-tab">
+  <view class="weui-navbar">
+    <block wx:for="{{tabs}}" wx:key="*this">
+      <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+        <view class="weui-navbar__title">{{item}}</view>
+      </view>
+    </block>
+    <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
   </view>
-</view>
-<view wx:else>
-  帖子
+  <view class="weui-tab__panel">
+    <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+      <view wx:for="{{sceneList}}" >
+        <view class="commentContainer">
+          <view class="commentCol commentColOne">
+            <image src="{{item.picUrl}}" class="commentIcon"></image>
+            <text class="commentName">{{item.name}}</text>
+          </view>
+          <view class="commentCol commentTxt">
+            <text>{{item.comment}}</text>
+          </view>
+          <view class="commentCol">
+            <image src="{{likeUrl}}" class="commentTypePic" hidden="{{item.like != 1}}"></image>
+            <text hidden="{{item.like != 1}}" class="recomTxt">推荐</text>
+            <image src="{{dislikeUrl}}" class="commentTypePic" hidden="{{item.like != 0}}"></image>
+            <text hidden="{{item.like != 0}}" class="noRecomTxt">不推荐</text>
+          </view>
+        </view>
+        <view class="commentAgree">
+          <text class="commentAgreeText">评论对他人是否有帮助</text>
+          <image src="{{likeUrl}}" class="commentAgreePic"></image>
+          <text class="commentAgreeText">{{item.agreeNum}}</text>
+          <image src="{{dislikeUrl}}" class="commentAgreePic"></image>
+          <text class="commentAgreeText">{{item.disagreeNum}}</text>
+        </view>
+         
+        <view class="commentLine"></view>
+      </view>
+    </view>
+    <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+       帖子
+    </view>
+  </view>
 </view>
