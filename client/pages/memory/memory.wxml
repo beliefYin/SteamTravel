@@ -1,6 +1,14 @@
+<view class="addBtnContainer">
 <image bindtap="navigateToAddMemory" src="{{addMemoryImage}}" class="addMemoryBtn"></image>
-<view wx:for="{{memoryList}}">
-    <image src="{{item.imgUrl}}" bindtap="previewImg" data-index="{{index}}"></image>
-    <view><text>{{item.content}}</text></view>
-    <view><text>{{item.time}}</text></view>
+</view>
+<view class="memoryContainer">
+    <view wx:for="{{memoryList}}" class="memoryItem">
+        <image class="memoryPic" src="{{item.imgUrl}}" bindtap="previewImg" data-index="{{index}}"></image>
+        <view class="memoryTxt">
+            <text>{{item.content}}</text>
+        </view>
+        <view>
+            <text class="memoryTime">{{item.time}}</text>
+        </view>
+    </view>
 </view>

@@ -9,14 +9,24 @@
 </view>
   
 <view class="briefIntroContainer">
-  <textarea value="{{briefIntro}}" bindinput="InputBriefIntro"></textarea>
+  <textarea maxlength="120" class="briefIntro" 
+  value="{{briefIntro}}" bindinput="InputBriefIntro" 
+  placeholder="还没有个人说明，赶快补上吧"></textarea>
 </view>
 
-  <checkbox-group bindchange="ChangeProfileVisble">
-    <checkbox checked="{{profileVisble.checked}}"/>{{profileVisble.string}}
-  </checkbox-group>
+<view class="options">
+  <view class="optionItem">
+    <checkbox-group bindchange="ChangeProfileVisble">
+      <checkbox checked="{{profileVisble.checked}}" />{{profileVisble.string}}
+    </checkbox-group>
+  </view>
+  <view class="optionItem">
   <checkbox-group bindchange="ChangeMemoryVisble">
     <checkbox checked="{{memoryVisble.checked}}"/>{{memoryVisble.string}}
   </checkbox-group>
+  </view>
+</view>
 
-  <button bindtap="ConfirmChange">修改</button>
+<view class="saveBtn">
+  <button bindtap="ConfirmChange" type="primary">保存修改</button>
+</view>
