@@ -1,6 +1,21 @@
-<image bindtap="uploadImage" src="{{addMemoryImage}}" ></image>
-<textarea placeholder="这里要写些东西哦" bindinput="InputDescription"></textarea>
-<checkbox-group bindchange="ChangeVisble">
-    <checkbox checked="{{visble}}"/>他人是否可见
-</checkbox-group>
-<image bindtap="ConfirmChange" src="../../image/changeInfoBtn.png" class="confirm"></image>
+<view class="imageContainer">
+    <image bindtap="uploadImage" src="{{imgUrl?imgUrl:addMemoryImage}}" ></image>
+</view>
+
+<view class="contextContainer">
+    <textarea maxlength="120" class="contextTextArea" 
+        bindinput="InputDescription" 
+        placeholder="这里要写下你的想法">
+    </textarea>
+</view>
+
+<view class="options">
+    <view class="optionItem">
+        <checkbox-group bindchange="ChangeVisble">
+            <checkbox checked="{{visble}}"/>他人是否可见
+        </checkbox-group>
+    </view>
+</view>
+<view class="saveBtn">
+    <button bindtap="ConfirmChange" type="primary">保存修改</button>
+</view>

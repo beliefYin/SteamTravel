@@ -1,6 +1,5 @@
 <!--pages/city/city.wxml-->
 <loading hidden="{{loadingHidden}}">加载中</loading>
-<text>{{placeName}}</text>
 <swiper indicator-dots="true" autoplay="true" interval="3000" duration="500">
   <block wx:for="{{imgUrls}}">
     <swiper-item>
@@ -8,8 +7,10 @@
     </swiper-item>
   </block>
 </swiper>
-<text>简介\n</text>
-<text>{{introduction}}</text>
+
+<text class="cityName">{{placeName}}\n</text>
+
+<text class="cityIntro" decode="true">&ensp;&ensp;&ensp;{{introduction}}</text>
 
 <view>
   <button bindtap="OpenSceneView">景点</button>

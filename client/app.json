@@ -1,7 +1,7 @@
 {
   "pages":[
-    "pages/person/person",
     "pages/index/index",
+    "pages/person/person",
     "pages/addCgi/addCgi",
     "pages/city/city",
     "pages/scenicSpot/scenicSpot",

@@ -1,1 +1,21 @@
 /* pages/place/place.wxss */
+.cityName{
+    font: 30px sans-serif;
+    margin:10rpx 10rpx 10rpx 10rpx;
+}
+.cityIntro{
+    font-size: 1em;
+    margin:10rpx 10rpx 10rpx 10rpx;
+}
+.swithcBtn{
+
+}
+.writeArticleBtn{
+
+}
+.scenicspotContainer{
+
+}
+.scenicspotItem{
+
+}
