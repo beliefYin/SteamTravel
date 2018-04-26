@@ -79,7 +79,6 @@ function request(options) {
 
             success: function (response) {
                 var data = response.data;
-
                 var error, message;
                 if (data && data.code === -1) {
                     Session.clear();

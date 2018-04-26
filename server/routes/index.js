@@ -36,4 +36,8 @@ router.get('/demo', controllers.demo)
 
 router.get('/test', controllers.test)
 
+// --- 数据库操作 ---//
+router.get('/AddUser', controllers.db.AddUser)
+
+
 module.exports = router

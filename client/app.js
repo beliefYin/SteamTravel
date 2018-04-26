@@ -21,34 +21,37 @@ App({
 
       util.showBusy('正在登录')
       var that = this
-
+      var hello = 123
       // 调用登录接口
       qcloud.login({
         success(result) {
-          if (result) {
-            util.showSuccess('登录成功')
-            
-            // that.globalData.userInfo = result,
-            that.globalData.userInfo = result.data.data
-            that.globalData.logged = true
-          } else {
-            // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
-            qcloud.request({
-              url: config.service.requestUrl,
-              login: true,
-              success(result) {
-                console.log(result)
-                util.showSuccess('登录成功')
-                that.globalData.userInfo = result.data.data,
-                that.globalData.logged = true
-              },
+          qcloud.request({
+            url: config.service.requestUrl,
+            login: true,
+            success(result) {
+              util.showSuccess('登录成功');
+              that.globalData.userInfo = result.data.data;
+              that.globalData.logged = true;
+              qcloud.request({
+                url: `${config.service.host}/weapp/AddUser`,
+                data: {
+                  openId: that.globalData.userInfo.openId,
+                  userName: that.globalData.userInfo.nickName, 
+                },
+                success(res){
+                  console.log("AddUser success",res);
+                },
+                fail(error){
+                  console.log("AddUser fail",error)
+                }
+              })
+            },
 
-              fail(error) {
-                util.showModel('请求失败', error)
-                console.log('request fail', error)
-              }
-            })
-          }
+            fail(error) {
+              util.showModel('请求失败', error)
+              console.log('request fail', error)
+            }
+          })
         },
 
         fail(error) {
