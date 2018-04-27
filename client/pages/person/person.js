@@ -1,6 +1,8 @@
 // pages/person/person.js
-
+var qcloud = require('../../vendor/wafer2-client-sdk/index')
+var config = require('../../config')
 var app = getApp()
+
 var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 
 const LIKE = 1
@@ -101,6 +103,39 @@ Page({
         userName: app.globalData.userInfo.nickName
       })
     }
+    if(app.globalData.hasChangedUserInfo)
+    {
+      var that = this;
+      qcloud.request({
+        url: `${config.service.host}/weapp/QueryUser`,
+        data: {
+          openId: app.globalData.userInfo.openId,
+        },
+        success(res){
+          if (res.data.code == 1)
+          {
+            console.log("读取数据失败")
+            return
+          }
+          var data = res.data.data[0]
+          that.setData({
+            briefIntro:data.introduction,
+            sex:data.sex,
+            fans:data.fans_number
+          })
+          app.globalData.memoryVisible = data.memory_visible;
+          app.globalData.infoVisible =  data.info_visible;
+          console.log("QuestUser success",res);
+        },
+        fail(error){
+          console.log("QuestUser fail",error)
+        }
+      });
+      app.globalData.hasChangedUserInfo = false;
+      console.log("refresh")
+    }
+
+    
   },
 
   /**

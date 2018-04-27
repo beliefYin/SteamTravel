@@ -38,6 +38,7 @@ router.get('/test', controllers.test)
 
 // --- 数据库操作 ---//
 router.get('/AddUser', controllers.db.AddUser)
-
+router.get('/QueryUser', controllers.db.QueryUser)
+router.get('/UpdateUser', controllers.db.UpdateUser)
 
 module.exports = router

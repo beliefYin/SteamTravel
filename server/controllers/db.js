@@ -1,14 +1,18 @@
 const { mysql } = require('../qcloud')
 
 async function AddUser(ctx, next) {
-
     const { openId, userName} = ctx.query
+    var res = await mysql("user_info").select('*').where({ open_id: openId })
+    if(res.length == 0)
+        return;
+
     var userData = {
         open_id: openId,
         user_name: userName,
         introduction: "还没有简介",
     }
-    var res = await mysql("user_info").insert(userData)
+    
+    res = await mysql("user_info").insert(userData)
     ctx.state.data = res
     // ctx.state.data = {
     //     openid: openId,
@@ -17,6 +21,47 @@ async function AddUser(ctx, next) {
     // }
 }
 
+async function QueryUser(ctx, next) {
+    const { openId} = ctx.query
+    var userData = {
+        open_id: openId,
+    }
+    var res = await mysql("user_info").select('*').where({ open_id: openId })
+    
+    if (res.length == 0)
+        ctx.state.code = 1
+    else
+        ctx.state.data = res
+}
+
+async function UpdateUser(ctx, next) {
+    const { openId, sex, introduction,infoVisible,memoryVisible } = ctx.query
+    var res = await mysql("user_info").select('*').where({ open_id: openId })
+
+    if(res.length == 0)
+        return;
+
+    var userData = {
+        sex:sex,
+        introduction: introduction,
+        info_visible:infoVisible,
+        memory_visible:memoryVisible
+    }
+    res = await mysql("user_info").update(userData).where({ open_id:openId })
+    ctx.state.data = res
+    // ctx.state.data = {
+    //     openid: openId,
+    //     sex: sex,
+    //     introduction: "还没有简介",
+    //     infoVisible: infoVisible,
+    //     memoryVisible: memoryVisible
+    // }
+    
+}
+
+
 module.exports = {
-    AddUser
+    AddUser,
+    QueryUser,
+    UpdateUser
 }

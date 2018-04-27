@@ -17,12 +17,12 @@
 <view class="options">
   <view class="optionItem">
     <checkbox-group bindchange="ChangeProfileVisble">
-      <checkbox checked="{{profileVisble.checked}}" />{{profileVisble.string}}
+      <checkbox checked="{{profileVisble.checked == 1}}" />{{profileVisble.string}}
     </checkbox-group>
   </view>
   <view class="optionItem">
   <checkbox-group bindchange="ChangeMemoryVisble">
-    <checkbox checked="{{memoryVisble.checked}}"/>{{memoryVisble.string}}
+    <checkbox checked="{{memoryVisble.checked == 1}}"/>{{memoryVisble.string}}
   </checkbox-group>
   </view>
 </view>

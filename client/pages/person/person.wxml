@@ -9,10 +9,6 @@
   <image src="{{sex == 0?manUrl:womanUrl}}" class="sexPic"></image>
 </view>
 
-<!-- <view class="weui-flex">
-  <view class="weui-flex__item"><image src="{{memoryBtnUrl}}" class="memoryBtn" bindtap="NavigateToMemory"></image></view>
-  <view class="weui-flex__item"><image src="{{changeInfoBtnUrl}}" class="changeInfoBtn" bindtap="NavigateToEditProfile"></image></view>
-</view> -->
 
 <view class="theTwoBtn">
     <button bindtap="NavigateToMemory" class="memoryBtn" type="primary" size="mini">回忆长廊</button>

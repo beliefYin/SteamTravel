@@ -9,7 +9,11 @@ App({
       code: null,
       isLoginSuc: false,
       placeUrl: null,
-      logged:false
+      logged:false,
+
+      memoryVisible: 1,
+      infoVisible:1,
+      hasChangedUserInfo: true
     },
     onLaunch: function () {
         qcloud.setLoginUrl(config.service.loginUrl)
@@ -21,7 +25,6 @@ App({
 
       util.showBusy('正在登录')
       var that = this
-      var hello = 123
       // 调用登录接口
       qcloud.login({
         success(result) {
@@ -32,19 +35,7 @@ App({
               util.showSuccess('登录成功');
               that.globalData.userInfo = result.data.data;
               that.globalData.logged = true;
-              qcloud.request({
-                url: `${config.service.host}/weapp/AddUser`,
-                data: {
-                  openId: that.globalData.userInfo.openId,
-                  userName: that.globalData.userInfo.nickName, 
-                },
-                success(res){
-                  console.log("AddUser success",res);
-                },
-                fail(error){
-                  console.log("AddUser fail",error)
-                }
-              })
+              
             },
 
             fail(error) {
