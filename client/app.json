@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/addCity/addCity",
     "pages/index/index",
     "pages/person/person",
     "pages/addCgi/addCgi",
