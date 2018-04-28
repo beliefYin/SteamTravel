@@ -17,7 +17,7 @@ App({
     },
     onLaunch: function () {
         qcloud.setLoginUrl(config.service.loginUrl)
-        this.login()
+        //this.login()
     },
     // 用户登录示例
     login: function () {
