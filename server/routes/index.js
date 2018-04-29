@@ -40,5 +40,7 @@ router.get('/test', controllers.test)
 router.get('/AddUser', controllers.db.AddUser)
 router.get('/QueryUser', controllers.db.QueryUser)
 router.get('/UpdateUser', controllers.db.UpdateUser)
+router.get('/QueryRecommendation', controllers.db.QueryRecommendation)
+
 
 module.exports = router

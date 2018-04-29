@@ -59,9 +59,28 @@ async function UpdateUser(ctx, next) {
     
 }
 
+async function QueryRecommendation(ctx, next) {
+    var res = await mysql("recommendation").select('*')
+
+    if (res.length == 0)
+    {
+        ctx.state.code = 1;        
+        return;
+    }
+
+    var userData = {
+        sex: sex,
+        introduction: introduction,
+        info_visible: infoVisible,
+        memory_visible: memoryVisible
+    }
+    ctx.state.data = res
+}
+
 
 module.exports = {
     AddUser,
     QueryUser,
-    UpdateUser
+    UpdateUser,
+    QueryRecommendation
 }

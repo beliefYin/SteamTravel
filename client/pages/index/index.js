@@ -1,3 +1,5 @@
+var config = require('../../config')
+var util = require('../../utils/util.js')
 var app = getApp();
 var WxSearch = require('../../wxSearch/wxSearch.js')
 Page({
@@ -30,6 +32,32 @@ Page({
     var that = this;
     WxSearch.init(that, 43, ['北京', '上海', '南京', '广州', '深圳']);    //热门搜索
     WxSearch.initMindKeys(['北京', '微信小程序开发', '微信开发', '微信小程序']);  //搜索建议
+
+    this.RequestRecommendations();
+  },
+
+  //请求推荐列表
+  RequestRecommendations: function () {
+    util.showBusy('请求中...')
+    var that = this
+    var options = {
+      url: config.service.recommendationUrl,
+      success(result) {
+        var code = result.data
+        if (result.data.code == 1)
+        {
+          util.showModel('数据库没有数据');
+          return;
+        }
+        util.showSuccess('请求成功完成')
+        console.log('request success', result)
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    }
+    wx.request(options);
   },
 
   //打开城市页面

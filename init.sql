@@ -106,3 +106,10 @@ CREATE TABLE IF NOT EXISTS `article_comment`(
 	`star_id`			INT UNSIGNED	NOT NULL 	COMMENT '被关注的人的ID',
 	PRIMARY KEY ( `my_id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*推荐列表*/
+CREATE TABLE IF NOT EXISTS `recommendation`(
+	`id`				INT UNSIGNED	NOT NULL 	COMMENT '城市或景点ID',
+	`type`			TINYINT	NOT NULL DEFAULT 0 	COMMENT '景点或城市',
+	PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
