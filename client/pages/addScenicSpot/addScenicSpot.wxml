@@ -1,4 +1,4 @@
-<!--addCity.wxml-->
+<!--addScenicSpot.wxml-->
 <text >--------------添加景点---------------</text>
 <view>
     <text>景点名：</text>

@@ -107,36 +107,50 @@ async function AddCity(ctx, next) {
 }
 
 async function AddScenicSpot(ctx, next) {
-    const { scenicSpotId,imgUrlStr, belong_city_id, introduction, placeName, briefIntro, briefImgUrl } = ctx.query
-    var res = await mysql("scenic_spot").select('*').where({ scenic_spot_id: scenicSpotId })
-    if (res.length != 0) {
+    const { imgUrlStr, belongCityId, introduction, placeName, briefIntro, briefImgUrl, type } = ctx.query
+    var belongCity = await mysql("city").select('*').where({ city_id: belongCityId });
+    var res = null;
+    if (belongCity.length == 0)
+    {
+        ctx.state.code = -1;
+        ctx.state.data = belongCity;
+        return;
+    }
+
+    res = await mysql("scenic_spot").select('*').where({ scenic_spot_name: placeName, belong_city_id: belongCityId })
+    if (res.length != 0){
         var updateScenicSpotData = {
-            belong_city_id:belongCityId,
-            imgUrlStr: imgUrlStr,
+            belong_city_id: belongCityId,
             scenic_spot_name: placeName,
             introduction: introduction,
             brief_introduction: briefIntro,
             brief_pic_url: briefImgUrl,
             pic_url: imgUrlStr
         }
-        res = await mysql("scenic_spot").update(updateScenicSpotData).where({ scenic_spot_id: scenicSpotId })
-        ctx.state.code = 1;
+        var id = res[0].scenic_spot_id;
+        res = await mysql("scenic_spot").update(updateScenicSpotData).where({ scenic_spot_id: id })
+        ctx.state.code = 2;
+        ctx.state.data = res;
         return;
     }
-    var scenicSpotData = {
-        scenic_spot_id: scenicSpotId,
-        belong_city_id: belongCityId,
-        imgUrlStr: imgUrlStr,
-        scenic_spot_name: placeName,
-        introduction: introduction,
-        brief_introduction: briefIntro,
-        brief_pic_url: briefImgUrl,
-        pic_url: imgUrlStr
+    else{
+        var scenicSpotId = belongCityId * 1000 + belongCity[0].next_scenic_spot_id;
+        var nextScenicSpotId = belongCity[0].next_scenic_spot_id + 1;
+        var scenicSpotData = {
+            scenic_spot_id: scenicSpotId,
+            belong_city_id: belongCityId,
+            scenic_spot_name: placeName,
+            introduction: introduction,
+            brief_introduction: briefIntro,
+            brief_pic_url: briefImgUrl,
+            pic_url: imgUrlStr
+        }
+        var updateCityRes = await mysql("city").update({ next_scenic_spot_id: nextScenicSpotId }).where({ city_id: belongCityId });
+        res = await mysql("scenic_spot").insert(scenicSpotData);
+        ctx.state.code = 1
+        ctx.state.data = updateCityRes
     }
 
-    res = await mysql("scenic_spot").insert(scenicSpotData);
-
-    ctx.state.data = res
 }
 
 module.exports = {

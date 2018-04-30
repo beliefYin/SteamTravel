@@ -9,7 +9,6 @@ Page({
             "../../image/noImage.png",
             "../../image/noImage.png",
         ],
-        scenicSpotId: 0,
         belongCityId: 0,
         introduction: "",
         placeName: "",
@@ -28,9 +27,8 @@ Page({
     InputBriefIntro: function (event) {
         this.data.briefIntro = event.detail.value;
     },
-
     Affirm: function () {
-        if (!isRealNum(this.data.scenicSpotId) || !isRealNum(this.data.belongCityId))
+        if ( !isRealNum(this.data.belongCityId))
         {
             util.showModel("错误","id必须为不为0的整数")
             return;
@@ -52,19 +50,21 @@ Page({
             url: config.service.addScenicSpotUrl,
 
             data:{
-                scenicSpotId: this.data.scenicSpotId,
                 belongCityId: this.data.belongCityId,
+                placeName: this.data.placeName,
                 introduction: this.data.introduction,
                 briefIntro: this.data.briefIntro,
                 briefImgUrl: this.data.briefImgUrl,
-                imgUrlStr:imgUrlStr
+                imgUrlStr:imgUrlStr,
             },
             success(result) {
                 if(result.data.code == 1)
-                    util.showSuccess('更新数据成功');
-                else
                     util.showSuccess('添加成功');
-                console.log('添加成功', result);
+                else if (result.data.code == 2)
+                    util.showSuccess('更新成功');
+                else if(result.data.code == -1)
+                    util.showModel('添加失败', '不存在这个城市ID');
+                console.log(result)
             },
             fail(error) {
                 util.showModel('添加失败', error);
