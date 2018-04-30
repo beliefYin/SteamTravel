@@ -2,10 +2,10 @@
 CREATE TABLE IF NOT EXISTS `user_info`(
 	`open_id` 			VARCHAR(100) 	NOT NULL,
 	`user_name` 		VARCHAR(30) 	NOT NULL 			COMMENT '用户名',	
-	`icon_url` 			VARCHAR(255) 	NOT NULL 			COMMENT '头像URL',
 	`introduction` 		VARCHAR(100) 	NOT NULL			COMMENT '一句话简介',
-	`sex`				TINYINT DEFAULT 0 					COMMENT '性别，1为男，2为女'
+	`sex`				TINYINT DEFAULT 0 					COMMENT '性别，0为男，1为女',
 	`fans_number`		INT UNSIGNED DEFAULT 0 				COMMENT '粉丝数量',
+	-- `stars_number`		INT UNSIGNED DEFAULT 0 				COMMENT '关注数量',  --这个东西还是计算出来好一点
 	`info_visible`		TINYINT DEFAULT 1 					COMMENT '个人信息他人是否可见，1为可见，0为不可见',
 	`memory_visible`	TINYINT DEFAULT 1 					COMMENT '回忆长廊他人是否可见，1为可见，0为不可见',
 	`create_time`		timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建用户时间',		
@@ -77,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `article`(
 	`id`				int NOT NULL AUTO_INCREMENT COMMENT '文章ID',
 	`user_id` 			VARCHAR(100) 	NOT NULL 	COMMENT '创建用户open_id',
 	`cover_pic_url`		VARCHAR(255) 				COMMENT '封面照片URL',
+	`context`			text						COMMENT '内容',
 	`visible`			TINYINT 		DEFAULT 1 	COMMENT '文章他人是否可见，1为可见，0为不可见',
 	`like`				int 			DEFAULT 0 	COMMENT '点赞数',
 	`timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -87,8 +88,8 @@ CREATE TABLE IF NOT EXISTS `article`(
 
 /*文章评论*/
 CREATE TABLE IF NOT EXISTS `article_comment`(
-	`id`				int NOT NULL AUTO_INCREMENT COMMENT '评论ID',
-	`article_id`		int 			NOT NULL 	COMMENT '文章ID',
+	`id`				INT NOT NULL AUTO_INCREMENT COMMENT '评论ID',
+	`article_id`		INT 			NOT NULL 	COMMENT '文章ID',
 	`user_id` 			VARCHAR(100) 	NOT NULL 	COMMENT '评论用户open_id',
 	`content` 			VARCHAR(255) 	NOT NULL 	COMMENT '内容',
 	`agree` 			INT UNSIGNED 	DEFAULT 0 	COMMENT '好评量',
@@ -96,4 +97,12 @@ CREATE TABLE IF NOT EXISTS `article_comment`(
 	`timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
 	INDEX(article_id),
 	PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*关注列表*/
+CREATE TABLE IF NOT EXISTS `article_comment`(
+	`my_id`				INT UNSIGNED	NOT NULL 	COMMENT '我的ID',
+	`star_id`			INT UNSIGNED	NOT NULL 	COMMENT '被关注的人的ID',
+	PRIMARY KEY ( `my_id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

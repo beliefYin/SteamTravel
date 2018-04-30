@@ -27,16 +27,18 @@ App({
         success(result) {
           if (result) {
             util.showSuccess('登录成功')
-            that.setData({
-              userInfo: result,
-              logged: true
-            })
+            console.log(result)
+            
+            that.globalData.userInfo = result,
+            that.globalData.logged = true
           } else {
             // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
             qcloud.request({
               url: config.service.requestUrl,
               login: true,
               success(result) {
+                console.log(result)
+                console.log("no first time")
                 util.showSuccess('登录成功')
                 that.globalData.userInfo = result.data.data,
                 that.globalData.logged = true
