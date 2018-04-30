@@ -41,6 +41,9 @@ router.get('/AddUser', controllers.db.AddUser)
 router.get('/QueryUser', controllers.db.QueryUser)
 router.get('/UpdateUser', controllers.db.UpdateUser)
 router.get('/QueryRecommendation', controllers.db.QueryRecommendation)
+router.get('/AddCity', controllers.db.AddCity)
+router.get('/AddScenicSpot', controllers.db.AddScenicSpot)
+
 
 
 module.exports = router

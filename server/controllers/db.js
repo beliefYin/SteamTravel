@@ -77,10 +77,73 @@ async function QueryRecommendation(ctx, next) {
     ctx.state.data = res
 }
 
+async function AddCity(ctx, next) {
+    const { imgUrlStr, cityId, introduction, placeName, briefIntro, briefImgUrl  } = ctx.query
+    var res = await mysql("city").select('*').where({city_id:cityId})
+    if (res.length != 0) {
+        var updateCityData = {
+            city_name: placeName,
+            introduction: introduction,
+            brief_introduction: briefIntro,
+            brief_pic_url: briefImgUrl,
+            pic_url: imgUrlStr
+        }
+        res = await mysql("city").update(updateCityData).where({ city_id: cityId })
+        ctx.state.code = 1;
+        return;
+    }
+    var cityData = {
+        city_id: cityId ,
+        city_name: placeName ,
+        introduction: introduction,
+        brief_introduction: briefIntro ,
+        brief_pic_url: briefImgUrl,
+        pic_url: imgUrlStr
+    }
+
+    res = await mysql("city").insert(cityData);
+    
+    ctx.state.data = res
+}
+
+async function AddScenicSpot(ctx, next) {
+    const { scenicSpotId,imgUrlStr, belong_city_id, introduction, placeName, briefIntro, briefImgUrl } = ctx.query
+    var res = await mysql("scenic_spot").select('*').where({ scenic_spot_id: scenicSpotId })
+    if (res.length != 0) {
+        var updateScenicSpotData = {
+            belong_city_id:belongCityId,
+            imgUrlStr: imgUrlStr,
+            scenic_spot_name: placeName,
+            introduction: introduction,
+            brief_introduction: briefIntro,
+            brief_pic_url: briefImgUrl,
+            pic_url: imgUrlStr
+        }
+        res = await mysql("scenic_spot").update(updateScenicSpotData).where({ scenic_spot_id: scenicSpotId })
+        ctx.state.code = 1;
+        return;
+    }
+    var scenicSpotData = {
+        scenic_spot_id: scenicSpotId,
+        belong_city_id: belongCityId,
+        imgUrlStr: imgUrlStr,
+        scenic_spot_name: placeName,
+        introduction: introduction,
+        brief_introduction: briefIntro,
+        brief_pic_url: briefImgUrl,
+        pic_url: imgUrlStr
+    }
+
+    res = await mysql("scenic_spot").insert(scenicSpotData);
+
+    ctx.state.data = res
+}
 
 module.exports = {
     AddUser,
     QueryUser,
     UpdateUser,
-    QueryRecommendation
+    QueryRecommendation,
+    AddCity,
+    AddScenicSpot
 }

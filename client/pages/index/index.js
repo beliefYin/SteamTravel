@@ -46,10 +46,10 @@ Page({
         var code = result.data
         if (result.data.code == 1)
         {
-          util.showModel('数据库没有数据');
+          util.showModel('数据库没有数据', '数据库没有数据');
           return;
         }
-        util.showSuccess('请求成功完成')
+        util.showSuccess('请求成功完成','请求成功完成');
         console.log('request success', result)
       },
       fail(error) {

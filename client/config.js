@@ -25,6 +25,10 @@ var config = {
 
         // 推介列表
         recommendationUrl: `${host}/weapp/QueryRecommendation`,
+
+        addCityUrl: `${host}/weapp/AddCity`,
+
+        addScenicSpotUrl: `${host}/weapp/AddScenicSpot`,
     }
 };
 

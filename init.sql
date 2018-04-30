@@ -15,31 +15,26 @@ CREATE TABLE IF NOT EXISTS `user_info`(
 
 /*城市*/
 CREATE TABLE IF NOT EXISTS `city`(
-	`id`				VARCHAR(6) 		NOT NULL 	COMMENT '城市id(用邮编)',
+	`city_id`			INT UNSIGNED 		NOT NULL 	COMMENT '城市id(用邮编)',
 	`city_name` 		VARCHAR(50) 	NOT NULL 	COMMENT '城市名',
-	`user_name` 		VARCHAR(30) 	NOT NULL 	COMMENT '用户名',
 	`brief_introduction`VARCHAR(100) 	NOT NULL 	COMMENT '简介,用于放在推荐页',
 	`introduction` 		VARCHAR(100) 	NOT NULL 	COMMENT '具体简介',
-	`next_scenic_spot_id` VARCHAR(4) 	NOT NULL ZEROFILL COMMENT '该城市下一个景点4位编号'
+	`next_scenic_spot_id` INT UNSIGNED 	NOT NULL DEFAULT 1 COMMENT '该城市下一个景点3位编号',
 	`brief_pic_url`		VARCHAR(255) 				COMMENT '推荐页图片URL',
-	`first_pic`			VARCHAR(255) 				COMMENT '照片集第一张照片URL',
-	`second_pic`		VARCHAR(255) 				COMMENT '照片集第二张照片URL',
-	`third_pic`			VARCHAR(255) 				COMMENT '照片集第三张照片URL',
+	`pic_url`			VARCHAR(1023) 				COMMENT '照片集照片URL',
 	PRIMARY KEY ( `city_id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 /*景点*/
 CREATE TABLE IF NOT EXISTS `scenic_spot`(
-	`id`	VARCHAR(10) NOT NULL 					COMMENT '景点id(城市id+景点4位编号)',
+	`scenic_spot_id`	INT UNSIGNED  NOT NULL 		COMMENT '景点id(城市id+景点3位编号)',
 	`scenic_spot_name` 	VARCHAR(50) 	NOT NULL 	COMMENT '景点名',
 	`belong_city_id` 	VARCHAR(6) 		NOT NULL 	COMMENT '归属城市的id',
 	`brief_introduction` VARCHAR(100) 	NOT NULL 	COMMENT '简介,用于放在推荐页',
 	`introduction` 		VARCHAR(100) 	NOT NULL 	COMMENT '一句话简介',
 	`brief_pic_url`		VARCHAR(255) 				COMMENT '推荐页图片URL',
-	`first_pic`			VARCHAR(255) 				COMMENT '照片集第一张照片URL',
-	`second_pic`		VARCHAR(255) 				COMMENT '照片集第二张照片URL',
-	`third_pic`			VARCHAR(255) 				COMMENT '照片集第三张照片URL',
+	`pic_url`			VARCHAR(1023) 				COMMENT '照片集照片URL',
 	INDEX(belong_city_id),
 	PRIMARY KEY ( `scenic_spot_id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

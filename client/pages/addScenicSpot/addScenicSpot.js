@@ -9,35 +9,30 @@ Page({
             "../../image/noImage.png",
             "../../image/noImage.png",
         ],
-        cityId: 0,
+        scenicSpotId: 0,
+        belongCityId: 0,
         introduction: "",
         placeName: "",
         briefIntro: "",
         briefImgUrl: "../../image/noImage.png"
     },
-  
-
-    InputCityName: function (event) {
+    InputName: function (event) {
         this.data.placeName = event.detail.value;
     },
-
-    InputCityId: function (event) {
-        this.data.cityId = event.detail.value;
+    InputBelongCityId: function (event) {
+        this.data.belongCityId = event.detail.value;
     },
-
-    InputCityIntro: function (event) {
+    InputIntro: function (event) {
         this.data.introduction = event.detail.value;
     },
-
-    InputCityBriefIntro: function (event) {
+    InputBriefIntro: function (event) {
         this.data.briefIntro = event.detail.value;
     },
 
     Affirm: function () {
-           
-        if (!isRealNum(this.data.cityId))
+        if (!isRealNum(this.data.scenicSpotId) || !isRealNum(this.data.belongCityId))
         {
-            util.showModel("错误","城市id必须为不为0的整数")
+            util.showModel("错误","id必须为不为0的整数")
             return;
         }
         if (this.data.imgUrls.length == 0 ||this.data.introduction == "" || this.data.placeName == "" || this.data.briefIntro == "" )
@@ -54,12 +49,11 @@ Page({
             imgUrlStr += element
         }
         var options = {
-            url: config.service.addCityUrl,
-
+            url: config.service.addScenicSpotUrl,
 
             data:{
-                cityId: this.data.cityId,
-                placeName: this.data.placeName,
+                scenicSpotId: this.data.scenicSpotId,
+                belongCityId: this.data.belongCityId,
                 introduction: this.data.introduction,
                 briefIntro: this.data.briefIntro,
                 briefImgUrl: this.data.briefImgUrl,
