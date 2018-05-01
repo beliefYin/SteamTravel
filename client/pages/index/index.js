@@ -10,16 +10,10 @@ Page({
   data: {
     recommendList:[
       {
-        picUrl: "../../image/loading.png",
-        cityName: "镇江",
-        introduction: "镇江是个污染很严重的城市",
+        brief_pic_url: "../../image/loading.png",
+        scenic_spot_name: "镇江",
+        brief_introduction: "镇江是个污染很严重的城市",
         url: "镇江url"
-      },
-      {
-        picUrl: "../../image/loading.png",
-        cityName: "广州",
-        introduction: "广州是个旧旧的城市",
-        url: "广州url"
       },
     ],
     inputCityName: null,
@@ -35,7 +29,7 @@ Page({
 
     this.RequestRecommendations();
   },
-
+  
   //请求推荐列表
   RequestRecommendations: function () {
     util.showBusy('请求中...')
@@ -43,14 +37,18 @@ Page({
     var options = {
       url: config.service.recommendationUrl,
       success(result) {
-        var code = result.data
         if (result.data.code == 1)
         {
-          util.showModel('数据库没有数据', '数据库没有数据');
+          util.showModel('请求出错', '数据库没有推荐列表数据');
           return;
         }
-        util.showSuccess('请求成功完成','请求成功完成');
-        console.log('request success', result)
+        else
+        {
+          that.setData({recommendList:result.data.data.scenicSpot})
+          util.showSuccess('请求成功');
+          console.log('请求推荐列表成功', result)
+        }
+       
       },
       fail(error) {
         util.showModel('请求失败', error);
@@ -58,21 +56,22 @@ Page({
       }
     }
     wx.request(options);
+
   },
 
-  //打开城市页面
-  openCity: function (params) {
-    app.globalData.placeUrl = params.currentTarget.dataset.url
-    wx.navigateTo({
-      url: "../city/city",
-    })
-  },
+  // //打开城市页面
+  // openCity: function (params) {
+  //   app.globalData.naviPlaceId = params.currentTarget.dataset.url
+  //   wx.navigateTo({
+  //     url: "../scenicSpot/scenicSpot",
+  //   })
+  // },
 
   //打开景点页面
   openScenicSpots: function (params) {
-    app.globalData.placeUrl = params.currentTarget.dataset.url
+    app.globalData.naviPlaceId = params.currentTarget.dataset.placeid
     wx.navigateTo({
-      url: "../ScenicSpot/ScenicSpot",
+      url: "../scenicSpot/scenicSpot",
     })
   },
 
@@ -86,26 +85,49 @@ Page({
     return -1;
   },
 
+  GetPlaceType: function () {
+    
+  },
+
   //↓wxSearch接口
   wxSearchFn: function (e) {
     console.log(e)
     var that = this
     WxSearch.wxSearchAddHisKey(that);
-    if (!this.data.inputCityName)
+    if (!this.data.inputCityName || this.data.inputCityName == "")
       return;
-    var index = this.isExistScene(this.data.inputCityName)
-    if (index != -1)
-    {
-      app.globalData.placeUrl = that.data.recommendList[index].url;
-      wx.navigateTo({
-        url: "../place/place",
-      })
+
+    util.showBusy('搜索中...')
+    var that = this
+    var options = {
+      url: config.service.getPlaceTypenUrl,
+      data: { name: this.data.inputCityName },
+      success(result) {
+        console.log(result)
+        if (result.data.code == 1) { //1为景点
+          app.globalData.naviPlaceId = result.data.data[0].scenic_spot_id
+          app.globalData.tmpScenicSpotData = result.data.data[0]
+          wx.navigateTo({ url: '../scenicSpot/scenicSpot' });
+        }
+        else if (result.data.code == 2) { //2为城市
+          app.globalData.naviPlaceId = result.data.data[0].city_id
+          app.globalData.tmpCityData = result.data.data[0]
+          wx.navigateTo({ url: '../city/city' });
+        }
+        else {
+          wx.showModal({
+            title: 'I’m sorry~',
+            content: '这个小程序还没有这个城市（景点）的信息',
+          })
+        }
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
     }
-    else
-      wx.showModal({
-        title: 'I’m sorry~',
-        content: '这个小程序还没有这个城市（景点）的信息',
-      })
+    wx.request(options);
+
   },
   wxSearchInput: function (e) {
     var that = this

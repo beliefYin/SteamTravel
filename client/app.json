@@ -1,8 +1,8 @@
 {
   "pages":[
+    "pages/index/index",
     "pages/gm/gm",
     "pages/addCity/addCity",
-    "pages/index/index",
     "pages/person/person",
     "pages/addCgi/addCgi",
     "pages/city/city",

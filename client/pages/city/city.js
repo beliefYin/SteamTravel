@@ -1,4 +1,6 @@
 // pages/place/place.js
+var config = require('../../config')
+var util = require('../../utils/util.js')
 var app = getApp()
 const SCENEICSPOT_VIEW = 1
 const ARTICLE_VIEW = 2
@@ -16,11 +18,11 @@ Page({
     viewIndex: SCENEICSPOT_VIEW,
     sceneList: [
       {
-        imgUrl: "../../image/IMG_20140711_201049.jpg",
+        imgUrl: "../../image/loading.png",
         name: "北固山"
       },
       {
-        imgUrl: "../../image/IMG_20140713_075457.jpg",
+        imgUrl: "../../image/loading.png",
         name: "金山"
       }
     ],
@@ -58,78 +60,63 @@ Page({
       url: '../writeArticle/writeArticle',
     })
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
+
   onLoad: function (options) {
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    
-  },
+  RequestCityData: function () {
+    util.showBusy('请求中...')
+    var that = this
+    var options = {
+      url: config.service.queryCityUrl,
+      data: {
+        cityId: app.globalData.naviPlaceId
+      },
+      success(result) {
+        console.log('请求景点信息成功',result)
+        if (result.data.code == 1) {
+          util.showModel('请求出错', '还没收录这个地方');
+          return;
+        }
+        else {
+          var resData = result.data.data[0]
+          var imgUrlStr = resData.pic_url
+          var tmpImgUrl = imgUrlStr.split(';')
+          that.setData({
+            placeName: resData.city_name,
+            introduction: resData.introduction,
+            imgUrls: tmpImgUrl
+          })
+          util.showSuccess('请求成功');
+        }
 
+      },
+      fail(error) {
+        util.showModel('请求失败', error);
+        console.log('request fail', error);
+      }
+    }
+    wx.request(options);
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var url = app.globalData.placeUrl;
-    console.log(url);
-    
-    if(url == "镇江url")
-    {
-      var imageList = ["../../image/镇江1.png", "../../image/镇江2.png"]
+    if (app.globalData.tmpCityData) {
+      var resData = app.globalData.tmpCityData
+      var imgUrlStr = resData.pic_url
+      var tmpImgUrl = imgUrlStr.split(';')
       this.setData({
-        placeName: "镇江",
-        imgUrls: imageList
+        placeName: resData.city_name,
+        introduction: resData.introduction,
+        imgUrls: tmpImgUrl
       })
+      //app.globalData.tmpCityData = null;
     }
-    else if(url == "广州url")
-    {
-      var imageList = ["../../image/广州1.png", "../../image/广州2.png"]
-      this.setData({
-        placeName: "广州",
-        imgUrls: imageList
-      })
-    }
-    
+    else
+      this.RequestCityData();
+
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
 })

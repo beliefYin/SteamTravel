@@ -10,14 +10,18 @@ App({
       isLoginSuc: false,
       placeUrl: null,
       logged:false,
+      naviPlaceId: 0,
 
       memoryVisible: 1,
       infoVisible:1,
-      hasChangedUserInfo: true
+      hasChangedUserInfo: true,
+
+      tmpCityData: null,
+      tmpScenicSpotData: null
     },
     onLaunch: function () {
         qcloud.setLoginUrl(config.service.loginUrl)
-        //this.login()
+        this.login()
     },
     // 用户登录示例
     login: function () {

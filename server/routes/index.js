@@ -43,7 +43,8 @@ router.get('/UpdateUser', controllers.db.UpdateUser)
 router.get('/QueryRecommendation', controllers.db.QueryRecommendation)
 router.get('/AddCity', controllers.db.AddCity)
 router.get('/AddScenicSpot', controllers.db.AddScenicSpot)
-
-
+router.get('/QueryScenicSpot', controllers.db.QueryScenicSpot)
+router.get('/GetPlaceTypenUrl', controllers.db.GetPlaceTypenUrl)
+router.get('/AddComment', controllers.db.AddComment)
 
 module.exports = router

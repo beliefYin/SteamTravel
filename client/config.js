@@ -29,6 +29,11 @@ var config = {
         addCityUrl: `${host}/weapp/AddCity`,
 
         addScenicSpotUrl: `${host}/weapp/AddScenicSpot`,
+
+        queryScenicSpotUrl: `${host}/weapp/QueryScenicSpot`,
+        getPlaceTypenUrl: `${host}/weapp/GetPlaceTypenUrl`,
+        queryCityUrl: `${host}/weapp/QueryCityData`,
+        addCommentUrl: `${host}/weapp/AddComment`,
     }
 };
 

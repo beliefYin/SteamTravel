@@ -10,4 +10,13 @@
 </swiper>
 <text>简介\n</text>
 <text>{{introduction}}</text>
-<text>评论\n</text>
+<button bindtap="ShowWriteCommentModal">写评论</button>
+<modal hidden="{{hiddenmodalput}}" title="评论" confirm-text="提交" cancel-text="重置" bindcancel="cancel" bindconfirm="SubmitComment">
+  <input type='text' placeholder="请写下你的评论" bindinput="InputComment" auto-focus/>
+  <radio-group class="radio-group" bindchange="CommentTypeChange">
+    <label class="radio" wx:for="{{commentType}}">
+      <radio value="{{item.value}}" checked="{{item.checked}}" />{{item.str}}
+    </label>
+  </radio-group>
+</modal>
+<text>\n\n评论\n</text>

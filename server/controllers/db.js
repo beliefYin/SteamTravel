@@ -64,17 +64,23 @@ async function QueryRecommendation(ctx, next) {
 
     if (res.length == 0)
     {
+        ctx.state.data = res
         ctx.state.code = 1;        
         return;
     }
-
-    var userData = {
-        sex: sex,
-        introduction: introduction,
-        info_visible: infoVisible,
-        memory_visible: memoryVisible
+    var cityIdList = [];
+    var scenicSpotIdList = [];
+    for (let index = 0; index < res.length; index++) {
+        if(res[index].type == 0)
+            cityIdList.push(res[index].id)
+        else
+            scenicSpotIdList.push(res[index].id)
     }
-    ctx.state.data = res
+    var sucResult = {}
+    sucResult.city = await mysql("city").select('*').whereIn('city_id', cityIdList);
+    sucResult.scenicSpot = await mysql("scenic_spot").select('*').whereIn('scenic_spot_id', scenicSpotIdList);
+
+    ctx.state.data = sucResult
 }
 
 async function AddCity(ctx, next) {
@@ -153,11 +159,85 @@ async function AddScenicSpot(ctx, next) {
 
 }
 
+async function QueryScenicSpot(ctx, next) {
+    const { scenicSpotId } = ctx.query
+
+    var res = await mysql("scenic_spot").select('*').where({ scenic_spot_id: scenicSpotId })
+
+    if (res.length == 0)
+        ctx.state.code = 1
+    else
+        ctx.state.data = res
+}
+
+async function GetPlaceTypenUrl(ctx, next) {
+    const { name } = ctx.query
+
+    var res = await mysql("scenic_spot").select('*').where({ scenic_spot_name: name })
+
+    if (res.length != 0)
+    {
+        ctx.state.code = 1  //1为景点
+        ctx.state.data = res
+        return
+    }
+    res = await mysql("city").select('*').where({ city_name: name })
+    if(res.length != 0)
+    {
+        ctx.state.code = 2  //2为城市
+        ctx.state.data = res
+        return
+    }
+    else
+    {
+        ctx.state.code = 0
+        ctx.state.data = res
+        return
+    }
+}
+
+async function QueryCityData(ctx, next) {
+    const { cityId } = ctx.query
+
+    var res = await mysql("city").select('*').where({ city_id: cityId })
+
+    if (res.length == 0)
+        ctx.state.code = 1
+    else
+        ctx.state.data = res
+}
+
+async function QueryCityData(ctx, next) {
+    const { cityId } = ctx.query
+
+    var res = await mysql("city").select('*').where({ city_id: cityId })
+
+    if (res.length == 0)
+        ctx.state.code = 1
+    else
+        ctx.state.data = res
+}
+
+async function AddComment(ctx, next) {
+    const { content, type, scenicSpotId, userId} = ctx.query
+    var comment = {
+        user_id:userId,
+        content: content,
+        scenic_spot_id: scenicSpotId,
+        evaluation: type,
+    }
+    var res = await mysql("scene_comment").insert(comment);
+    ctx.state.data = res
+}
 module.exports = {
     AddUser,
     QueryUser,
     UpdateUser,
     QueryRecommendation,
     AddCity,
-    AddScenicSpot
+    AddScenicSpot,
+    QueryScenicSpot,
+    GetPlaceTypenUrl,
+    QueryCityData,
+    AddComment
 }
