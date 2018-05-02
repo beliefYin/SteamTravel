@@ -14,7 +14,7 @@ App({
 
       memoryVisible: 1,
       infoVisible:1,
-      hasChangedUserInfo: true,
+      hasChangedUserInfo: false,
 
       tmpCityData: null,
       tmpScenicSpotData: null
@@ -31,20 +31,34 @@ App({
       var that = this
       // 调用登录接口
       qcloud.login({
-        success(result) {
+        success() {
+          util.showSuccess('登录成功');
           qcloud.request({
             url: config.service.requestUrl,
             login: true,
             success(result) {
-              util.showSuccess('登录成功');
+              console.log("登陆请求成功",result)
               that.globalData.userInfo = result.data.data;
               that.globalData.logged = true;
-              
+              qcloud.request({
+                url: config.service.addUserUtl,
+                data: {
+                  openId:that.globalData.userInfo.openId,
+                  userName:that.globalData.userInfo.nickName,
+                  avatarUrl:that.globalData.userInfo.avatarUrl,
+                },
+                success(result) {
+                  console.log('添加用户成功', result)
+                },
+                fail(error) {
+                  console.log('添加用户失败', error)
+                }
+              })
             },
 
             fail(error) {
-              util.showModel('请求失败', error)
-              console.log('request fail', error)
+              util.showModel('登陆请求失败', error)
+              console.log('登陆请求失败', error)
             }
           })
         },

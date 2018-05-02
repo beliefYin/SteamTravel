@@ -18,21 +18,20 @@ Page({
     placeName: "北固山",
 
     commentList:[
-      {
-        name:"simon",
-        picUrl:"../../user-unlogin.png",
-        attitude:GOOD,//好评或差评
-        agreeNum:100,
-        disagreeNum:23,
-      },
-      {
-        name:"simon",
-        picUrl:"../../user-unlogin.png",
-        attitude:BAD,//好评或差评
-        agreeNum:10,
-        disagreeNum:23,
-      },
+      // {
+        // `id`				INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论ID',
+        // `icon_url` 			VARCHAR(255) 	NOT NULL			COMMENT '头像url',
+        // `user_id` 			VARCHAR(100) 	NOT NULL 	COMMENT '评论用户open_id',
+        // `content` 			VARCHAR(255) 	NOT NULL 	COMMENT '内容',
+        // `scenic_spot_id` 	VARCHAR(10) 	NOT NULL 	COMMENT '景点id',
+        // `evaluation` 		TINYINT 		NOT NULL 	COMMENT '评价（好评为1，差评为2)',
+        // `agree` 			INT UNSIGNED DEFAULT 0 		COMMENT '好评量',
+        // `disagree` 			INT UNSIGNED DEFAULT 0 		COMMENT '差评量',
+        // `timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
+      // },`
     ],
+    likeUrl:"../../image/like.png",
+    dislikeUrl:"../../image/dislike.png",
     //---------写评论--------
     hiddenmodalput:true,
     commentType:[
@@ -78,10 +77,11 @@ Page({
         content:this.data.commentContent,
         type:this.data.isLike,
         scenicSpotId: app.globalData.naviPlaceId,
-        userId: app.globalData.userInfo.openId
+        userId: app.globalData.userInfo.openId,
+        avatarUrl:app.globalData.userInfo.avatarUrl,
+        userName: app.globalData.userInfo.nickName
       },
       success(result) {
-        that.setData({ hiddenmodalput: true });
         util.showSuccess("评论成功");
         console.log('评论成功', result)
       },
@@ -90,7 +90,30 @@ Page({
         console.log('评论失败', error)
       }
     })
-
+    that.setData({ hiddenmodalput: true });
+  },
+  LoadComment: function() {
+    util.showBusy('请求评论中...')
+    var that = this
+    var options = {
+      url: config.service.queryScenicSpotCommentUrl,
+      data: {
+        scenicSpotId: app.globalData.naviPlaceId
+      },
+      success(result) {
+          that.setData({
+            commentList:result.data.data
+          })
+          util.showSuccess('请求评论成功');
+          console.log('请求评论成功', result)
+          console.log(that.data.commentList)
+      },
+      fail(error) {
+        util.showModel('请求评论失败', error);
+        console.log('请求评论失败', error);
+      }
+    }
+    wx.request(options);
   },
   /**
    * 生命周期函数--监听页面显示
@@ -110,6 +133,7 @@ Page({
     }
     else
       this.RequestScenicSpotData();
+    this.LoadComment();
   },
   
   RequestScenicSpotData:function ()

@@ -19,4 +19,34 @@
     </label>
   </radio-group>
 </modal>
-<text>\n\n评论\n</text>
+
+
+<text>\n评论\n</text>
+<view class="weui-tab__content">
+  <view wx:for="{{commentList}}" >
+    <view class="commentContainer">
+      <view class="commentCol commentColOne">
+        <image src="{{item.icon_url}}" class="commentIcon"></image>
+        <text class="commentName">{{item.user_name}}</text>
+      </view>
+      <view class="commentCol commentTxt">
+        <text>{{item.content}}</text>
+      </view>
+      <view class="commentCol">
+        <image src="{{likeUrl}}" class="commentTypePic" hidden="{{item.evaluation != 1}}"></image>
+        <text hidden="{{item.like != 1}}" class="recomTxt">推荐</text>
+        <image src="{{dislikeUrl}}" class="commentTypePic" hidden="{{item.evaluation != 2}}"></image>
+        <text hidden="{{item.like != 0}}" class="noRecomTxt">不推荐</text>
+      </view>
+    </view>
+    <view class="commentAgree">
+      <text class="commentAgreeText">评论对他人是否有帮助</text>
+      <image src="{{likeUrl}}" class="commentAgreePic"></image>
+      <text class="commentAgreeText">{{item.agree}}</text>
+      <image src="{{dislikeUrl}}" class="commentAgreePic"></image>
+      <text class="commentAgreeText">{{item.disagree}}</text>
+    </view>
+     
+    <view class="commentLine"></view>
+  </view>
+</view>

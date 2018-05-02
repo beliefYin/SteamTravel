@@ -2,6 +2,7 @@
 CREATE TABLE IF NOT EXISTS `user_info`(
 	`open_id` 			VARCHAR(100) 	NOT NULL,
 	`user_name` 		VARCHAR(30) 	NOT NULL 			COMMENT '用户名',	
+	`icon_url` 			VARCHAR(255) 	NOT NULL			COMMENT '头像url',
 	`introduction` 		VARCHAR(100) 	NOT NULL			COMMENT '一句话简介',
 	`sex`				TINYINT DEFAULT 0 					COMMENT '性别，0为男，1为女',
 	`fans_number`		INT UNSIGNED DEFAULT 0 				COMMENT '粉丝数量',
@@ -43,6 +44,8 @@ CREATE TABLE IF NOT EXISTS `scenic_spot`(
 /*景点评论*/
 CREATE TABLE IF NOT EXISTS `scene_comment`(
 	`id`				INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论ID',
+	`icon_url` 			VARCHAR(255) 	NOT NULL			COMMENT '头像url',
+	`user_name` 		VARCHAR(30) 	NOT NULL 			COMMENT '用户名',	
 	`user_id` 			VARCHAR(100) 	NOT NULL 	COMMENT '评论用户open_id',
 	`content` 			VARCHAR(255) 	NOT NULL 	COMMENT '内容',
 	`scenic_spot_id` 	VARCHAR(10) 	NOT NULL 	COMMENT '景点id',

@@ -34,6 +34,9 @@ var config = {
         getPlaceTypenUrl: `${host}/weapp/GetPlaceTypenUrl`,
         queryCityUrl: `${host}/weapp/QueryCityData`,
         addCommentUrl: `${host}/weapp/AddComment`,
+        addUserUtl: `${host}/weapp/AddUser`,
+        queryScenicSpotCommentUrl: `${host}/weapp/QueryScenicSpotComment`,
+        queryUserCommentUrl: `${host}/weapp/QueryUserComment`,
     }
 };
 

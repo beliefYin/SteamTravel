@@ -8,12 +8,12 @@ Page({
     
     memoryList: [
       {
-        imgUrl: "../../image/IMG_20140711_201049.jpg",
+        imgUrl: "../../image/loading.png",
         content: "这这这这",
         time:"2018.1.1"
       },
       {
-        imgUrl: "../../image/IMG_20140713_075457.jpg",
+        imgUrl: "../../image/loading.png",
         content: "这这这这",
         time:"2018.1.1"
       },

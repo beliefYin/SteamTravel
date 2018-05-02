@@ -1,15 +1,21 @@
 const { mysql } = require('../qcloud')
 
 async function AddUser(ctx, next) {
-    const { openId, userName} = ctx.query
+    const { openId, userName,avatarUrl} = ctx.query
     var res = await mysql("user_info").select('*').where({ open_id: openId })
-    if(res.length == 0)
+    if(res.length != 0)
+    {
+       // ctx.state.data = res
+        ctx.state.code = 1
         return;
+        
+    }
 
     var userData = {
         open_id: openId,
         user_name: userName,
         introduction: "还没有简介",
+        icon_url:avatarUrl
     }
     
     res = await mysql("user_info").insert(userData)
@@ -219,16 +225,30 @@ async function QueryCityData(ctx, next) {
 }
 
 async function AddComment(ctx, next) {
-    const { content, type, scenicSpotId, userId} = ctx.query
+    const { content, type, scenicSpotId, userId,avatarUrl,userName} = ctx.query
     var comment = {
         user_id:userId,
         content: content,
         scenic_spot_id: scenicSpotId,
         evaluation: type,
+        icon_url: avatarUrl,
+        user_name: userName
     }
     var res = await mysql("scene_comment").insert(comment);
     ctx.state.data = res
 }
+
+async function QueryScenicSpotComment(ctx, next) {
+    const { scenicSpotId} = ctx.query
+    var res = await mysql("scene_comment").select('*').where({scenic_spot_id:scenicSpotId});
+    ctx.state.data = res
+}
+async function QueryScenicSpotComment(ctx, next) {
+    const { userId} = ctx.query
+    var res = await mysql("scene_comment").select('*').where({user_id:userId});
+    ctx.state.data = res
+}
+
 module.exports = {
     AddUser,
     QueryUser,
@@ -239,5 +259,7 @@ module.exports = {
     QueryScenicSpot,
     GetPlaceTypenUrl,
     QueryCityData,
-    AddComment
+    AddComment,
+    QueryScenicSpotComment,
+    QueryUserComment
 }

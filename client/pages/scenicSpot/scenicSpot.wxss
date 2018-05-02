@@ -1,1 +1,59 @@
 /* pages/place/place.wxss */
+/*评论*/
+.commentContainer{
+    margin: 5px 10px 5px 10px;/*上右下左*/
+    padding: 5px 5px 5px 5px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+}
+.commentCol{
+    display: flex;
+    flex-direction:column;
+}
+.commentColOne{
+    width: 20%;
+}
+.commentAgree{
+    display: flex;
+    justify-content:flex-end;
+    margin-right: 10px;
+}
+.commentAgreePic{
+    margin-left: 5px;
+    width:30rpx;
+    height:30rpx;
+}
+.commentAgreeText{
+    font-size: 13px;
+}
+.commentIcon{
+    width:100rpx;
+    height:100rpx;
+}
+.commentName{
+    font-size: 17px;
+}
+.commentTypePic{
+    padding-left:8px;
+    margin-bottom: 10px;
+    width:80rpx;
+    height:80rpx;
+}
+.commentLine{
+    width:100%;
+    height:2rpx;
+    background:rgb(223, 220, 220);
+}
+.recomTxt{
+    font-size: 17px;
+    padding-left: 8px;
+}
+.noRecomTxt{
+    font-size: 17px;
+    padding: 0px;
+}
+.commentTxt{
+    font-size: 18px;
+    flex: 1;
+}

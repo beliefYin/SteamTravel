@@ -46,5 +46,7 @@ router.get('/AddScenicSpot', controllers.db.AddScenicSpot)
 router.get('/QueryScenicSpot', controllers.db.QueryScenicSpot)
 router.get('/GetPlaceTypenUrl', controllers.db.GetPlaceTypenUrl)
 router.get('/AddComment', controllers.db.AddComment)
+router.get('/QueryScenicSpotComment', controllers.db.QueryScenicSpotComment)
+router.get('/QueryUserComment', controllers.db.QueryUserComment)
 
 module.exports = router
