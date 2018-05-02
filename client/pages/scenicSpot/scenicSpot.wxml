@@ -1,15 +1,12 @@
 <!--pages/place/place.wxml-->
-<loading hidden="{{loadingHidden}}">加载中</loading>
-<text>{{placeName}}</text>
-<swiper indicator-dots="true" autoplay="true" interval="3000" duration="500">
+<swiper indicator-dots="true" autoplay="true" interval="3000" duration="500" class="swiper">
   <block wx:for="{{imgUrls}}">
-    <swiper-item>
-      <image src="{{item}}" width="355" height="150"/>
+    <swiper-item style="background:url({{item}});background-repeat: no-repeat;background-size:100% 200px; ">
     </swiper-item>
   </block>
 </swiper>
-<text>简介\n</text>
-<text>{{introduction}}</text>
+<text class="cityName">{{placeName}}</text>
+<text class="cityIntro" decode="true">&ensp;&ensp;&ensp;{{introduction}}</text>
 <button bindtap="ShowWriteCommentModal">写评论</button>
 <modal hidden="{{hiddenmodalput}}" title="评论" confirm-text="提交" cancel-text="重置" bindcancel="cancel" bindconfirm="SubmitComment">
   <input type='text' placeholder="请写下你的评论" bindinput="InputComment" auto-focus/>

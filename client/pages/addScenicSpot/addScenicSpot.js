@@ -13,7 +13,9 @@ Page({
         introduction: "",
         placeName: "",
         briefIntro: "",
-        briefImgUrl: "../../image/noImage.png"
+        briefImgUrl: "../../image/noImage.png",
+
+        recommName: ""
     },
     InputName: function (event) {
         this.data.placeName = event.detail.value;
@@ -63,7 +65,7 @@ Page({
                 else if (result.data.code == 2)
                     util.showSuccess('更新成功');
                 else if(result.data.code == -1)
-                    util.showModel('添加失败', '不存在这个城市ID');
+                    util.showModel('添加失败', '不存在这个景点ID');
                 console.log(result)
             },
             fail(error) {
@@ -83,6 +85,33 @@ Page({
                 return false;
             }
         }
+    },
+    AddRecomm:function(){
+        util.showBusy('请求中...')
+        var that = this;
+
+        var options = {
+            url: config.service.addRecommendationUrl,
+
+            data: {
+                name: this.data.recommName
+            },
+            success(result) {
+                if (result.data.code == -1)
+                    util.showModel('添加失败', '不存在这个景点ID');
+                else
+                    util.showSuccess("添加成功")
+                console.log(result)
+            },
+            fail(error) {
+                util.showModel('添加失败', error);
+                console.log('添加失败', error);
+            }
+        }
+        wx.request(options);
+    },
+    InputScenicSpotID: function (event){
+        this.data.recommName = event.detail.value;
     },
     // 上传图片接口
     doUpload: function () {

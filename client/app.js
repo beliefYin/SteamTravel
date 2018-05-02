@@ -14,7 +14,7 @@ App({
 
       memoryVisible: 1,
       infoVisible:1,
-      hasChangedUserInfo: false,
+      hasChangedUserInfo: true,
 
       tmpCityData: null,
       tmpScenicSpotData: null
@@ -41,7 +41,7 @@ App({
               that.globalData.userInfo = result.data.data;
               that.globalData.logged = true;
               qcloud.request({
-                url: config.service.addUserUtl,
+                url: config.service.addUserUrl,
                 data: {
                   openId:that.globalData.userInfo.openId,
                   userName:that.globalData.userInfo.nickName,

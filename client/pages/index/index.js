@@ -10,10 +10,10 @@ Page({
   data: {
     recommendList:[
       {
-        brief_pic_url: "../../image/loading.png",
-        scenic_spot_name: "镇江",
-        brief_introduction: "镇江是个污染很严重的城市",
-        url: "镇江url"
+        // brief_pic_url: "../../image/loading.png",
+        // scenic_spot_name: "镇江",
+        // brief_introduction: "镇江是个污染很严重的城市",
+        // url: "镇江url"
       },
     ],
     inputCityName: null,
@@ -25,7 +25,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     WxSearch.init(that, 43, ['北京', '上海', '南京', '广州', '深圳']);    //热门搜索
-    WxSearch.initMindKeys(['北京', '微信小程序开发', '微信开发', '微信小程序']);  //搜索建议
+    WxSearch.initMindKeys(['北京', '上海', '南京', '广州','深圳']);  //搜索建议
 
     this.RequestRecommendations();
   },
@@ -39,7 +39,7 @@ Page({
       success(result) {
         if (result.data.code == 1)
         {
-          util.showModel('请求出错', '数据库没有推荐列表数据');
+          console.log("数据库中没有推荐列表数据",result)
           return;
         }
         else
@@ -107,18 +107,17 @@ Page({
         if (result.data.code == 1) { //1为景点
           app.globalData.naviPlaceId = result.data.data[0].scenic_spot_id
           app.globalData.tmpScenicSpotData = result.data.data[0]
+          util.showSuccess("")
           wx.navigateTo({ url: '../scenicSpot/scenicSpot' });
         }
         else if (result.data.code == 2) { //2为城市
           app.globalData.naviPlaceId = result.data.data[0].city_id
           app.globalData.tmpCityData = result.data.data[0]
+          util.showSuccess("")
           wx.navigateTo({ url: '../city/city' });
         }
         else {
-          wx.showModal({
-            title: 'I’m sorry~',
-            content: '这个小程序还没有这个城市（景点）的信息',
-          })
+          util.showModel('I’m sorry~','这个小程序还没有这个城市（景点）的信息')
         }
       },
       fail(error) {

@@ -25,16 +25,20 @@ var config = {
 
         // 推介列表
         recommendationUrl: `${host}/weapp/QueryRecommendation`,
+        addRecommendationUrl: `${host}/weapp/AddRecommendation`,
 
         addCityUrl: `${host}/weapp/AddCity`,
 
         addScenicSpotUrl: `${host}/weapp/AddScenicSpot`,
 
         queryScenicSpotUrl: `${host}/weapp/QueryScenicSpot`,
+        queryScenicSpotACity: `${host}/weapp/QueryScenicSpotACity`,
         getPlaceTypenUrl: `${host}/weapp/GetPlaceTypenUrl`,
         queryCityUrl: `${host}/weapp/QueryCityData`,
+        addUserUrl: `${host}/weapp/AddUser`,
+
+
         addCommentUrl: `${host}/weapp/AddComment`,
-        addUserUtl: `${host}/weapp/AddUser`,
         queryScenicSpotCommentUrl: `${host}/weapp/QueryScenicSpotComment`,
         queryUserCommentUrl: `${host}/weapp/QueryUserComment`,
     }

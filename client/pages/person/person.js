@@ -1,6 +1,7 @@
 // pages/person/person.js
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
+var util = require('../../utils/util.js')
 var app = getApp()
 
 var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
@@ -23,9 +24,9 @@ Page({
     changeInfoBtnUrl:"../../image/changeInfoBtn.png",
     leftQuotesUrl:"../../image/leftQuotes.png",
     rightQuotesUrl:"../../image/rightQuotes.png",
-    briefIntro:"hello，i am Simon.",
-    stars:12, //关注数
-    fans:111, //粉丝数
+    briefIntro:"加载中",
+    stars:0, //关注数
+    fans:0, //粉丝数
 
 
     tabs: ["评论", "帖子"],
@@ -36,23 +37,16 @@ Page({
 
     likeUrl:"../../image/like.png",
     dislikeUrl:"../../image/dislike.png",
-    sceneList : [
+    commentList : [
       {
-        picUrl:"../../image/man.png",
-        name:"留园大幅度对的",
-        comment:"这是一个苏州的园拉拉队浪费大量司法所这是一个苏州的园拉拉队浪费大量司法所这是一个苏州的园拉拉队浪费大量司法所",
-        like:LIKE,
-        agreeNum:23,
-        disagreeNum:2,
+      // `icon_url` 			VARCHAR(255) 	NOT NULL			COMMENT '头像url',
+      // `content` 			VARCHAR(255) 	NOT NULL 	COMMENT '内容',
+      // `scenic_spot_name` 	VARCHAR(50) 	NOT NULL 	COMMENT '景点名',
+      // `evaluation` 		TINYINT 		NOT NULL 	COMMENT '评价（好评为1，差评为2)',
+      // `agree` 			INT UNSIGNED DEFAULT 0 		COMMENT '好评量',
+      // `disagree` 			INT UNSIGNED DEFAULT 0 		COMMENT '差评量',
+      // `timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
       },
-      {
-        picUrl:"../../image/woman.png",
-        name:"黄旗山",
-        comment:"顶上有一个灯笼",
-        like:DISLIKE,
-        agreeNum:45,
-        disagreeNum:2,
-      }
     ],
     articleList : [
       {
@@ -100,7 +94,7 @@ Page({
       this.setData({
         userInfo: app.globalData.userInfo,
         iconUrl: app.globalData.userInfo.avatarUrl,
-        userName: app.globalData.userInfo.nickName
+        userName: app.globalData.userInfo.nickName,
       })
     }
     if(app.globalData.hasChangedUserInfo)
@@ -134,15 +128,32 @@ Page({
       app.globalData.hasChangedUserInfo = false;
       console.log("refresh")
     }
-
+    this.LoadComment()
     
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+  LoadComment: function () {
+    util.showBusy('请求评论中...')
+    var that = this
+    var options = {
+      url: config.service.queryUserCommentUrl,
+      login:true,
+      data: {
+        userId: app.globalData.userInfo.openId
+      },
+      success(result) {
+        that.setData({
+          commentList: result.data.data
+        })
+        util.showSuccess('请求评论成功');
+        console.log('请求评论成功', result)
+      },
+      fail(error) {
+        util.showModel('请求评论失败', error);
+        console.log('请求评论失败', error);
+      }
+    }
+    qcloud.request(options);
   },
 
   /**

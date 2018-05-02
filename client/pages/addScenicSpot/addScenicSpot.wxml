@@ -1,6 +1,6 @@
 <!--addScenicSpot.wxml-->
-<text >--------------添加景点---------------</text>
 <view>
+    <text >--------------添加景点---------------</text>
     <text>景点名：</text>
     <input bindinput="InputName"></input>
     <text>归属城市id（邮编）：</text>
@@ -12,10 +12,14 @@
     <button type="primary" bindtap="Affirm">确定</button>
 </view>
 
+<view>
+    <text>\n--------------添加推荐景点---------------</text>
+    <input type='text' placeholder="景点ID" bindinput="InputScenicSpotID"/>
+    <button bindtap="AddRecomm">确定</button>
+</view>
 
 
-<view class="container">
-    <!-- 上传图片测试 -->
+<!-- <view class="container">
     <view class="uploader">
         <view class="uploader-text" bindtap="doUpload">
             <text>上传图片</text>
@@ -29,4 +33,4 @@
             ></image>
         </view>
     </view>
-</view>
+</view> -->

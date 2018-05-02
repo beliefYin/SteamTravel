@@ -12,8 +12,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    loadingHidden: true,
-    imgUrls: ["../../image/广州1.png", "../../image/广州2.png"],
+    imgUrls: ["../../image/noImage.png", "../../image/noImage.png"],
     introduction: "这个景点还没有介绍哦",
     placeName: "北固山",
 
@@ -79,7 +78,8 @@ Page({
         scenicSpotId: app.globalData.naviPlaceId,
         userId: app.globalData.userInfo.openId,
         avatarUrl:app.globalData.userInfo.avatarUrl,
-        userName: app.globalData.userInfo.nickName
+        userName: app.globalData.userInfo.nickName,
+        scenicSpotName:this.data.placeName
       },
       success(result) {
         util.showSuccess("评论成功");
@@ -106,7 +106,6 @@ Page({
           })
           util.showSuccess('请求评论成功');
           console.log('请求评论成功', result)
-          console.log(that.data.commentList)
       },
       fail(error) {
         util.showModel('请求评论失败', error);
@@ -159,6 +158,7 @@ Page({
             introduction: resData.introduction,
             imgUrls: tmpImgUrl
           })
+          console.log(that.data.imgUrls)
           util.showSuccess('请求成功');
           console.log('请求景点信息成功', result)
         }

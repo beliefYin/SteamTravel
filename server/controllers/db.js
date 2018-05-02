@@ -225,14 +225,15 @@ async function QueryCityData(ctx, next) {
 }
 
 async function AddComment(ctx, next) {
-    const { content, type, scenicSpotId, userId,avatarUrl,userName} = ctx.query
+    const { content, type, scenicSpotId, userId,avatarUrl,userName,scenicSpotName} = ctx.query
     var comment = {
         user_id:userId,
         content: content,
         scenic_spot_id: scenicSpotId,
         evaluation: type,
         icon_url: avatarUrl,
-        user_name: userName
+        user_name: userName,
+        scenic_spot_name:scenicSpotName
     }
     var res = await mysql("scene_comment").insert(comment);
     ctx.state.data = res
@@ -243,9 +244,28 @@ async function QueryScenicSpotComment(ctx, next) {
     var res = await mysql("scene_comment").select('*').where({scenic_spot_id:scenicSpotId});
     ctx.state.data = res
 }
-async function QueryScenicSpotComment(ctx, next) {
+async function QueryUserComment(ctx, next) {
     const { userId} = ctx.query
-    var res = await mysql("scene_comment").select('*').where({user_id:userId});
+    var res = await mysql("scene_comment").select('icon_url', 'content', 'evaluation', 'agree', 'disagree', 'timestamp', 'scenic_spot_name').where({user_id:userId});
+    ctx.state.data = res
+}
+async function AddRecommendation(ctx, next) {
+    const { name } = ctx.query;
+    var res = await mysql("scenic_spot").select('*').where({ scenic_spot_name: name})
+    if (res.length == 0)
+    {
+        ctx.state.data = res;
+        ctx.state.code = -1;
+        return;
+    }
+    var data = { id: res[0].scenic_spot_id, type: 1 };
+    res = await mysql("recommendation").insert(data);
+    ctx.state.data = res
+}
+
+async function QueryScenicSpotACity(ctx, next) {
+    const { cityId } = ctx.query;
+    var res = await mysql("scenic_spot").select('brief_pic_url', 'scenic_spot_name', 'brief_introduction').where({ belong_city_id: cityId })
     ctx.state.data = res
 }
 
@@ -261,5 +281,7 @@ module.exports = {
     QueryCityData,
     AddComment,
     QueryScenicSpotComment,
-    QueryUserComment
+    QueryUserComment,
+    AddRecommendation,
+    QueryScenicSpotACity
 }

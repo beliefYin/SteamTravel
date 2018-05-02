@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS `scene_comment`(
 	`user_id` 			VARCHAR(100) 	NOT NULL 	COMMENT '评论用户open_id',
 	`content` 			VARCHAR(255) 	NOT NULL 	COMMENT '内容',
 	`scenic_spot_id` 	VARCHAR(10) 	NOT NULL 	COMMENT '景点id',
+	`scenic_spot_name` 	VARCHAR(50) 	NOT NULL 	COMMENT '景点名',
 	`evaluation` 		TINYINT 		NOT NULL 	COMMENT '评价（好评为1，差评为2)',
 	`agree` 			INT UNSIGNED DEFAULT 0 		COMMENT '好评量',
 	`disagree` 			INT UNSIGNED DEFAULT 0 		COMMENT '差评量',
@@ -66,6 +67,15 @@ CREATE TABLE IF NOT EXISTS `scene_comment_like`(
 	`type`					TINYINT	NOT NULL	COMMENT 'like,dislike之类的',
 	PRIMARY KEY ( `id` ) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*推荐列表*/
+CREATE TABLE IF NOT EXISTS `recommendation`(
+	`id`				INT UNSIGNED	NOT NULL 	COMMENT '城市或景点ID',
+	`type`			TINYINT	NOT NULL DEFAULT 0 	COMMENT '景点或城市',
+	PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*--------------------下面的数据库还没建-----------------------*/
 
 /*回忆长廊*/
 CREATE TABLE IF NOT EXISTS `memory_gallery`(
@@ -114,10 +124,4 @@ CREATE TABLE IF NOT EXISTS `article_comment`(
 	PRIMARY KEY ( `my_id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*推荐列表*/
-CREATE TABLE IF NOT EXISTS `recommendation`(
-	`id`				INT UNSIGNED	NOT NULL 	COMMENT '城市或景点ID',
-	`type`			TINYINT	NOT NULL DEFAULT 0 	COMMENT '景点或城市',
-	PRIMARY KEY ( `id` )
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

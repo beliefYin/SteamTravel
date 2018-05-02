@@ -61,14 +61,13 @@ Page({
       success(res){
         app.globalData.infoVisible = that.data.profileVisble.checked;
         app.globalData.memoryVisible = that.data.memoryVisble.checked;
-        app.globalData.hasChangedUserInfo = true;
         console.log("UpdateUser success",res);
       },
       fail(error){
         console.log("UpdateUser fail",error)
       }
     });
-    
+    app.globalData.hasChangedUserInfo = true;
     wx.switchTab({
       url:"../person/person"
     })

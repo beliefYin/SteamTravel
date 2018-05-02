@@ -34,6 +34,12 @@
         "text": "我的",
         "iconPath": "image/person.png",
         "selectedIconPath": "image/selectedPerson.png"
+      },
+      {
+        "pagePath": "pages/gm/gm",
+        "text": "GM",
+        "iconPath": "image/person.png",
+        "selectedIconPath": "image/selectedPerson.png"
       }
     ]
   }

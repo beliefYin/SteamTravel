@@ -1,9 +1,7 @@
 <!--pages/city/city.wxml-->
-<loading hidden="{{loadingHidden}}">加载中</loading>
-<swiper indicator-dots="true" autoplay="true" interval="3000" duration="500">
+<swiper indicator-dots="true" autoplay="true" interval="3000" duration="500" class="swiper">
   <block wx:for="{{imgUrls}}">
-    <swiper-item>
-      <image src="{{item}}" width="355" height="150"/>
+    <swiper-item style="background:url({{item}});background-repeat: no-repeat;background-size:100% 200px; ">
     </swiper-item>
   </block>
 </swiper>
@@ -12,20 +10,38 @@
 
 <text class="cityIntro" decode="true">&ensp;&ensp;&ensp;{{introduction}}</text>
 
-<view>
-  <button bindtap="OpenSceneView">景点</button>
-  <button bindtap="OpenArticle">攻略</button>
-  <button bindtap="WriteArticle">写攻略</button>
-  <view wx:if="{{viewIndex == 1}}">
-    <view wx:for="{{sceneList}}" bindtap="NavigateToScenicSpot">
-      <image src="{{item.imgUrl}}"></image>
-      <text>{{item.name}}</text>
-    </view>
+ 
+
+
+
+<view class="weui-tab">
+  <view class="weui-navbar">
+    <block wx:for="{{tabs}}" wx:key="*this">
+      <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+        <view class="weui-navbar__title">{{item}}</view>
+      </view>
+    </block>
+    <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
   </view>
-  <view wx:elif="{{viewIndex == 2}}">
-    <view wx:for="{{articleList}}" bindtap="NavigateToArticle">
-      <image src="{{item.imgUrl}}"></image>
-      <text>{{item.name}}</text>
+  <view class="weui-tab__panel">
+    <view class="weui-tab__content gray_background" hidden="{{activeIndex != 0}}">
+      <view wx:for="{{sceneList}}" class='sceneItem'>
+          <view>
+            <image src="{{item.brief_pic_url}}" class='scenePicture'></image>
+          </view>
+          <view>
+            <text class="sceneName">{{item.scenic_spot_name}}</text>
+          </view>
+          <view>
+            <text class="sceneintro">{{item.brief_introduction}}</text>
+          </view>
+      </view>
+    </view>
+    <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+      <button bindtap="WriteArticle" class="writeArticleBtn" size="mini">写攻略</button>
+      <view wx:for="{{articleList}}">
+      
+      </view>
     </view>
   </view>
 </view>

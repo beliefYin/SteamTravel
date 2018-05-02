@@ -4,6 +4,7 @@ var util = require('../../utils/util.js')
 var app = getApp()
 const SCENEICSPOT_VIEW = 1
 const ARTICLE_VIEW = 2
+var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 
 Page({
 
@@ -13,29 +14,26 @@ Page({
   data: {
     loadingHidden: true,
     imgUrls: [],
-    introduction: "这个景点还没有介绍哦",
-    placeName: "镇江",
+    introduction: "这个城市还没有介绍哦",
+    placeName: "城市名",
     viewIndex: SCENEICSPOT_VIEW,
     sceneList: [
-      {
-        imgUrl: "../../image/loading.png",
-        name: "北固山"
-      },
-      {
-        imgUrl: "../../image/loading.png",
-        name: "金山"
-      }
+
     ],
     articleList: [
-      {
-        imgUrl: "../../image/广州1.png",
-        name: "北固山"
-      },
-      {
-        imgUrl: "../../image/广州2.png",
-        name: "金山"
-      }
-    ]
+
+    ],
+
+    tabs: ["景点", "攻略"],
+    activeIndex: 0,
+    sliderOffset: 0,
+    sliderLeft: 0,
+  },
+  tabClick: function (e) {
+    this.setData({
+      sliderOffset: e.currentTarget.offsetLeft,
+      activeIndex: e.currentTarget.id
+    });
   },
   NavigateToScenicSpot:function(e)
   {
@@ -49,12 +47,7 @@ Page({
       url: '../article/article',
     })
   },
-  OpenSceneView:function(e){
-    this.setData({viewIndex: SCENEICSPOT_VIEW})
-  },
-  OpenArticle:function(e){
-    this.setData({viewIndex: ARTICLE_VIEW})
-  },
+
   WriteArticle:function(e){
     wx.navigateTo({
       url: '../writeArticle/writeArticle',
@@ -62,7 +55,16 @@ Page({
   },
 
   onLoad: function (options) {
-
+    var that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+          sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
+        });
+      }
+    });
+    this.LoadScenicSpot();
   },
 
   RequestCityData: function () {
@@ -118,5 +120,24 @@ Page({
       this.RequestCityData();
 
   },
-
+  LoadScenicSpot: function (params) {
+    var that = this
+    var options = {
+      url: config.service.queryScenicSpotACity,
+      data: {
+        cityId: app.globalData.naviPlaceId
+      },
+      success(result) {
+        that.setData({
+          sceneList: result.data.data
+        })
+        console.log('请求景点列表成功', result)
+      },
+      fail(error) {
+        util.showModel('请求景点列表失败', error);
+        console.log('请求景点列表失败', error);
+      }
+    }
+    wx.request(options);
+  }
 })
