@@ -1,7 +1,7 @@
 <!--addScenicSpot.wxml-->
 <view>
     <text >--------------添加景点---------------</text>
-    <text>景点名：</text>
+    <text>\n景点名：</text>
     <input bindinput="InputName"></input>
     <text>归属城市id（邮编）：</text>
     <input bindinput="InputBelongCityId"></input>
@@ -14,7 +14,7 @@
 
 <view>
     <text>\n--------------添加推荐景点---------------</text>
-    <input type='text' placeholder="景点ID" bindinput="InputScenicSpotID"/>
+    <input type='text' placeholder="景点名字" bindinput="InputScenicSpotName"/>
     <button bindtap="AddRecomm">确定</button>
 </view>
 

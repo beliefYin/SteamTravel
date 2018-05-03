@@ -110,7 +110,7 @@ Page({
         }
         wx.request(options);
     },
-    InputScenicSpotID: function (event){
+    InputScenicSpotName: function (event){
         this.data.recommName = event.detail.value;
     },
     // 上传图片接口
