@@ -1,7 +1,9 @@
 <!--pages/place/place.wxml-->
 <swiper indicator-dots="true" autoplay="true" interval="3000" duration="500" class="swiper">
   <block wx:for="{{imgUrls}}">
-    <swiper-item style="background:url({{item}});background-repeat: no-repeat;background-size:100% 200px; ">
+    <!-- <swiper-item style="background:url({{item}});background-repeat: no-repeat;background-size:100% 200px; "> -->
+      <swiper-item>
+      <image src="{{item}}"></image>
     </swiper-item>
   </block>
 </swiper>

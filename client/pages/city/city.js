@@ -139,5 +139,11 @@ Page({
       }
     }
     wx.request(options);
-  }
+  },
+  openScenicSpots: function (params) {
+    app.globalData.naviPlaceId = params.currentTarget.dataset.placeid
+    wx.navigateTo({
+      url: "../scenicSpot/scenicSpot",
+    })
+  },
 })

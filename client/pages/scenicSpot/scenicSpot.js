@@ -128,7 +128,7 @@ Page({
           introduction: resData.introduction,
           imgUrls: tmpImgUrl
       })
-      //app.globalData.tmpScenicSpotData = null;
+      app.globalData.tmpScenicSpotData = null;
     }
     else
       this.RequestScenicSpotData();

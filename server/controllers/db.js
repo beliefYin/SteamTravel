@@ -265,7 +265,7 @@ async function AddRecommendation(ctx, next) {
 
 async function QueryScenicSpotACity(ctx, next) {
     const { cityId } = ctx.query;
-    var res = await mysql("scenic_spot").select('brief_pic_url', 'scenic_spot_name', 'brief_introduction').where({ belong_city_id: cityId })
+    var res = await mysql("scenic_spot").select('brief_pic_url', 'scenic_spot_name', 'brief_introduction','scenic_spot_id').where({ belong_city_id: cityId })
     ctx.state.data = res
 }
 

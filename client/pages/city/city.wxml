@@ -25,7 +25,7 @@
   </view>
   <view class="weui-tab__panel">
     <view class="weui-tab__content gray_background" hidden="{{activeIndex != 0}}">
-      <view wx:for="{{sceneList}}" class='sceneItem'>
+      <view wx:for="{{sceneList}}" class='sceneItem' bindtap="openScenicSpots" data-placeId="{{item.scenic_spot_id}}">
           <view>
             <image src="{{item.brief_pic_url}}" class='scenePicture'></image>
           </view>
