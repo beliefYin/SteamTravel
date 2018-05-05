@@ -50,6 +50,8 @@ router.get('/QueryScenicSpotComment', controllers.db.QueryScenicSpotComment)
 router.get('/QueryUserComment', controllers.db.QueryUserComment)
 router.get('/AddRecommendation', controllers.db.AddRecommendation)
 router.get('/QueryScenicSpotACity', controllers.db.QueryScenicSpotACity)
-
+router.get('/QuerySelfMemory', controllers.db.QuerySelfMemory)
+router.get('/QueryOtherMemory', controllers.db.QueryOtherMemory)
+router.get('/AddMemory', controllers.db.AddMemory)
 
 module.exports = router

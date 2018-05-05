@@ -17,7 +17,8 @@ App({
       hasChangedUserInfo: true,
 
       tmpCityData: null,
-      tmpScenicSpotData: null
+      tmpScenicSpotData: null,
+      isRefreshMemory: true
     },
     onLaunch: function () {
         qcloud.setLoginUrl(config.service.loginUrl)

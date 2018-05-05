@@ -2,12 +2,13 @@ var config = require('../../config')
 var util = require('../../utils/util.js')
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
 
+var app = getApp()
+
 Page({
     data:{
-        addMemoryImage : "../../image/addMemoryBtn.png",
-        imgUrl : null,
-        description : null,
-        visble: true,
+        imgUrl: "../../image/addMemoryBtn.png",
+        description : "",
+        visble:1,//1为可见，0为不可见
     },
     uploadImage:function(){
         var that = this
@@ -52,34 +53,36 @@ Page({
         this.data.description = e.detail.value
     },
     ChangeVisble:function(){
-        this.data.visble = !this.data.visble 
+        if (this.data.visble == 1)
+            this.data.visble = 0;
+        else
+            this.data.visble = 1;
     },
     //确认修改
     ConfirmChange:function(){
-        //保存到数据库
+        var that = this;
+        qcloud.request({
+            url: config.service.addMemoryUrl,
+            login: true,
+            data: {
+                userId: app.globalData.userInfo.openId,
+                imgUrl: this.data.imgUrl,
+                visble: this.data.visble,
+                description: this.data.description
+            },
+            success(res) {
+                app.globalData.isRefreshMemory = true
+                wx.navigateBack({
+                    delta: 1, // 回退前 delta(默认为1) 页面
+                })
+                console.log("AddMemory success", res);
+            },
+            fail(error) {
+                console.log("AddMemory fail", error)
+            }
+        });
     },
 
-    onLoad:function(options){
-        // 生命周期函数--监听页面加载
-    },
-    onReady:function(){
-        // 生命周期函数--监听页面初次渲染完成
-    },
-    onShow:function(){
-        // 生命周期函数--监听页面显示
-    },
-    onHide:function(){
-        // 生命周期函数--监听页面隐藏
-    },
-    onUnload:function(){
-        // 生命周期函数--监听页面卸载
-    },
-    onPullDownRefresh: function() {
-        // 页面相关事件处理函数--监听用户下拉动作
-    },
-    onReachBottom: function() {
-        // 页面上拉触底事件的处理函数
-    },
     onShareAppMessage: function() {
         // 用户点击右上角分享
         return {

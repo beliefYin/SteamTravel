@@ -1,5 +1,5 @@
 <view class="imageContainer">
-    <image bindtap="uploadImage" src="{{imgUrl?imgUrl:addMemoryImage}}" ></image>
+    <image bindtap="uploadImage" src="{{imgUrl}}" ></image>
 </view>
 
 <view class="contextContainer">

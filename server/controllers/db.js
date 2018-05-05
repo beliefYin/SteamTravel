@@ -269,6 +269,37 @@ async function QueryScenicSpotACity(ctx, next) {
     ctx.state.data = res
 }
 
+async function QuerySelfMemory(ctx, next) {
+    const { userId } = ctx.query;
+    var res = await mysql("memory_gallery").select('*').where({ user_id: userId })
+    ctx.state.data = res
+}
+
+async function QueryOtherMemory(ctx, next) {
+    const { userId } = ctx.query;
+    var res = await mysql("user_info").select('memory_visible').where({ open_id: userId })
+    if (res[0].memory_visible == 0)//不可见
+    {
+        ctx.state.data = res
+        ctx.state.code = -1        
+        return 
+    }
+    res = await mysql("memory_gallery").select('pic_url', 'memory_visible', 'like', 'timestamp','content').where({ memory_visible: 1, user_id: userId })
+      
+}
+
+async function AddMemory(ctx, next) {
+    const { userId, imgUrl, visble, description } = ctx.query;
+    var memory = {
+        user_id: userId,
+        pic_url: imgUrl,
+        memory_visible: visble,
+        content: description
+    }
+    var res = await mysql("memory_gallery").insert(memory);
+    ctx.state.data = res
+}
+
 module.exports = {
     AddUser,
     QueryUser,
@@ -283,5 +314,8 @@ module.exports = {
     QueryScenicSpotComment,
     QueryUserComment,
     AddRecommendation,
-    QueryScenicSpotACity
+    QueryScenicSpotACity,
+    QuerySelfMemory,
+    QueryOtherMemory,
+    AddMemory
 }

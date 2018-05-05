@@ -1,6 +1,6 @@
 /*用户资料表*/
 CREATE TABLE IF NOT EXISTS `user_info`(
-	`open_id` 			VARCHAR(100) 	NOT NULL,
+	` ` 			VARCHAR(100) 	NOT NULL,
 	`user_name` 		VARCHAR(30) 	NOT NULL 			COMMENT '用户名',	
 	`icon_url` 			VARCHAR(255) 	NOT NULL			COMMENT '头像url',
 	`introduction` 		VARCHAR(100) 	NOT NULL			COMMENT '一句话简介',
@@ -75,18 +75,22 @@ CREATE TABLE IF NOT EXISTS `recommendation`(
 	PRIMARY KEY ( `id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*--------------------下面的数据库还没建-----------------------*/
-
 /*回忆长廊*/
 CREATE TABLE IF NOT EXISTS `memory_gallery`(
 	`id`				int NOT NULL AUTO_INCREMENT COMMENT '回忆项ID',
 	`user_id` 			VARCHAR(100) 	NOT NULL 	COMMENT '用户open_id',
 	`pic_url`			VARCHAR(255) 				COMMENT '照片URL',
+	`content`		VARCHAR(255) 				COMMENT '内容',
 	`memory_visible`	TINYINT 		DEFAULT 1 	COMMENT '该回忆项他人是否可见，1为可见，0为不可见',
 	`like`				int 			DEFAULT 0 	COMMENT '点赞数',
+	`timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
 	INDEX(user_id),
-	PRIMARY KEY ( `id `)
+	PRIMARY KEY ( `id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*--------------------下面的数据库还没建-----------------------*/
+
+
 
 
 /*文章*/

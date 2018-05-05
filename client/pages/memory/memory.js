@@ -1,3 +1,9 @@
+var config = require('../../config')
+var util = require('../../utils/util.js')
+var qcloud = require('../../vendor/wafer2-client-sdk/index')
+
+var app = getApp()
+
 Page({
 
   /**
@@ -5,18 +11,15 @@ Page({
    */
   data: {
     addMemoryImage : "../../image/addMemoryBtn.png",
-    
+
     memoryList: [
-      {
-        imgUrl: "../../image/loading.png",
-        content: "这这这这",
-        time:"2018.1.1"
-      },
-      {
-        imgUrl: "../../image/loading.png",
-        content: "这这这这",
-        time:"2018.1.1"
-      },
+      // {
+      //   pic_url,
+      //   memory_visible,
+      //   like,
+      //   timestamp,
+      //   content
+      // },
     ],
   },
 
@@ -41,18 +44,35 @@ Page({
     
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    
+  LoadMemoryData:function () {
+    var that = this;
+    qcloud.request({
+      url: config.service.querySelfMemoryUrl,
+      login: true,
+      data: {
+        userId: app.globalData.userInfo.openId,
+      },
+      success(res) {
+        that.setData({
+          memoryList:res.data.data
+        })
+        console.log("LoadMemory success", res);
+      },
+      fail(error) {
+        console.log("LoadMemory fail", error)
+      }
+    });
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    // if(app.globalData.isRefreshMemory)
+    // {
+      this.LoadMemoryData();
+    //   app.globalData.isRefreshMemory = false;
+    // }
   },
 
   /**
