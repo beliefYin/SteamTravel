@@ -10,7 +10,7 @@
 <text class="cityName">{{placeName}}</text>
 <text class="cityIntro" decode="true">&ensp;&ensp;&ensp;{{introduction}}</text>
 <button bindtap="ShowWriteCommentModal">写评论</button>
-<modal hidden="{{hiddenmodalput}}" title="评论" confirm-text="提交" cancel-text="重置" bindcancel="cancel" bindconfirm="SubmitComment">
+<modal hidden="{{hiddenmodalput}}" title="评论" confirm-text="提交" cancel-text="取消" bindcancel="SubmitCancel" bindconfirm="SubmitComment">
   <input type='text' placeholder="请写下你的评论" bindinput="InputComment" auto-focus/>
   <radio-group class="radio-group" bindchange="CommentTypeChange">
     <label class="radio" wx:for="{{commentType}}">
@@ -32,17 +32,17 @@
         <text>{{item.content}}</text>
       </view>
       <view class="commentCol">
-        <image src="{{likeUrl}}" class="commentTypePic" hidden="{{item.evaluation != 1}}"></image>
+        <image src="{{goodReputationUrl}}" class="commentTypePic" hidden="{{item.evaluation != 1}}"></image>
         <text hidden="{{item.like != 1}}" class="recomTxt">推荐</text>
-        <image src="{{dislikeUrl}}" class="commentTypePic" hidden="{{item.evaluation != 2}}"></image>
+        <image src="{{badReputationUrl}}" class="commentTypePic" hidden="{{item.evaluation != 2}}"></image>
         <text hidden="{{item.like != 0}}" class="noRecomTxt">不推荐</text>
       </view>
     </view>
     <view class="commentAgree">
       <text class="commentAgreeText">评论对他人是否有帮助</text>
-      <image src="{{likeUrl}}" class="commentAgreePic"></image>
+      <image src="{{(item.type&&(item.type == 1))?likeUrl:unselectLikeUrl}}" class="commentAgreePic" bindtap="TapLike" data-index="{{index}}"></image>
       <text class="commentAgreeText">{{item.agree}}</text>
-      <image src="{{dislikeUrl}}" class="commentAgreePic"></image>
+      <image src="{{(item.type&&(item.type == 2))?dislikeUrl:unselectDisLikeUrl}}" class="commentAgreePic" bindtap="TapDisLike" data-index="{{index}}"></image>
       <text class="commentAgreeText">{{item.disagree}}</text>
     </view>
      

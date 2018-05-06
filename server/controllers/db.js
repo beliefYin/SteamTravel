@@ -246,7 +246,7 @@ async function QueryScenicSpotComment(ctx, next) {
 }
 async function QueryUserComment(ctx, next) {
     const { userId} = ctx.query
-    var res = await mysql("scene_comment").select('icon_url', 'content', 'evaluation', 'agree', 'disagree', 'timestamp', 'scenic_spot_name').where({user_id:userId});
+    var res = await mysql("scene_comment").select('id','icon_url', 'content', 'evaluation', 'agree', 'disagree', 'timestamp', 'scenic_spot_name').where({user_id:userId});
     ctx.state.data = res
 }
 async function AddRecommendation(ctx, next) {
@@ -300,6 +300,76 @@ async function AddMemory(ctx, next) {
     ctx.state.data = res
 }
 
+async function QuerySceneCommentLike(ctx, next) {
+    const { userId, scenic_spot_id } = ctx.query;
+    var res = await mysql("scene_comment_like").select('comment_id', 'type').where({ user_id: userId, scenic_spot_id: scenic_spot_id});
+    ctx.state.data = res
+}
+
+async function UpdateSceneCommentLike(ctx, next) {
+    const { userId, scenic_spot_id, commentType, comment_id } = ctx.query;
+
+    var oldCommentLike = await mysql("scene_comment_like").select('id', 'comment_id', 'type').where({ user_id: userId, comment_id: comment_id });
+    var res = await mysql("scene_comment").select('agree', 'disagree').where({ id: comment_id });
+    if (oldCommentLike.length == 0)
+    {   //新增
+        var insertRes = await mysql("scene_comment_like").insert({ scenic_spot_id: scenic_spot_id, comment_id: comment_id, user_id: userId, type: commentType })
+        var updateRes
+        if (commentType == 1)
+        {
+            var agreeNum = res[0].agree + 1
+            updateRes =await mysql("scene_comment").update({ agree: agreeNum }).where({ id: comment_id })
+        }
+        else if (commentType == 2)
+        {
+            var disagreeNum = res[0].disagree + 1
+            updateRes =await mysql("scene_comment").update({ disagree: disagreeNum }).where({ id: comment_id })
+        }
+        var result = {}
+        result.updateRes = updateRes
+        result.res = res
+        result.insertRes = insertRes
+        ctx.state.data = result
+        ctx.state.code = 1
+        return
+    }
+    else
+    {   //修改
+        await mysql("scene_comment_like").update({ type: commentType }).where({ id: oldCommentLike[0].id })
+        if (oldCommentLike[0].type == 0 && commentType == 1){   //无评变好评
+            var agreeNum = res[0].agree + 1
+            await mysql("scene_comment").update({ agree: agreeNum }).where({ id: comment_id })
+        }
+        else if (oldCommentLike[0].type == 0 && commentType == 2){   //无评变差评
+            var disagreeNum = res[0].disagree + 1
+            await mysql("scene_comment").update({ disagree: disagreeNum }).where({ id: comment_id })
+        }
+        else if (oldCommentLike[0].type == 1 && commentType == 0) {   //好评变无评
+            var agreeNum = res[0].agree - 1
+            await mysql("scene_comment").update({ agree: agreeNum }).where({ id: comment_id })
+        }
+        else if (oldCommentLike[0].type == 1 && commentType == 2) {   //好评变差评
+            var agreeNum = res[0].agree - 1
+            var disagreeNum = res[0].disagree + 1
+            await mysql("scene_comment").update({ agree: agreeNum, disagree: disagreeNum }).where({ id: comment_id })
+        }
+        else if (oldCommentLike[0].type == 2 && commentType == 0) {   //差评变无评
+            var disagreeNum = res[0].disagree - 1
+            await mysql("scene_comment").update({ disagree: disagreeNum }).where({ id: comment_id })
+        }
+        else if (oldCommentLike[0].type == 2 && commentType == 1) {   //差评变好评
+            var agreeNum = res[0].agree + 1
+            var disagreeNum = res[0].disagree - 1
+            await mysql("scene_comment").update({ agree: agreeNum, disagree: disagreeNum }).where({ id: comment_id })
+        }
+        ctx.state.data = oldCommentLike
+        ctx.state.code = 2
+        return
+    }
+
+}
+
+
 module.exports = {
     AddUser,
     QueryUser,
@@ -317,5 +387,7 @@ module.exports = {
     QueryScenicSpotACity,
     QuerySelfMemory,
     QueryOtherMemory,
-    AddMemory
+    AddMemory,
+    QuerySceneCommentLike,
+    UpdateSceneCommentLike
 }

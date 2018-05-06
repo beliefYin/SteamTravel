@@ -43,7 +43,9 @@ var config = {
         queryUserCommentUrl: `${host}/weapp/QueryUserComment`,
         querySelfMemoryUrl: `${host}/weapp/QuerySelfMemory`,
         queryOtherMemoryUrl: `${host} / weapp /QueryOtherMemory`,
-        addMemoryUrl:`${host}/weapp/AddMemory`
+        addMemoryUrl:`${host}/weapp/AddMemory`,
+        querySceneCommentLikeUrl: `${host}/weapp/QuerySceneCommentLike`,
+        updateSceneCommentLikeUrl: `${host}/weapp/UpdateSceneCommentLike`
     }
 };
 

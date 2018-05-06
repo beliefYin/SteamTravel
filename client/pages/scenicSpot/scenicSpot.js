@@ -27,10 +27,17 @@ Page({
         // `agree` 			INT UNSIGNED DEFAULT 0 		COMMENT '好评量',
         // `disagree` 			INT UNSIGNED DEFAULT 0 		COMMENT '差评量',
         // `timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
+        // `type`   0没选择，1喜欢，2不喜欢
       // },`
     ],
-    likeUrl:"../../image/like.png",
-    dislikeUrl:"../../image/dislike.png",
+  
+    goodReputationUrl:"../../image/goodReputation.png",
+    badReputationUrl: "../../image/badReputation.png",
+    likeUrl: "../../image/like.png",
+    dislikeUrl: "../../image/dislike.png",
+    unselectLikeUrl: "../../image/unselectLike.png",
+    unselectDisLikeUrl: "../../image/unselectDislike.png",
+
     //---------写评论--------
     hiddenmodalput:true,
     commentType:[
@@ -47,6 +54,135 @@ Page({
     isLike:1,
     commentContent:"",
     //-----------------------
+  },
+  UpdateLike: function (commentId,type) {
+    console.log(type)
+    qcloud.request({
+      url: config.service.updateSceneCommentLikeUrl,
+      login: true,
+      data: {
+        commentType: type,
+        scenic_spot_id: app.globalData.naviPlaceId,
+        userId: app.globalData.userInfo.openId,
+        comment_id: commentId
+      },
+      success(result) {
+        util.showSuccess("点赞成功");
+        console.log('点赞成功', result)
+      },
+      fail(error) {
+        util.showModel('点赞失败', error)
+        console.log('点赞失败', error)
+      }
+    })
+  },
+
+  TapLike: function (params) {
+    if(!app.globalData.logged)
+    {
+      util.showModel("点赞失败","要登录才能点赞")
+      return
+    }
+
+    var i = params.currentTarget.dataset.index
+    var tmpdisagree = this.data.commentList[i].disagree
+    var tmpagree = this.data.commentList[i].agree
+    console.log(this.data.commentList[i].type)
+    if (!this.data.commentList[i].type)
+    {
+      this.data.commentList[i].type = 1
+      tmpagree++;
+    }
+    else if ( this.data.commentList[i].type == 1)
+    {
+      this.data.commentList[i].type = 0
+      tmpagree--;
+    }
+    else if (this.data.commentList[i].type == 2)
+    {
+      this.data.commentList[i].type = 1
+      tmpagree++;
+      tmpdisagree--;
+    }
+    else if(this.data.commentList[i].type == 0)
+    {
+      console.log("HIhihi")
+      this.data.commentList[i].type = 1
+      tmpagree++;
+    }
+
+    this.data.commentList[i].disagree = tmpdisagree;
+    this.data.commentList[i].agree = tmpagree;
+    var tmpList = this.data.commentList
+    this.setData({ commentList: tmpList })
+    this.UpdateLike(this.data.commentList[i].id, this.data.commentList[i].type)
+  },
+  TapDisLike: function (params) {
+    if (!app.globalData.logged) {
+      util.showModel("点赞失败", "要登录才能点赞")
+      return
+    }
+    var i = params.currentTarget.dataset.index
+    var tmpdisagree = this.data.commentList[i].disagree
+    var tmpagree = this.data.commentList[i].agree
+    if (!this.data.commentList[i].type)
+    {
+      this.data.commentList[i].type = 2;
+      tmpdisagree++;
+    }
+    else if (this.data.commentList[i].type == 2)
+    {
+      this.data.commentList[i].type = 0;
+      tmpdisagree--;
+    }
+    else if (this.data.commentList[i].type == 1)
+    {
+      this.data.commentList[i].type = 2
+      tmpdisagree++;
+      tmpagree--;
+    }
+    else if (this.data.commentList[i].type == 0)
+    {
+      this.data.commentList[i].type = 2
+      tmpdisagree++;
+    }
+    this.data.commentList[i].disagree = tmpdisagree;
+    this.data.commentList[i].agree = tmpagree;
+    var tmpList = this.data.commentList
+    this.setData({ 
+      commentList: tmpList,
+    })
+    this.UpdateLike(this.data.commentList[i].id, this.data.commentList[i].type)
+  },
+  LoadCommentLike:function () {
+    if(!app.globalData.logged)
+      return
+    var that = this
+    qcloud.request({
+      url: config.service.querySceneCommentLikeUrl,
+      login: true,
+      data: {
+        scenic_spot_id: app.globalData.naviPlaceId,
+        userId: app.globalData.userInfo.openId,
+      },
+      success(result) {
+        var list = result.data.data
+        for (let i = 0; i < that.data.commentList.length; i++) {
+          for(let j = 0; j < list.length; j++){
+            if (list[j].comment_id == that.data.commentList[i].id){
+              that.data.commentList[i].type = list[j].type
+              break
+            }
+          }
+        }
+        var tmp = that.data.commentList
+        that.setData({commentList:tmp})
+        console.log('读取点赞信息成功', result)
+      },
+      fail(error) {
+        console.log('读取点赞信息失败', error)
+      }
+    })
   },
   ShowWriteCommentModal:function(){
     this.setData({hiddenmodalput:false});
@@ -92,6 +228,9 @@ Page({
     })
     that.setData({ hiddenmodalput: true });
   },
+  SubmitCancel:function(){
+    this.setData({ hiddenmodalput: true });
+  },
   LoadComment: function() {
     util.showBusy('请求评论中...')
     var that = this
@@ -104,6 +243,7 @@ Page({
           that.setData({
             commentList:result.data.data
           })
+          that.LoadCommentLike()
           util.showSuccess('请求评论成功');
           console.log('请求评论成功', result)
       },

@@ -61,9 +61,9 @@ CREATE TABLE IF NOT EXISTS `scene_comment`(
 /*景点评论点赞表*/
 CREATE TABLE IF NOT EXISTS `scene_comment_like`(
 	`id`						INT UNSIGNED	AUTO_INCREMENT 	COMMENT 'ID',
-	`scneic_spot_id`		INT UNSIGNED	NOT NULL 	COMMENT '景点ID',
+	`scenic_spot_id`		INT UNSIGNED	NOT NULL 	COMMENT '景点ID',
 	`comment_id`			INT UNSIGNED	NOT NULL 	COMMENT '评论ID',
-	`open_id` 				VARCHAR(100) 	NOT NULL,
+	`user_id` 				VARCHAR(100) 	NOT NULL COMMENT '用户ID',
 	`type`					TINYINT	NOT NULL	COMMENT 'like,dislike之类的',
 	PRIMARY KEY ( `id` ) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
