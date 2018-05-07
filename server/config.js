@@ -34,12 +34,17 @@ const CONF = {
         // Bucket 名称
         fileBucket: 'qcloudtest',
         // 文件夹
-        uploadFolder: ''
+        uploadFolder: 'test'
     },
 
     // 微信登录态有效期
     wxLoginExpires: 7200,
-    wxMessageToken: 'abcdefgh'
-}
+    // wxMessageToken: 'abcdefgh',
 
-module.exports = CONF
+    // serverHost: 'https://5pewu2mx.qcloud.la',
+    // qcloudAppId: '1253646735',
+    // qcloudSecretId: 'AKIDhDTUGpeF7k9JFxvghU2MRHsFNGvL7TBd', 
+    // qcloudSecretKey: 'AKIDhDTUGpeF7k9JFxvghU2MRHsFNGvL7TBd',
+}
+module.exports = process.env.NODE_ENV === 'local' ? Object.assign({}, CONF, require('./config.local')) : CONF;
+//module.exports = CONF

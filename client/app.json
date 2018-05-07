@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/upload/upload",
     "pages/index/index",
     "pages/gm/gm",
     "pages/addCity/addCity",
