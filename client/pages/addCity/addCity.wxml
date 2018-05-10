@@ -13,23 +13,15 @@
     <text>推荐页简介：</text>
     <input bindinput="InputCityBriefIntro">
     </input>
+    <view class="container">
+        <view class="uploader">
+            <view class="uploader-text" bindtap="doUpload">
+                <text>上传图片</text>
+            </view>
+        </view>
+    </view> 
     <button type="primary" bindtap="Affirm">确定</button>
 </view>
 
 
-<!-- 
-<view class="container">
-    <view class="uploader">
-        <view class="uploader-text" bindtap="doUpload">
-            <text>上传图片</text>
-        </view>
-        <view class="uploader-container" wx:if="{{imgUrl}}">
-            <image
-                class="uploader-image"
-                src="{{imgUrl}}"
-                mode="aspectFit"
-                bindtap="previewImg"
-            ></image>
-        </view>
-    </view>
-</view> -->
+
