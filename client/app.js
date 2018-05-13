@@ -11,6 +11,7 @@ App({
       placeUrl: null,
       logged:false,
       naviPlaceId: 0,
+      naviPlaceName:"还没做",//用来写攻略
 
       memoryVisible: 1,
       infoVisible:1,

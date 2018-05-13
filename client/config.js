@@ -45,7 +45,9 @@ var config = {
         queryOtherMemoryUrl: `${host} / weapp /QueryOtherMemory`,
         addMemoryUrl:`${host}/weapp/AddMemory`,
         querySceneCommentLikeUrl: `${host}/weapp/QuerySceneCommentLike`,
-        updateSceneCommentLikeUrl: `${host}/weapp/UpdateSceneCommentLike`
+        updateSceneCommentLikeUrl: `${host}/weapp/UpdateSceneCommentLike`,
+
+        AddArticleUrl: `${host}/weapp/AddArticle`,
     }
 };
 

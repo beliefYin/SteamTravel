@@ -1,90 +1,182 @@
-// pages/place/place.js
 var app = getApp()
+var MaxPictureCount = 4
+var qcloud = require('../../vendor/wafer2-client-sdk/index')
+var config = require('../../config')
+var util = require('../../utils/util.js')
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    loadingHidden: true,
-    imgUrls: [],
-    introduction: "这个景点还没有介绍哦",
-    placeName: "镇江"
+    title:'',
+    article:[
+      {
+        text: "",
+        imgUrl: "",
+      }
+    ],
+    curPicutreCount: 0,
+    canAddPic: true,
+
+    author:'',
+    currentUploadIndex: 0,
+    mainbody:'',
+    imgUrl:''
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
+  InputTitle: function (event) {
+    this.data.title = event.detail.value;
+  },
+  InputMainbody: function (event) {
+    var i = event.target.dataset.index
+    this.data.article[i].text = event.detail.value;
+  },
+  IsCanAddPic: function () {
+    if(this.data.curPicutreCount >= MaxPictureCount)
+    {
+      this.setData({ canAddPic:false})
+
+    }
+  },
+  AddPic: function (event){
+    var that = this
+
+    // 选择图片
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        var i = event.target.dataset.index
+        that.data.article[i].imgUrl = res.tempFilePaths[0];
+        that.data.currentUploadIndex = 0;
+        var curPicutreCount = that.data.curPicutreCount + 1
+        var tmp = {
+          text: '',
+          imgUrl: ''
+        }
+        that.data.article.push(tmp)
+        tmp = that.data.article
+        that.setData({
+          article: tmp,
+          curPicutreCount: curPicutreCount
+        })
+        that.IsCanAddPic()
+      },
+      fail: function (e) {
+        console.error(e)
+      }
+    })
+    
+   
+  },
+  CheckBeforeSubmit: function(){
+    if (this.data.title == '')
+    {
+      util.showModel('错误','请输入标题')
+      return
+    }
+    if (this.data.article[0].txt == '')
+    {
+      util.showModel('错误', '请输入正文')
+      return
+    }
+  },
+
+  PackData: function (){
+    for (let index = 0; index < this.data.article.length; index++) {
+      const element = this.data.article[index];
+      if(element.text == '')
+        this.data.article[index].text = "###"
+      if (element.imgUrl == '')
+        this.data.article[index].imgUrl = "###"
+      if(index != 0)
+      {
+        this.data.mainbody = this.data.mainbody + ';'
+        this.data.imgUrl = this.data.imgUrl + ';'     
+      }
+      this.data.mainbody = this.data.mainbody + this.data.article[index].text
+      this.data.imgUrl = this.data.imgUrl + this.data.article[index].imgUrl
+    }
+  },
+  Submit: function (){
+    if(!app.globalData.logged){
+      util.showModel("点赞失败", "要登录才能点赞")
+      return
+    }
+    this.CheckBeforeSubmit()
+    this.PackData()
+    var that = this;
+  
+    qcloud.request({
+      url: config.service.AddArticleUrl,
+      login:true,
+      data: {
+        mainbody: this.data.mainbody,
+        imgUrl: this.data.imgUrl,
+        author: app.globalData.userInfo.nickName,
+        uesrId: app.globalData.userInfo.openId,
+        sceneName: app.globalData.naviPlaceName,
+        placeId: app.globalData.naviPlaceId
+      },
+      success(res) {
+        console.log("添加文章成功", res);
+      },
+      fail(error) {
+        console.log("添加文章失败", error)
+      }
+    });
+    util.showSuccess("上传完成")
+  },
   onLoad: function (options) {
+  },
+  UploadImg: function () {
+    var that = this;
+    util.showBusy("上传中");
+    //上传图片
+    wx.uploadFile({
+      url: config.service.uploadUrl,
+      filePath: this.data.article[this.data.currentUploadIndex],
+      name: 'file',
 
+      success: function (res) {
+
+      },
+
+      fail: function (e) {
+        util.showModel('上传图片失败')
+      },
+      complete: function (res) {
+        res = JSON.parse(res.data)
+        console.log('上传图片', res)
+        if (that.data.imgUrl != '')
+          that.data.imgUrl = that.data.imgUrl + ';'
+        that.data.imgUrl = that.data.imgUrl + res.data.imgUrl
+        that.data.currentUploadIndex++
+        if (that.data.currentUploadIndex < that.data.article.length 
+          && that.data.article[that.data.currentUploadIndex].imgUrl != '')
+          that.UploadImg()
+        console.log("imgString:", that.data.imgUrl)
+      }
+    })
+  },
+  // 上传图片接口
+  doUpload: function () {
+    var that = this
+
+    // 选择图片
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        that.data.tempFilePaths = res.tempFilePaths;
+        that.data.currentUploadIndex = 0;
+        that.UploadImg();
+
+      },
+      fail: function (e) {
+        console.error(e)
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    var url = app.globalData.placeUrl;
-    console.log(url);
-    
-    if(url == "镇江url")
-    {
-      var imageList = ["../../image/镇江1.png", "../../image/镇江2.png"]
-      this.setData({
-        placeName: "镇江",
-        imgUrls: imageList
-      })
-    }
-    else if(url == "广州url")
-    {
-      var imageList = ["../../image/广州1.png", "../../image/广州2.png"]
-      this.setData({
-        placeName: "广州",
-        imgUrls: imageList
-      })
-    }
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
 })

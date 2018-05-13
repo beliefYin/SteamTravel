@@ -88,23 +88,27 @@ CREATE TABLE IF NOT EXISTS `memory_gallery`(
 	PRIMARY KEY ( `id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*文章*/
+CREATE TABLE IF NOT EXISTS `article`(
+	`id`				int NOT NULL AUTO_INCREMENT COMMENT '文章ID',
+	`user_id` 			VARCHAR(100) 	NOT NULL 	COMMENT '创建用户open_id',
+	`belong_scene_id`	INT UNSIGNED  NOT NULL	COMMENT '所属地方的ID',
+	`belong_scene_name` VARCHAR(50) 	NOT NULL 	COMMENT '所属地方的名字',
+	`author`		VARCHAR(30) 	NOT NULL 			COMMENT '用户名',	
+	`pic_url`		VARCHAR(1024) 				COMMENT '照片URL',
+	`mainbody`			text						COMMENT '正文',
+	`like`				int 			DEFAULT 0 	COMMENT '点赞数',
+	`timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	INDEX(user_id),
+	PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*--------------------下面的数据库还没建-----------------------*/
 
 
 
 
-/*文章*/
-CREATE TABLE IF NOT EXISTS `article`(
-	`id`				int NOT NULL AUTO_INCREMENT COMMENT '文章ID',
-	`user_id` 			VARCHAR(100) 	NOT NULL 	COMMENT '创建用户open_id',
-	`cover_pic_url`		VARCHAR(255) 				COMMENT '封面照片URL',
-	`context`			text						COMMENT '内容',
-	`visible`			TINYINT 		DEFAULT 1 	COMMENT '文章他人是否可见，1为可见，0为不可见',
-	`like`				int 			DEFAULT 0 	COMMENT '点赞数',
-	`timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-	INDEX(user_id),
-	PRIMARY KEY ( `id ` )
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 /*文章评论*/

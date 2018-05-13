@@ -1,1 +1,32 @@
-<text>写攻略的还没写</text>
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+    <view class="page__hd">
+        <view class="page__desc">攻略地点</view>
+        <view class="page__title">广州</view>
+    </view>
+
+    <view class="page__bd">
+        <view class="weui-cells__title">标题</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__bd">
+                    <input class="weui-input" placeholder="请输入标题" bindinput="InputTitle" />
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class="weui-cells__title">正文</view>
+    <view wx:for="{{article}}" class="mainbody">
+        <view class=" weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入文本" style="height: 3.3em" bindinput="InputMainbody" data-index="{{index}}"/>
+                </view>
+            </view>
+        </view>
+
+        <view><image src="{{item.imgUrl}}" hidden="{{item.imgUrl == ''}}" class="pic"></image></view>
+        <button class="weui-btn" hidden="{{item.imgUrl != ''||!canAddPic}}" bindtap="AddPic" data-index="{{index}}" type="primary">添加图片({{curPicutreCount}}/4)</button>
+    </view>
+    <button class="weui-btn" type="primary" bindtap="Submit">完成攻略</button>
+</view>

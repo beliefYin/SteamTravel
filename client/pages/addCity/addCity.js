@@ -110,6 +110,8 @@ Page({
                 that.data.currentUploadIndex++
                 if (that.data.currentUploadIndex < that.data.tempFilePaths.length)
                     that.UploadImg()
+                else
+                    util.showSuccess("上传完成")
                 console.log("imgString:", that.data.imgUrl)
             }
         })

@@ -1,5 +1,8 @@
 {
   "pages":[
+    "pages/writeArticle/writeArticle",
+    
+    "pages/article/article",
     "pages/index/index",
     "pages/gm/gm",
     "pages/addCity/addCity",
@@ -10,8 +13,6 @@
     "pages/editProfile/editProfile",
     "pages/memory/memory",
     "pages/addMemory/addMemory",
-    "pages/article/article",
-    "pages/writeArticle/writeArticle",
     "pages/addScenicSpot/addScenicSpot"
   ],
   "window":{

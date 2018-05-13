@@ -369,6 +369,19 @@ async function UpdateSceneCommentLike(ctx, next) {
 
 }
 
+async function AddArticle(ctx, next) {
+    const { mainbody, imgUrl, author, uesrId, sceneName, placeId } = ctx.query;
+    var data = {
+        mainbody:mainbody,
+        pic_url:imgUrl, 
+        author:author,
+        user_id:uesrId, 
+        belong_scene_name:sceneName, 
+        belong_scene_id:placeId
+    }
+    res = await mysql("article").insert(data)
+    ctx.state.data = res
+}
 
 module.exports = {
     AddUser,
@@ -389,5 +402,6 @@ module.exports = {
     QueryOtherMemory,
     AddMemory,
     QuerySceneCommentLike,
-    UpdateSceneCommentLike
+    UpdateSceneCommentLike,
+    AddArticle
 }
