@@ -1,6 +1,6 @@
 <view>
   <view wx:for="{{article}}">
-    <text decode="true" space="true">{{item.text}}\n</text>
+    <text hidden="{{item.text == ''}}" decode="true" space="true">{{item.text}}\n</text>
     <image hidden="{{item.imgUrl == ''}}" src="{{item.imgUrl}}"></image>
   </view>
 </view>

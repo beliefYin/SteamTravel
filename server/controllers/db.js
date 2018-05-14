@@ -385,29 +385,15 @@ async function AddArticle(ctx, next) {
 
 async function QuerySceneArticle(ctx, next) {
     const { sceneId } = ctx.query;
-    var data = {
-        mainbody:mainbody,
-        pic_url:imgUrl, 
-        author:author,
-        user_id:uesrId, 
-        belong_scene_name:sceneName, 
-        belong_scene_id:placeId
-    }
-    res = await mysql("article").insert(data)
+
+    res = await mysql("article").select('*').where({ belong_scene_id: sceneId })
     ctx.state.data = res
 }
 
 async function QueryUserArticle(ctx, next) {
     const { uesrId } = ctx.query;
-    var data = {
-        mainbody:mainbody,
-        pic_url:imgUrl, 
-        author:author,
-        user_id:uesrId, 
-        belong_scene_name:sceneName, 
-        belong_scene_id:placeId
-    }
-    res = await mysql("article").insert(data)
+
+    res = await mysql("article").select('*').where({ belong_scene_id: uesrId })
     ctx.state.data = res
 }
 
