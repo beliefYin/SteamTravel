@@ -56,6 +56,9 @@ router.get('/AddMemory', controllers.db.AddMemory)
 router.get('/QuerySceneCommentLike', controllers.db.QuerySceneCommentLike)
 router.get('/UpdateSceneCommentLike', controllers.db.UpdateSceneCommentLike)
 router.get('/AddArticle', controllers.db.AddArticle)
+router.get('/QuerySceneArticle', controllers.db.QuerySceneArticle)
+router.get('/QueryUserArticle', controllers.db.QueryUserArticle)
+
 
 
 module.exports = router

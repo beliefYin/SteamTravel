@@ -1,7 +1,12 @@
 var app = getApp()
+var config = require('../../config')
+var util = require('../../utils/util.js')
 
 Page({
   data: {
+    author:'',
+    time:'',
+    title:'',
     article: [
       //text:"",
       //imgUrl:"",
@@ -9,23 +14,26 @@ Page({
   },
 
   onLoad: function (options) {
-    var article = [
-      {
-        text: "        这是一篇攻略哦        这个空格可以吗",
-        imgUrl: "../../image/图标.png",
+    var that = this;
+
+    var options = {
+      url: config.service.QuerySceneArticleUrl,
+
+      data:{
+        sceneId: 0,//app.globalData.naviPlaceId
       },
-      {
-        text: "       正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文",
-        imgUrl: "../../image/loading.png",
+      success(result) {
+        this.setData({
+          article: article
+        })
+          console.log('查询攻略信息成功', result);
       },
-      {
-        text: "    结尾一下好了。",
-        imgUrl: "",
-      },
-    ]
-    this.setData({
-      article: article
-    })
+      fail(error) {
+          console.log('查询攻略信息成功失败', error);
+      }
+    }
+    wx.request(options);
+    
   },
 
 

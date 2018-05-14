@@ -48,6 +48,8 @@ var config = {
         updateSceneCommentLikeUrl: `${host}/weapp/UpdateSceneCommentLike`,
 
         AddArticleUrl: `${host}/weapp/AddArticle`,
+        QuerySceneArticleUrl: `${host}/weapp/QuerySceneArticle`,
+        QueryUserArticleUrl: `${host}/weapp/QueryUserArticle`,
     }
 };
 
