@@ -1,4 +1,7 @@
 <view>
+  <view>{{title}}</view>
+  <view>{{author}}</view>
+  <view>{{time}}</view>
   <view wx:for="{{article}}">
     <text hidden="{{item.text == ''}}" decode="true" space="true">{{item.text}}\n</text>
     <image hidden="{{item.imgUrl == ''}}" src="{{item.imgUrl}}"></image>

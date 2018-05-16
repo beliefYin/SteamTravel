@@ -57,7 +57,7 @@
     <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
       <button bindtap="WriteArticle" class="writeArticleBtn" size="mini">写攻略</button>
       <view wx:for="{{articleList}}">
-      
+        <view bindtap="NaviToArticle" data-id="{{item.id}}"><text>{{item.title}}</text></view>
       </view>
     </view>
   </view>

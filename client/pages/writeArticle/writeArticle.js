@@ -100,7 +100,7 @@ Page({
   },
   Submit: function (){
     if(!app.globalData.logged){
-      util.showModel("点赞失败", "要登录才能点赞")
+      util.showModel("提交失败", "要登录才能提交文字")
       return
     }
     this.CheckBeforeSubmit()

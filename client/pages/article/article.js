@@ -19,7 +19,6 @@ Page({
 
   onLoad: function (options) {
     var that = this;
-
     var options = {
       url: config.service.QueryArticleUrl,
 
@@ -33,9 +32,31 @@ Page({
         
         var picUrl = data.pic_url.split('&&&')
         var mainbody = data.mainbody.split('&&&')
-        ------写到分割字符串
-
-
+        var article = []
+        for (let i = 0; i < mainbody.length; i++) {
+          var tmp = {
+            text:'',
+            imgUrl:''
+          }
+          if(mainbody[i] == "###")
+            tmp.text = ''        
+          else
+            tmp.text = mainbody[i]
+          if (picUrl[i] == '###')
+            tmp.imgUrl = ''
+          else
+            tmp.imgUrl = picUrl[i]
+          article.push(tmp)
+        }
+        console.log(article)
+        var time = data.timestamp.split('T')
+        that.setData({
+          article:article,
+          author: data.author,
+          time: time[0],
+          title: data.title,
+          like: data.like,
+        })
         console.log('加载攻略成功', result);
       },
       fail(error) {
@@ -43,7 +64,6 @@ Page({
       }
     }
     wx.request(options);
-    
   },
 
 

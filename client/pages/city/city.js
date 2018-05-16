@@ -66,6 +66,7 @@ Page({
       }
     });
     this.LoadScenicSpot();
+    this.QueryArticleList();
   },
 
   RequestCityData: function () {
@@ -145,6 +146,36 @@ Page({
     app.globalData.naviPlaceId = params.currentTarget.dataset.placeid
     wx.navigateTo({
       url: "../scenicSpot/scenicSpot",
+    })
+  },
+  QueryArticleList: function () {
+    var that = this;
+
+    var options = {
+      url: config.service.QuerySceneArticleUrl,
+
+      data: {
+        sceneId: app.globalData.naviPlaceId
+      },
+      success(result) {
+        if (result.data.data.length == 0)
+          return;
+        that.setData({
+          articleList: result.data.data
+        })
+        console.log('加载攻略成功', result);
+      },
+      fail(error) {
+        console.log('加载攻略失败', error);
+      }
+    }
+    wx.request(options);
+  },
+
+  NaviToArticle: function (event) {
+    app.globalData.articleId = event.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../article/article',
     })
   },
 })
