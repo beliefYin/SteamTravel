@@ -50,6 +50,8 @@ var config = {
         AddArticleUrl: `${host}/weapp/AddArticle`,
         QuerySceneArticleUrl: `${host}/weapp/QuerySceneArticle`,
         QueryUserArticleUrl: `${host}/weapp/QueryUserArticle`,
+        QueryArticleUrl: `${host}/weapp/QueryArticle`,
+        
     }
 };
 

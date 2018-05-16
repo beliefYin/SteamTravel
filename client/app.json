@@ -1,9 +1,8 @@
 {
   "pages":[
-    "pages/writeArticle/writeArticle",
-    
-    "pages/article/article",
     "pages/index/index",
+    "pages/writeArticle/writeArticle",
+    "pages/article/article",
     "pages/gm/gm",
     "pages/addCity/addCity",
     "pages/person/person",

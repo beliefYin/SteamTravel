@@ -5,6 +5,7 @@ var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var app = getApp()
 const GOOD = 1
 const BAD = 2
+var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 
 Page({
 
@@ -14,7 +15,7 @@ Page({
   data: {
     imgUrls: ["../../image/noImage.png", "../../image/noImage.png"],
     introduction: "这个景点还没有介绍哦",
-    placeName: "北固山",
+    placeName: "景点名",
 
     commentList:[
       // {
@@ -37,6 +38,16 @@ Page({
     dislikeUrl: "../../image/dislike.png",
     unselectLikeUrl: "../../image/unselectLike.png",
     unselectDisLikeUrl: "../../image/unselectDislike.png",
+
+
+    tabs: ["评论", "攻略"],
+    activeIndex: 0,
+    sliderOffset: 0,
+    sliderLeft: 0,
+
+    articleList: [
+
+    ],
 
     //---------写评论--------
     hiddenmodalput:true,
@@ -310,5 +321,19 @@ Page({
       }
     }
     wx.request(options);
-  }
+  },
+
+  WriteArticle:function(e){
+    app.globalData.naviPlaceName = this.data.placeName;
+    wx.navigateTo({
+      url: '../writeArticle/writeArticle',
+    })
+  },
+
+  tabClick: function (e) {
+    this.setData({
+      sliderOffset: e.currentTarget.offsetLeft,
+      activeIndex: e.currentTarget.id
+    });
+  },
 })

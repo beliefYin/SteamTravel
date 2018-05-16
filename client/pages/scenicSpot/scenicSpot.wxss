@@ -69,3 +69,9 @@
     font-size: 1em;
     margin:10rpx 10rpx 10rpx 10rpx;
 }
+.writeArticleBtn{
+    color: white;
+    background-color: orange;
+    margin: 15rpx 15rpx 20rpx 15rpx;
+
+}

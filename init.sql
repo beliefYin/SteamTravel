@@ -93,12 +93,13 @@ CREATE TABLE IF NOT EXISTS `article`(
 	`id`				int NOT NULL AUTO_INCREMENT COMMENT '文章ID',
 	`user_id` 			VARCHAR(100) 	NOT NULL 	COMMENT '创建用户open_id',
 	`belong_scene_id`	INT UNSIGNED  NOT NULL	COMMENT '所属地方的ID',
-	`belong_scene_name` VARCHAR(50) 	NOT NULL 	COMMENT '所属地方的名字',
-	`author`		VARCHAR(30) 	NOT NULL 			COMMENT '用户名',	
-	`pic_url`		VARCHAR(1024) 				COMMENT '照片URL',
+	`title` 					VARCHAR(50) 	NOT NULL 	COMMENT '文章名字',
+	`author`				VARCHAR(30) 	NOT NULL 			COMMENT '用户名',	
+	`pic_url`				VARCHAR(1024) 				COMMENT '照片URL',
 	`mainbody`			text						COMMENT '正文',
-	`like`				int 			DEFAULT 0 	COMMENT '点赞数',
+	`like`					int 			DEFAULT 0 	COMMENT '点赞数',
 	`timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	`title`			
 	INDEX(user_id),
 	PRIMARY KEY ( `id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

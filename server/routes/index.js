@@ -58,7 +58,7 @@ router.get('/UpdateSceneCommentLike', controllers.db.UpdateSceneCommentLike)
 router.get('/AddArticle', controllers.db.AddArticle)
 router.get('/QuerySceneArticle', controllers.db.QuerySceneArticle)
 router.get('/QueryUserArticle', controllers.db.QueryUserArticle)
-
+router.get('/QueryArticle', controllers.db.QueryArticle)
 
 
 module.exports = router

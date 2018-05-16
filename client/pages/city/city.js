@@ -49,6 +49,7 @@ Page({
   },
 
   WriteArticle:function(e){
+    app.globalData.naviPlaceName = this.data.placeName;
     wx.navigateTo({
       url: '../writeArticle/writeArticle',
     })

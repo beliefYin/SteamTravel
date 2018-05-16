@@ -19,7 +19,8 @@ Page({
     author:'',
     currentUploadIndex: 0,
     mainbody:'',
-    imgUrl:''
+    imgUrl:'',
+    placeName:'',
   },
 
   InputTitle: function (event) {
@@ -90,8 +91,8 @@ Page({
         this.data.article[index].imgUrl = "###"
       if(index != 0)
       {
-        this.data.mainbody = this.data.mainbody + ';'
-        this.data.imgUrl = this.data.imgUrl + ';'     
+        this.data.mainbody = this.data.mainbody + '&&&'
+        this.data.imgUrl = this.data.imgUrl + '&&&'     
       }
       this.data.mainbody = this.data.mainbody + this.data.article[index].text
       this.data.imgUrl = this.data.imgUrl + this.data.article[index].imgUrl
@@ -114,8 +115,8 @@ Page({
         imgUrl: this.data.imgUrl,
         author: app.globalData.userInfo.nickName,
         uesrId: app.globalData.userInfo.openId,
-        sceneName: app.globalData.naviPlaceName,
-        placeId: app.globalData.naviPlaceId
+        placeId: app.globalData.naviPlaceId,
+        title: this.data.title
       },
       success(res) {
         console.log("添加文章成功", res);
@@ -127,6 +128,9 @@ Page({
     util.showSuccess("上传完成")
   },
   onLoad: function (options) {
+    this.setData({
+      placeName:app.globalData.naviPlaceName
+    }) 
   },
   UploadImg: function () {
     var that = this;

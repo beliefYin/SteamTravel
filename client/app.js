@@ -12,6 +12,7 @@ App({
       logged:false,
       naviPlaceId: 0,
       naviPlaceName:"还没做",//用来写攻略
+      articleId:0,
 
       memoryVisible: 1,
       infoVisible:1,

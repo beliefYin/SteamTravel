@@ -370,14 +370,14 @@ async function UpdateSceneCommentLike(ctx, next) {
 }
 
 async function AddArticle(ctx, next) {
-    const { mainbody, imgUrl, author, uesrId, sceneName, placeId } = ctx.query;
+    const { mainbody, imgUrl, author, uesrId, sceneName, placeId, title } = ctx.query;
     var data = {
         mainbody:mainbody,
         pic_url:imgUrl, 
         author:author,
         user_id:uesrId, 
-        belong_scene_name:sceneName, 
-        belong_scene_id:placeId
+        belong_scene_id:placeId,
+        title:title
     }
     res = await mysql("article").insert(data)
     ctx.state.data = res
@@ -386,14 +386,21 @@ async function AddArticle(ctx, next) {
 async function QuerySceneArticle(ctx, next) {
     const { sceneId } = ctx.query;
 
-    res = await mysql("article").select('*').where({ belong_scene_id: sceneId })
+    res = await mysql("article").select('id','title').where({ belong_scene_id: sceneId })
     ctx.state.data = res
 }
 
 async function QueryUserArticle(ctx, next) {
     const { uesrId } = ctx.query;
 
-    res = await mysql("article").select('*').where({ belong_scene_id: uesrId })
+    res = await mysql("article").select('*').where({ user_id: uesrId })
+    ctx.state.data = res
+}
+
+async function QueryArticle(ctx, next) {
+    const { id } = ctx.query;
+
+    res = await mysql("article").select('*').where({ id: id })
     ctx.state.data = res
 }
 
@@ -420,5 +427,6 @@ module.exports = {
     UpdateSceneCommentLike,
     AddArticle,
     QuerySceneArticle,
-    QueryUserArticle
+    QueryUserArticle,
+    QueryArticle
 }

@@ -1,7 +1,7 @@
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
     <view class="page__hd">
         <view class="page__desc">攻略地点</view>
-        <view class="page__title">广州</view>
+        <view class="page__title">{{placeName}}</view>
     </view>
 
     <view class="page__bd">

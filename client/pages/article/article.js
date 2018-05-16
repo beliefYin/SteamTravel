@@ -7,9 +7,13 @@ Page({
     author:'',
     time:'',
     title:'',
+    like:'',
     article: [
       //text:"",
       //imgUrl:"",
+    ],
+    comments:[
+
     ],
   },
 
@@ -17,19 +21,25 @@ Page({
     var that = this;
 
     var options = {
-      url: config.service.QuerySceneArticleUrl,
+      url: config.service.QueryArticleUrl,
 
       data:{
-        sceneId: 0,//app.globalData.naviPlaceId
+        id: app.globalData.articleId
       },
       success(result) {
-        this.setData({
-          article: article
-        })
-          console.log('查询攻略信息成功', result);
+        if (result.data.data.length == 0)
+          return;
+        var data = result.data.data[0]
+        
+        var picUrl = data.pic_url.split('&&&')
+        var mainbody = data.mainbody.split('&&&')
+        ------写到分割字符串
+
+
+        console.log('加载攻略成功', result);
       },
       fail(error) {
-          console.log('查询攻略信息成功失败', error);
+        console.log('加载攻略失败', error);
       }
     }
     wx.request(options);
