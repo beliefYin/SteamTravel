@@ -69,19 +69,6 @@ Page({
     
    
   },
-  CheckBeforeSubmit: function(){
-    if (this.data.title == '')
-    {
-      util.showModel('错误','请输入标题')
-      return
-    }
-    if (this.data.article[0].txt == '')
-    {
-      util.showModel('错误', '请输入正文')
-      return
-    }
-  },
-
   PackData: function (){
     for (let index = 0; index < this.data.article.length; index++) {
       const element = this.data.article[index];
@@ -99,17 +86,30 @@ Page({
     }
   },
   Submit: function (){
-    if(!app.globalData.logged){
+    if (!app.globalData.logged) {
       util.showModel("提交失败", "要登录才能提交文字")
       return
     }
-    this.CheckBeforeSubmit()
-    this.PackData()
+    if (this.data.title == '') {
+      util.showModel('错误', '请输入标题')
+      return
+    }
+    if (this.data.article[0].txt == '') {
+      util.showModel('错误', '请输入正文')
+      return
+    }
+    wx.showToast({
+      title: "上传中",
+      icon: 'loading',
+    })
+    this.UploadImg()
+  },
+  DoUpload: function(){
     var that = this;
-  
+    this.PackData()
     qcloud.request({
       url: config.service.AddArticleUrl,
-      login:true,
+      login: true,
       data: {
         mainbody: this.data.mainbody,
         imgUrl: this.data.imgUrl,
@@ -134,11 +134,22 @@ Page({
   },
   UploadImg: function () {
     var that = this;
-    util.showBusy("上传中");
+    if (this.data.currentUploadIndex >= this.data.article.length)
+    {
+      this.DoUpload();
+      return;
+    }
+    if (this.data.article[this.data.currentUploadIndex].imgUrl == '')
+    {
+      this.data.currentUploadIndex++;
+      this.UploadImg();
+      return
+    }
+
     //上传图片
     wx.uploadFile({
       url: config.service.uploadUrl,
-      filePath: this.data.article[this.data.currentUploadIndex],
+      filePath: this.data.article[this.data.currentUploadIndex].imgUrl,
       name: 'file',
 
       success: function (res) {
@@ -151,13 +162,9 @@ Page({
       complete: function (res) {
         res = JSON.parse(res.data)
         console.log('上传图片', res)
-        if (that.data.imgUrl != '')
-          that.data.imgUrl = that.data.imgUrl + '&&&'
-        that.data.imgUrl = that.data.imgUrl + res.data.imgUrl
+        that.data.article[that.data.currentUploadIndex].imgUrl = res.data.imgUrl
         that.data.currentUploadIndex++
-        if (that.data.currentUploadIndex < that.data.article.length 
-          && that.data.article[that.data.currentUploadIndex].imgUrl != '')
-          that.UploadImg()
+        that.UploadImg()
         console.log("imgString:", that.data.imgUrl)
       }
     })
