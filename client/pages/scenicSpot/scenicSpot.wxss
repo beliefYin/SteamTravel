@@ -75,3 +75,10 @@
     margin: 15rpx 15rpx 20rpx 15rpx;
 
 }
+.articleItem{
+    padding: 15rpx 15rpx 20rpx 15rpx;
+    font-size: 35rpx;
+    height: 50rpx;
+ 
+    border: 3px solid gray;
+}

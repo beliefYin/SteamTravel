@@ -152,33 +152,13 @@ Page({
         res = JSON.parse(res.data)
         console.log('上传图片', res)
         if (that.data.imgUrl != '')
-          that.data.imgUrl = that.data.imgUrl + ';'
+          that.data.imgUrl = that.data.imgUrl + '&&&'
         that.data.imgUrl = that.data.imgUrl + res.data.imgUrl
         that.data.currentUploadIndex++
         if (that.data.currentUploadIndex < that.data.article.length 
           && that.data.article[that.data.currentUploadIndex].imgUrl != '')
           that.UploadImg()
         console.log("imgString:", that.data.imgUrl)
-      }
-    })
-  },
-  // 上传图片接口
-  doUpload: function () {
-    var that = this
-
-    // 选择图片
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function (res) {
-        that.data.tempFilePaths = res.tempFilePaths;
-        that.data.currentUploadIndex = 0;
-        that.UploadImg();
-
-      },
-      fail: function (e) {
-        console.error(e)
       }
     })
   },
