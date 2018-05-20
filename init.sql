@@ -1,6 +1,6 @@
 /*用户资料表*/
 CREATE TABLE IF NOT EXISTS `user_info`(
-	` ` 			VARCHAR(100) 	NOT NULL,
+	`open_id` 			VARCHAR(100) 	NOT NULL,
 	`user_name` 		VARCHAR(30) 	NOT NULL 			COMMENT '用户名',	
 	`icon_url` 			VARCHAR(255) 	NOT NULL			COMMENT '头像url',
 	`introduction` 		VARCHAR(100) 	NOT NULL			COMMENT '一句话简介',
@@ -77,12 +77,12 @@ CREATE TABLE IF NOT EXISTS `recommendation`(
 
 /*回忆长廊*/
 CREATE TABLE IF NOT EXISTS `memory_gallery`(
-	`id`				int NOT NULL AUTO_INCREMENT COMMENT '回忆项ID',
+	`id`				INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '回忆项ID',
 	`user_id` 			VARCHAR(100) 	NOT NULL 	COMMENT '用户open_id',
-	`pic_url`			VARCHAR(255) 				COMMENT '照片URL',
-	`content`		VARCHAR(255) 				COMMENT '内容',
+	`pic_url`			VARCHAR(255) 		NOT NULL		COMMENT '照片URL',
+	`content`		VARCHAR(255) 	NOT NULL			COMMENT '内容',
 	`memory_visible`	TINYINT 		DEFAULT 1 	COMMENT '该回忆项他人是否可见，1为可见，0为不可见',
-	`like`				int 			DEFAULT 0 	COMMENT '点赞数',
+	`like`				INT UNSIGNED 			DEFAULT 0 	COMMENT '点赞数',
 	`timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
 	INDEX(user_id),
 	PRIMARY KEY ( `id`)
@@ -90,16 +90,15 @@ CREATE TABLE IF NOT EXISTS `memory_gallery`(
 
 /*文章*/
 CREATE TABLE IF NOT EXISTS `article`(
-	`id`				int NOT NULL AUTO_INCREMENT COMMENT '文章ID',
+	`id`				INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '文章ID',
 	`user_id` 			VARCHAR(100) 	NOT NULL 	COMMENT '创建用户open_id',
 	`belong_scene_id`	INT UNSIGNED  NOT NULL	COMMENT '所属地方的ID',
 	`title` 					VARCHAR(50) 	NOT NULL 	COMMENT '文章名字',
 	`author`				VARCHAR(30) 	NOT NULL 			COMMENT '用户名',	
-	`pic_url`				VARCHAR(1024) 				COMMENT '照片URL',
-	`mainbody`			text						COMMENT '正文',
-	`like`					int 			DEFAULT 0 	COMMENT '点赞数',
+	`pic_url`				VARCHAR(1024) 	NOT NULL			COMMENT '照片URL',
+	`mainbody`			text			NOT NULL			COMMENT '正文',
+	`like`					INT UNSIGNED 			DEFAULT 0 	COMMENT '点赞数',
 	`timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-	`title`			
 	INDEX(user_id),
 	PRIMARY KEY ( `id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
