@@ -59,6 +59,9 @@ router.get('/AddArticle', controllers.db.AddArticle)
 router.get('/QuerySceneArticle', controllers.db.QuerySceneArticle)
 router.get('/QueryUserArticle', controllers.db.QueryUserArticle)
 router.get('/QueryArticle', controllers.db.QueryArticle)
-
-
+router.get('/QueryOtherUser', controllers.db.QueryOtherUser)
+router.get('/Star', controllers.db.Star)
+router.get('/QueryStarList', controllers.db.QueryStarList)
+router.get('/LoadMessage', controllers.db.LoadMessage)
+router.get('/SendMessage', controllers.db.SendMessage)
 module.exports = router

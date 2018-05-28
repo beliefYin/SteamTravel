@@ -1,0 +1,38 @@
+
+.Icon{
+    width:100rpx;
+    height:100rpx;
+}
+.Name{
+    font-size: 17px;
+}
+
+.messageIcon{
+    width: 80rpx;
+    height: 60rpx;
+    margin-left: 46%;
+    margin-top: 15rpx;
+}
+
+
+
+
+.messageContainer{
+    border: 2px solid rgba(0, 0, 0, .1);
+    margin: 5px 10px 5px 10px;/*上右下左*/
+    padding: 5px 5px 5px 5px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+}
+.messageCol{
+    display: flex;
+    flex-direction:column;
+}
+.messageColOne{
+    width: 20%;
+}
+.commentIcon{
+    width:100rpx;
+    height:100rpx;
+}

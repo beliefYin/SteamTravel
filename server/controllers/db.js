@@ -280,12 +280,20 @@ async function QueryOtherMemory(ctx, next) {
     var res = await mysql("user_info").select('memory_visible').where({ open_id: userId })
     if (res[0].memory_visible == 0)//不可见
     {
-        ctx.state.data = res
+        ctx.state.data = []
         ctx.state.code = -1        
         return 
     }
     res = await mysql("memory_gallery").select('pic_url', 'memory_visible', 'like', 'timestamp','content').where({ memory_visible: 1, user_id: userId })
-      
+    for (let index = 0; index < res.length; index++) {
+        const element = array[index];
+        if (element.memory_visible)
+        {
+            res.splice(index, 1);
+            index--;            
+        }
+    }
+    ctx.state.data = res
 }
 
 async function AddMemory(ctx, next) {
@@ -404,6 +412,78 @@ async function QueryArticle(ctx, next) {
     ctx.state.data = res
 }
 
+async function QueryOtherUser(ctx, next) {
+    const { openId } = ctx.query
+    var userData = {
+        open_id: openId,
+    }
+    var res = await mysql("user_info").select('*').where({ open_id: openId }).limit(1)
+
+    if (res.length == 0 || res[0].info_visible == 0)
+    {
+        ctx.state.data = []
+        ctx.state.code = -1     
+    }
+    else
+    {
+        ctx.state.data = res
+        ctx.state.code = 1
+    }
+}
+
+async function Star(ctx, next) {
+    const { myId,otherId,name,icon } = ctx.query
+    
+    var res = await mysql("star_list").select('*').where({ my_id: myId, star_id: otherId }).limit(1)
+
+    if (res.length == 1 ) {
+        ctx.state.data = []
+        ctx.state.code = -1
+    }
+    else {
+        var userData = {
+            my_id: myId,
+            star_id: otherId,
+            user_name: name,
+            icon_url: icon
+        }
+        await mysql("star_list").insert(userData)
+        res = await mysql("user_info").select('fans_number').where({ open_id: star_id}).limit(1)
+        if(res.length == 0)
+            return;
+        var fans_number = res[0].fans_number + 1
+        await mysql("user_info").update({ fans_number: fans_number }).where({ open_id: star_id })
+        ctx.state.data = res
+        ctx.state.code = 1
+    }
+}
+
+async function QueryStarList(ctx, next) {
+    const { myId } = ctx.query
+    var res = await mysql("star_list").select('*').where({ my_id: myId })
+    ctx.state.data = res
+}
+
+async function SendMessage(ctx, next) {
+    const { send_user_id, recv_user_id, context, send_user_icon, send_user_name, is_read } = ctx.query
+    var message = {
+        send_user_id: send_user_id,
+        recv_user_id: recv_user_id,
+        context: context,
+        send_user_icon: send_user_icon,
+        send_user_name: send_user_name,
+    }
+    var res = await mysql("message").insert(message)
+    ctx.state.data = res
+}
+async function LoadMessage(ctx, next) {
+    const { myId } = ctx.query
+    var res = await mysql("message").select('*').where({ recv_user_id: myId })
+    ctx.state.data = res
+}
+
+    
+    
 
 module.exports = {
     AddUser,
@@ -428,5 +508,10 @@ module.exports = {
     AddArticle,
     QuerySceneArticle,
     QueryUserArticle,
-    QueryArticle
+    QueryArticle,
+    QueryOtherUser,
+    Star,
+    QueryStarList,
+    SendMessage,
+    LoadMessage
 }

@@ -1,0 +1,32 @@
+/* pages/memory/memory.wxss */
+
+.addBtnContainer{
+    display: flex;
+    margin-left: 85%;
+    margin-right: 2%;
+    margin-top:10rpx;
+}
+.addMemoryBtn {
+    width:150rpx;
+    height:60rpx;
+}
+
+.memoryContainer{
+    margin:20px 20px 20px 20px;
+}
+.memoryPic{
+    width: 100%;
+}
+.memoryItem{
+    border-style: solid;
+    border-width: 1px;
+    margin:10px 0px 10px 0px;
+}
+.memoryTxt{
+    margin: 0px 5px 0px 5px;
+}
+.memoryTime{
+    margin-left: 78%;
+    color: gray;
+    font-size: 15px;
+}

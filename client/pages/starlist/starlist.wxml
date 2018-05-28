@@ -1,0 +1,12 @@
+<view class="page__hd">
+    <view class="page__title">关注列表</view>
+</view>
+<view>
+    <view wx:for="{{starlist}}">
+        <view bindtap="NaviToOther" data-id="{{item.star_id}}" class="item">
+            <image class="icon" src="{{item.icon_url}}"></image>
+            <text class="name">{{item.user_name}}</text>
+        </view>
+        <view class="line"></view>
+    </view>
+</view>

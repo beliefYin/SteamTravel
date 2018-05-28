@@ -66,6 +66,7 @@ Page({
     commentContent:"",
     //-----------------------
   },
+  
   UpdateLike: function (commentId,type) {
     console.log(type)
     qcloud.request({
@@ -85,6 +86,12 @@ Page({
         util.showModel('点赞失败', error)
         console.log('点赞失败', error)
       }
+    })
+  },
+  WatchOther: function (event) {
+    app.globalData.otherUserId = event.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../watchOther/watchOther',
     })
   },
 
@@ -266,6 +273,15 @@ Page({
     wx.request(options);
   },
   onLoad: function () {
+    var that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+          sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
+        });
+      }
+    });
     this.QueryArticleList();
   },
   /**

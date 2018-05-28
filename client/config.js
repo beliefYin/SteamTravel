@@ -52,6 +52,11 @@ var config = {
         QueryUserArticleUrl: `${host}/weapp/QueryUserArticle`,
         QueryArticleUrl: `${host}/weapp/QueryArticle`,
         
+        QueryOtherUserUrl: `${host}/weapp/QueryOtherUser`,
+        StarUrl: `${host}/weapp/Star`,
+        QueryStarListUrl: `${host}/weapp/QueryStarList`,
+        LoadMessageUrl: `${host}/weapp/LoadMessage`,
+        SendMessageUrl: `${host}/weapp/SendMessage`,
     }
 };
 

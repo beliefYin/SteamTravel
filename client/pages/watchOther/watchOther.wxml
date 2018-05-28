@@ -1,0 +1,78 @@
+<!--pages/person/person.wxml-->
+
+<view class="iconContainer"><image src="{{iconUrl}}" class="icon"></image></view>
+
+<view class="nameAndSex">
+  <view class="userName">
+    <text >{{userName}}</text>
+  </view>
+  <image src="{{sex == 0?manUrl:womanUrl}}" class="sexPic"></image>
+</view>
+
+
+<view class="theTwoBtn">
+    <button bindtap="NavigateToMemory" class="memoryBtn" type="primary" size="mini">回忆长廊</button>
+    <button class="changeInfoBtn" bindtap="WriteMessage" size="mini">私信</button>
+</view>
+
+<view class="briefIntro">
+  <text >“{{briefIntro}}”</text>
+</view>
+
+<view class="fansAndStars">
+  <text class="fans">粉丝: {{fans}}</text>
+</view>
+<button class="starBtn" bindtap="Star" >关注</button>
+<view class="line"></view>
+
+<view class="weui-tab">
+  <view class="weui-navbar">
+    <block wx:for="{{tabs}}" wx:key="*this">
+      <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+        <view class="weui-navbar__title">{{item}}</view>
+      </view>
+    </block>
+    <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+  </view>
+  <view class="weui-tab__panel">
+    <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+      <view wx:for="{{commentList}}" >
+        <view class="commentContainer">
+          <view class="commentCol commentColOne">
+            <image src="{{item.icon_url}}" class="commentIcon"></image>
+            <text class="commentName">{{item.scenic_spot_name}}</text>
+          </view>
+          <view class="commentCol commentTxt">
+            <text>{{item.content}}</text>
+          </view>
+          <view class="commentCol">
+            <image src="{{likeUrl}}" class="commentTypePic" hidden="{{item.evaluation != 1}}"></image>
+            <text hidden="{{item.like != 1}}" class="recomTxt">推荐</text>
+            <image src="{{dislikeUrl}}" class="commentTypePic" hidden="{{item.evaluation != 2}}"></image>
+            <text hidden="{{item.like != 0}}" class="noRecomTxt">不推荐</text>
+          </view>
+        </view>
+        <view class="commentAgree">
+          <text class="commentAgreeText">评论对他人是否有帮助</text>
+          <image src="{{likeUrl}}" class="commentAgreePic"></image>
+          <text class="commentAgreeText">{{item.agree}}</text>
+          <image src="{{dislikeUrl}}" class="commentAgreePic"></image>
+          <text class="commentAgreeText">{{item.disagree}}</text>
+        </view>
+          
+        <view class="commentLine"></view>
+      </view>
+    </view>
+    <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+      <view wx:for="{{articleList}}">
+        <view bindtap="NaviToArticle" data-id="{{item.id}}" class="articleItem">
+          <text>{{item.title}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<modal hidden="{{hiddenMessage}}" title="私信" confirm-text="发送" cancel-text="取消" bindcancel="HideMessage" bindconfirm="SendMessage">
+  <input type='text' placeholder="请写下私信内容" bindinput="InputMessage" auto-focus/>
+</modal>

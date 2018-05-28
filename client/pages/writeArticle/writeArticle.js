@@ -21,6 +21,8 @@ Page({
     mainbody:'',
     imgUrl:'',
     placeName:'',
+
+    isPerson: true
   },
 
   InputTitle: function (event) {
@@ -128,8 +130,14 @@ Page({
     util.showSuccess("上传完成")
   },
   onLoad: function (options) {
+    var isPerson = true;
+    if(app.globalData.naviPlaceId == 0)
+      isPerson = true;
+    else
+      isPerson = false;
     this.setData({
-      placeName:app.globalData.naviPlaceName
+      placeName:app.globalData.naviPlaceName,
+      isPerson:isPerson
     }) 
   },
   UploadImg: function () {

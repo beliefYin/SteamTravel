@@ -8,14 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    recommendList:[
-      {
-        // brief_pic_url: "../../image/loading.png",
-        // scenic_spot_name: "镇江",
-        // brief_introduction: "镇江是个污染很严重的城市",
-        // url: "镇江url"
-      },
-    ],
+    recommendList:[],
     inputCityName: null,
   },
 
@@ -45,7 +38,7 @@ Page({
         else
         {
           that.setData({recommendList:result.data.data.scenicSpot})
-          util.showSuccess('请求成功');
+          util.showSuccess('加载成功');
           console.log('请求推荐列表成功', result)
         }
        
@@ -161,52 +154,4 @@ Page({
   },
   //↑wxSearch接口
 
-    /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

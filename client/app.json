@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/loading/loading",
     "pages/index/index",
     "pages/writeArticle/writeArticle",
     "pages/article/article",
@@ -12,13 +13,17 @@
     "pages/editProfile/editProfile",
     "pages/memory/memory",
     "pages/addMemory/addMemory",
-    "pages/addScenicSpot/addScenicSpot"
+    "pages/addScenicSpot/addScenicSpot",
+    "pages/watchOther/watchOther",
+    "pages/message/message",
+    "pages/otherMemory/otherMemory",
+    "pages/starlist/starlist"
   ],
   "window":{
     "backgroundColor":"#F6F6F6",
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "Wafer Quick Start",
+    "navigationBarTitleText": "到处走走",
     "navigationBarTextStyle":"black"
   },
   "tabBar": {

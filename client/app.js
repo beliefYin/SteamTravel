@@ -20,22 +20,21 @@ App({
 
       tmpCityData: null,
       tmpScenicSpotData: null,
-      isRefreshMemory: true
+      isRefreshMemory: true,
+      otherUserId:0,
     },
     onLaunch: function () {
         qcloud.setLoginUrl(config.service.loginUrl)
-        this.login()
+        //this.login()
     },
     // 用户登录示例
     login: function () {
       if (this.globalData.logged) return
 
-      util.showBusy('正在登录')
       var that = this
       // 调用登录接口
       qcloud.login({
         success() {
-          util.showSuccess('登录成功');
           qcloud.request({
             url: config.service.requestUrl,
             login: true,

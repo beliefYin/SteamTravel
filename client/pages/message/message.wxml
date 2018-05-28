@@ -1,0 +1,27 @@
+<view>
+  <image src="{{messageIcon}}" class="messageIcon"></image>
+  <view wx:for="{{messageList}}" >
+    <view class="messageContainer">
+      <view class="messageCol messageColOne">
+        <image src="{{item.send_user_icon}}" class="commentIcon"></image>
+        <text>{{item.send_user_name}}</text>
+      </view>
+      <view>
+        <text>{{item.context}}</text>
+      </view>
+      <view>
+        <button bindtap="WriteMessage" type="primary" size="mini" data-id="{{item.send_user_id}}">回信</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<modal hidden="{{hiddenMessage}}" title="私信" confirm-text="提交" cancel-text="取消" bindcancel="HideMessage" bindconfirm="SendMessage">
+  <input type='text' placeholder="请写下私信内容" bindinput="InputMessage" auto-focus/>
+  <radio-group class="radio-group" bindchange="CommentTypeChange">
+    <label class="radio" wx:for="{{commentType}}">
+      <radio value="{{item.value}}" checked="{{item.checked}}" />{{item.str}}
+    </label>
+  </radio-group>
+</modal>

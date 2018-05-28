@@ -1,0 +1,20 @@
+.icon {
+    width:80rpx;
+    height:80rpx;
+}
+
+.item{
+    margin: 0 5% 0 5%;
+}
+.line{
+    width:90%;
+    height:2rpx;
+    background:rgb(223, 220, 220);
+    margin-left: 5%;
+    margin-top: 5rpx;
+}
+
+.name{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 40rpx;
+}

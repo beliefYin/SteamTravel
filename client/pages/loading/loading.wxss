@@ -1,0 +1,37 @@
+.loading{
+    margin-left: 10%;
+    margin-right: 10%; 
+    border: solid 1rpx gray;
+}
+
+.pic{
+    margin:30% 20% 0 20%;
+    width:60%;
+    border-radius:50%;
+}
+
+.text{
+    margin-top: 50rpx;
+    margin-left: 25%;
+    display:flex;
+    align-items:center;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 100rpx;
+}
+
+page{
+    background-color: #f0edcc;
+}
+
+.loginBtn{
+    margin:50rpx 20% 60rpx 20%;
+    width:60%;
+    color:white;
+}
+
+.visitBtn{
+    margin:0 20% 40rpx 20%;
+    width:60%;
+    background-color:orange;
+    color:white;
+}

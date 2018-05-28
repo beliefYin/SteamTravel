@@ -1,0 +1,16 @@
+
+<image src="../../image/图标.png" class="pic"></image>
+
+<view hidden= "{{hasAccredit == 1 || hasAccredit == 0}}">
+    <button bindtap="Accredit" open-type="getUserInfo" hidden="{{showEnterButton}}" class="loginBtn" type="primary">登录</button>
+    <button bindtap="UserEnter" hidden="{{!showEnterButton}}" class="loginBtn" type="primary">登录用户入口</button>
+    <button bindtap="VisitEnter"  class="visitBtn">游客用户入口</button>
+</view>
+
+
+<view hidden="{{hasAccredit == 2 || hasAccredit == 0}}">
+    <view class="text">
+        <text>Loading...</text>
+    </view>
+    <progress active="{{active}}" stroke-width="12" activeColor="green" percent="100" class="loading"></progress>
+</view>

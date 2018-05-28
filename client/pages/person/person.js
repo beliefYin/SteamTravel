@@ -24,9 +24,11 @@ Page({
     changeInfoBtnUrl:"../../image/changeInfoBtn.png",
     leftQuotesUrl:"../../image/leftQuotes.png",
     rightQuotesUrl:"../../image/rightQuotes.png",
+    messageIcon: "../../image/message.png",
     briefIntro:"加载中",
     stars:0, //关注数
     fans:0, //粉丝数
+    isLogged:true,
 
 
     tabs: ["评论", "帖子"],
@@ -48,14 +50,7 @@ Page({
       // `timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
       },
     ],
-    articleList : [
-      {
-        
-      },
-      {
-
-      },
-    ]
+    articleList : []
   },
 
   tabClick: function (e) {
@@ -68,6 +63,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if(!app.globalData.userInfo)
+    {
+      this.setData({ isLogged:false})
+      return;
+    }
+
     var that = this;
     wx.getSystemInfo({
       success: function (res) {
@@ -77,12 +78,8 @@ Page({
         });
       }
     });
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+    this.QueryArticleList();
+    this.LoadComment();
     
   },
 
@@ -91,11 +88,20 @@ Page({
    */
   onShow: function () {
     if (app.globalData.logged) {
+      if(!this.data.isLogged)
+      {
+        this.onLoad();
+      }
       this.setData({
         userInfo: app.globalData.userInfo,
         iconUrl: app.globalData.userInfo.avatarUrl,
         userName: app.globalData.userInfo.nickName,
+        isLogged: true
       })
+    }
+    else
+    {
+      return;
     }
     if(app.globalData.hasChangedUserInfo)
     {
@@ -126,9 +132,8 @@ Page({
         }
       });
       app.globalData.hasChangedUserInfo = false;
-      console.log("refresh")
     }
-    this.LoadComment()
+    
     
   },
 
@@ -207,6 +212,54 @@ Page({
         content: '您还没有登录，要登录了进入回忆长廊哦',
       })
   },
+  NaviToArticle: function (event) {
+    app.globalData.articleId = event.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../article/article',
+    })
+  },
+  QueryArticleList: function () {
+    var that = this;
+    if (!app.globalData.logged)
+      return;
+    var options = {
+      url: config.service.QueryUserArticleUrl,
 
+      data: {
+        uesrId: app.globalData.userInfo.openId
+      },
+      success(result) {
+        if (result.data.data.length == 0)
+          return;
+        that.setData({
+          articleList: result.data.data
+        })
+        console.log('加载攻略成功', result);
+      },
+      fail(error) {
+        console.log('加载攻略失败', error);
+      }
+    }
+    wx.request(options);
+  },
+  WriteArticle: function (e) {
+    app.globalData.naviPlaceName = "";
+    app.globalData.naviPlaceId = 0;
+    wx.navigateTo({
+      url: '../writeArticle/writeArticle',
+    })
+  },
+  NaviToStarList: function () {
+    wx.navigateTo({
+      url: '../starlist/starlist',
+    })
+  },
+  NaviToMessage:function(){
+    if (!app.globalData.logged)
+      return;
 
+    wx.navigateTo({
+      url: '../message/message',
+    })
+  }
 })

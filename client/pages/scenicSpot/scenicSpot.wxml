@@ -26,10 +26,10 @@
 
   <view class="weui-tab__panel">
     <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
-      <button bindtap="ShowWriteCommentModal" size="mini" type="primary">写评论</button>
+      <button bindtap="ShowWriteCommentModal" size="mini" type="primary" class="writeArticleBtn">写评论</button>
       <view wx:for="{{commentList}}" >
         <view class="commentContainer">
-          <view class="commentCol commentColOne">
+          <view class="commentCol commentColOne" bindtap="WatchOther" data-id = "{{item.user_id}}">
             <image src="{{item.icon_url}}" class="commentIcon"></image>
             <text class="commentName">{{item.user_name}}</text>
           </view>

@@ -59,13 +59,12 @@
     justify-content: center;
 }
 .fans{
-    text-align: center;
     font-size: 18px;
 }
-
-.starBtn {
-    color:#fff;
-    background-color: rgb(27, 213, 226);
+.stars{
+    text-align: right;
+    margin-right: 30%;
+    font-size: 18px;
 }
 .line{
     width:70%;
@@ -149,8 +148,9 @@
     border: 3px solid gray;
 }
 
-.messageIcon{
-    width: 80rpx;
-    height: 60rpx;
-    margin: 10px 30px 10px 20px; /*上右下左*/
+.starBtn {
+    width: 20%;
+    margin: 10px 40% 10px 40%; /*上右下左*/
+    color:#fff;
+    background-color: rgb(27, 213, 226);
 }

@@ -1,0 +1,11 @@
+<view class="memoryContainer">
+    <view wx:for="{{memoryList}}" class="memoryItem">
+        <image class="memoryPic" src="{{item.pic_url}}" bindtap="previewImg" data-index="{{index}}"></image>
+        <view class="memoryTxt">
+            <text>{{item.content}}</text>
+        </view>
+        <view>
+            <text class="memoryTime">{{item.timestamp}}</text>
+        </view>
+    </view>
+</view>
