@@ -145,3 +145,16 @@ CREATE TABLE IF NOT EXISTS `article_comment`(
 
 
 
+/*私信*/
+CREATE TABLE IF NOT EXISTS `message`(
+	`id`				INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '私信ID',
+	`send_user_id` 			VARCHAR(100) 	NOT NULL 	COMMENT '发送用户id',
+	`recv_user_id`	VARCHAR(100)  NOT NULL	COMMENT '接收用户id',
+	`context` 			VARCHAR(256) 	NOT NULL 	COMMENT '内容',
+	`send_user_icon`				VARCHAR(255) 	NOT NULL			COMMENT '发送用户头像URL',
+	`send_user_name`			VARCHAR(30)			NOT NULL			COMMENT '发送用户名字',
+	`is_read`					TINYINT 			DEFAULT 0 	COMMENT '是否已读',
+	`timestamp`			timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '发送时间',
+	INDEX(user_id),
+	PRIMARY KEY ( `id` )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
