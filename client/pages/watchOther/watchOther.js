@@ -209,8 +209,8 @@ Page({
       data: {
         myId: app.globalData.userInfo.openId,
         otherId: app.globalData.otherUserId,
-        name: app.globalData.userInfo.nickName,
-        icon: app.globalData.userInfo.avatarUrl
+        name: this.data.userName,
+        icon: this.data.iconUrl
       },
       success(res) {
         if (res.data.code == -1) {
@@ -219,7 +219,7 @@ Page({
         }
         var tmpFans = that.data.fans + 1
         that.setData({
-          fans:fans+1
+          fans: tmpFans
         })
         util.showSuccess("关注成功")
         console.log("Star success", res);

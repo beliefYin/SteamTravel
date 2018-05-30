@@ -25,10 +25,11 @@ Page({
     leftQuotesUrl:"../../image/leftQuotes.png",
     rightQuotesUrl:"../../image/rightQuotes.png",
     messageIcon: "../../image/message.png",
-    briefIntro:"加载中",
+    briefIntro:"空空如也",
     stars:0, //关注数
     fans:0, //粉丝数
     isLogged:true,
+    gm:0,
 
 
     tabs: ["评论", "帖子"],
@@ -78,8 +79,7 @@ Page({
         });
       }
     });
-    this.QueryArticleList();
-    this.LoadComment();
+    
     
   },
 
@@ -121,7 +121,8 @@ Page({
           that.setData({
             briefIntro:data.introduction,
             sex:data.sex,
-            fans:data.fans_number
+            fans:data.fans_number,
+            gm:data.gm
           })
           app.globalData.memoryVisible = data.memory_visible;
           app.globalData.infoVisible =  data.info_visible;
@@ -133,12 +134,12 @@ Page({
       });
       app.globalData.hasChangedUserInfo = false;
     }
-    
+    this.QueryArticleList();
+    this.LoadComment();
     
   },
 
   LoadComment: function () {
-    util.showBusy('请求评论中...')
     var that = this
     var options = {
       url: config.service.queryUserCommentUrl,
@@ -150,7 +151,6 @@ Page({
         that.setData({
           commentList: result.data.data
         })
-        util.showSuccess('请求评论成功');
         console.log('请求评论成功', result)
       },
       fail(error) {
@@ -169,24 +169,22 @@ Page({
   },
 
   /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+    
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+    console.log(this.data.gm)
+    if (this.data.gm > 0) {
+      wx.navigateTo({
+        url: "../gm/gm"
+      })
+    }
   },
 
   NavigateToEditProfile: function () {

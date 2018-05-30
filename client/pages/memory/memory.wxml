@@ -8,7 +8,7 @@
             <text>{{item.content}}</text>
         </view>
         <view>
-            <text class="memoryTime">{{item.timestamp}}</text>
+            <text class="memoryTime">{{item.time}}</text>
         </view>
     </view>
 </view>

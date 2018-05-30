@@ -285,14 +285,14 @@ async function QueryOtherMemory(ctx, next) {
         return 
     }
     res = await mysql("memory_gallery").select('pic_url', 'memory_visible', 'like', 'timestamp','content').where({ memory_visible: 1, user_id: userId })
-    for (let index = 0; index < res.length; index++) {
-        const element = array[index];
-        if (element.memory_visible)
-        {
-            res.splice(index, 1);
-            index--;            
-        }
-    }
+    // for (let index = 0; index < res.length; index++) {
+    //     const element = array[index];
+    //     if (element.memory_visible)
+    //     {
+    //         res.splice(index, 1);
+    //         index--;            
+    //     }
+    // }
     ctx.state.data = res
 }
 
@@ -448,11 +448,11 @@ async function Star(ctx, next) {
             icon_url: icon
         }
         await mysql("star_list").insert(userData)
-        res = await mysql("user_info").select('fans_number').where({ open_id: star_id}).limit(1)
+        res = await mysql("user_info").select('fans_number').where({ open_id: otherId}).limit(1)
         if(res.length == 0)
             return;
         var fans_number = res[0].fans_number + 1
-        await mysql("user_info").update({ fans_number: fans_number }).where({ open_id: star_id })
+        await mysql("user_info").update({ fans_number: fans_number }).where({ open_id: otherId })
         ctx.state.data = res
         ctx.state.code = 1
     }

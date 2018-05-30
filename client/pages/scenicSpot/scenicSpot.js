@@ -13,7 +13,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    imgUrls: ["../../image/noImage.png", "../../image/noImage.png"],
+    imgUrls: [],
     introduction: "这个景点还没有介绍哦",
     placeName: "景点名",
 
@@ -68,7 +68,6 @@ Page({
   },
   
   UpdateLike: function (commentId,type) {
-    console.log(type)
     qcloud.request({
       url: config.service.updateSceneCommentLikeUrl,
       login: true,
@@ -79,11 +78,9 @@ Page({
         comment_id: commentId
       },
       success(result) {
-        util.showSuccess("点赞成功");
         console.log('点赞成功', result)
       },
       fail(error) {
-        util.showModel('点赞失败', error)
         console.log('点赞失败', error)
       }
     })
@@ -238,6 +235,7 @@ Page({
       success(result) {
         util.showSuccess("评论成功");
         console.log('评论成功', result)
+        that.LoadComment();
       },
       fail(error) {
         util.showModel('评论失败', error)
@@ -250,7 +248,6 @@ Page({
     this.setData({ hiddenmodalput: true });
   },
   LoadComment: function() {
-    util.showBusy('请求评论中...')
     var that = this
     var options = {
       url: config.service.queryScenicSpotCommentUrl,
@@ -262,11 +259,9 @@ Page({
             commentList:result.data.data
           })
           that.LoadCommentLike()
-          util.showSuccess('请求评论成功');
           console.log('请求评论成功', result)
       },
       fail(error) {
-        util.showModel('请求评论失败', error);
         console.log('请求评论失败', error);
       }
     }
@@ -282,33 +277,33 @@ Page({
         });
       }
     });
-    this.QueryArticleList();
-  },
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    if (app.globalData.tmpScenicSpotData)
-    {
+    if (app.globalData.tmpScenicSpotData) {
       var resData = app.globalData.tmpScenicSpotData
       var imgUrlStr = resData.pic_url
       var tmpImgUrl = imgUrlStr.split(';')
       this.setData({
-          placeName: resData.scenic_spot_name,
-          introduction: resData.introduction,
-          imgUrls: tmpImgUrl
+        placeName: resData.scenic_spot_name,
+        introduction: resData.introduction,
+        imgUrls: tmpImgUrl
       })
       app.globalData.tmpScenicSpotData = null;
     }
     else
       this.RequestScenicSpotData();
+    this.QueryArticleList();
     this.LoadComment();
+  },
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    
     
   },
   
   RequestScenicSpotData:function ()
   {
-    util.showBusy('请求中...')
+    util.showBusy('加载中')
     var that = this
     var options = {
       url: config.service.queryScenicSpotUrl,
@@ -329,14 +324,13 @@ Page({
             introduction: resData.introduction,
             imgUrls: tmpImgUrl
           })
-          console.log(that.data.imgUrls)
-          util.showSuccess('请求成功');
+          util.showSuccess('加载成功');
           console.log('请求景点信息成功', result)
         }
 
       },
       fail(error) {
-        util.showModel('请求失败', error);
+        util.showModel('加载失败', error);
         console.log('request fail', error);
       }
     }

@@ -12,7 +12,14 @@
     <view class="container">
         <view class="uploader">
             <view class="uploader-text" bindtap="doUpload">
-                <text>上传图片</text>
+                <text>上传介绍图片</text>
+            </view>
+        </view>
+    </view>
+    <view class="container">
+        <view class="uploader">
+            <view class="uploader-text" bindtap="UploadBriefPic">
+                <text>上传推荐页图片</text>
             </view>
         </view>
     </view>

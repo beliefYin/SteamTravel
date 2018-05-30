@@ -1,1 +1,26 @@
 /* pages/place/place.wxss */
+.titleContainer{
+    display: flex;
+    justify-content: center;
+}
+.title{
+    text-align: center;
+    font-size: 40rpx;
+}
+
+.name{
+    text-align: center;
+    color: rgb(80, 161, 175);
+}
+
+.time{
+    text-align: center;
+}
+
+.img{
+    width: 100%;
+}
+
+.article{
+    margin: 5% 5% 0% 5%;
+}

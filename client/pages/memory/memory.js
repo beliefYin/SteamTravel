@@ -33,7 +33,7 @@ Page({
   previewImg: function (e) {
     var index = e.currentTarget.dataset.index;
     wx.previewImage({
-        urls: [this.data.memoryList[index].imgUrl]
+      urls: [this.data.memoryList[index].pic_url]
     })
     
   },
@@ -53,8 +53,19 @@ Page({
         userId: app.globalData.userInfo.openId,
       },
       success(res) {
+        var list = res.data.data
+        for (let index = 0; index < list.length; index++) {
+          var item = list[index];
+          console.log(item)
+          var time = item.timestamp.split('T')
+          console.log(time)
+          list[index].time = time[0]
+        }
+
+
+
         that.setData({
-          memoryList:res.data.data
+          memoryList: list
         })
         console.log("LoadMemory success", res);
       },
@@ -75,38 +86,4 @@ Page({
     // }
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    
-  }
 })

@@ -32,7 +32,6 @@ Page({
     var that = this;
     qcloud.request({
       url: config.service.queryOtherMemoryUrl,
-      login: true,
       data: {
         userId: app.globalData.otherUserId,
       },

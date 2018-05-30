@@ -12,9 +12,7 @@ Page({
       //text:"",
       //imgUrl:"",
     ],
-    comments:[
-
-    ],
+    userId:0
   },
 
   onLoad: function (options) {
@@ -56,6 +54,7 @@ Page({
           time: time[0],
           title: data.title,
           like: data.like,
+          userId: data.user_id
         })
         console.log('加载攻略成功', result);
       },
@@ -66,5 +65,11 @@ Page({
     wx.request(options);
   },
 
+  NaviToOther:function() {
+    app.globalData.otherUserId = this.data.userId
+    wx.navigateTo({
+      url: '../watchOther/watchOther',
+    })
+  }
 
 })

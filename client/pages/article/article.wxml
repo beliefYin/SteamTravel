@@ -1,9 +1,11 @@
-<view>
-  <view>{{title}}</view>
-  <view>{{author}}</view>
-  <view>{{time}}</view>
+<view class="article">
+  <view class="titleContainer">
+    <text class="title">{{title}}</text>
+  </view>
+  <view class="name" bindtap="NaviToOther">{{author}}</view>
+  <view class="time">{{time}}</view>
   <view wx:for="{{article}}">
     <text hidden="{{item.text == ''}}" decode="true" space="true">{{item.text}}\n</text>
-    <image hidden="{{item.imgUrl == ''}}" src="{{item.imgUrl}}"></image>
+    <image hidden="{{item.imgUrl == ''}}" src="{{item.imgUrl}}" class="img"></image>
   </view>
 </view>

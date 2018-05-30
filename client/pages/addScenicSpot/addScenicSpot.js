@@ -9,7 +9,7 @@ Page({
         introduction: "",
         placeName: "",
         briefIntro: "",
-        briefImgUrl: "../../image/noImage.png",
+        briefImgUrl: "",
 
         recommName: "",
         imgUrl:'',
@@ -86,7 +86,9 @@ Page({
             util.showModel("错误","id必须为不为0的整数")
             return;
         }
-        if (this.data.imgUrl == '' ||this.data.introduction == "" || this.data.placeName == "" || this.data.briefIntro == "" )
+        if (this.data.imgUrl == '' ||this.data.introduction == "" 
+            || this.data.placeName == "" || this.data.briefIntro == ""
+            || this.data.placeNamebriefImgUrl == "")
         {
             util.showModel("错误", "还有没有填的位置")
             return;
@@ -168,4 +170,37 @@ Page({
             urls: [this.data.imgUrl]
         })
     },
+
+    UploadBriefPic: function () {
+        var that = this
+
+        // 选择图片
+        wx.chooseImage({
+            count: 1,
+            sizeType: ['compressed'],
+            sourceType: ['album', 'camera'],
+            success: function (res) {
+                util.showSuccess("上传中")
+                wx.uploadFile({
+                    url: config.service.uploadUrl,
+                    filePath: res.tempFilePaths[0],
+                    name: 'file',
+
+                    fail: function (e) {
+                        util.showModel('上传图片失败')
+                    },
+                    complete: function (res) {
+                        res = JSON.parse(res.data)
+                        console.log('上传图片', res)
+                        that.data.briefImgUrl = res.data.imgUrl
+                        util.showSuccess("上传完成")
+                    }
+                })
+            },
+            fail: function (e) {
+                console.error(e)
+            }
+        })
+    },
+    
 })
